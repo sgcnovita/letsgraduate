@@ -3,83 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Auto-Marking Questionnaire</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
             margin: 0;
-            padding: 40px;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f8;
+            color: #222;
         }
 
         .container {
-            max-width: 800px;
-            margin: auto;
+            max-width: 850px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .card {
             background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
         }
 
         h1 {
             text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .progress {
+            margin-bottom: 25px;
+            color: #666;
+            font-size: 15px;
         }
 
         .question {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 180px;
+            padding: 15px;
+            font-size: 17px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            resize: vertical;
+            outline: none;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        textarea:focus {
+            border-color: #555;
+        }
+
+        button {
+            margin-top: 18px;
+            padding: 13px 28px;
+            border: none;
+            border-radius: 8px;
+            background: #222;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #444;
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 10px;
+            background: #f7f7f7;
+        }
+
+        .question-score {
             font-size: 20px;
             font-weight: bold;
             margin-bottom: 15px;
         }
 
-        textarea {
-            width: 100%;
-            height: 150px;
-            padding: 12px;
-            font-size: 16px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            resize: vertical;
-        }
-
-        button {
-            margin-top: 15px;
-            padding: 12px 25px;
-            font-size: 16px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            background: #333;
-            color: white;
-        }
-
-        button:hover {
-            background: #555;
-        }
-
-        #result {
-            margin-top: 25px;
+        .word-results {
+            line-height: 2;
         }
 
         .correct {
-            color: green;
+            color: #16803c;
             font-weight: bold;
+            margin-right: 8px;
         }
 
         .incorrect {
-            color: red;
+            color: #d62828;
             font-weight: bold;
+            margin-right: 8px;
         }
 
-        .score {
-            font-size: 24px;
+        .missing {
+            color: #d62828;
             font-weight: bold;
-            margin-top: 20px;
+            margin-right: 8px;
+        }
+
+        .extra {
+            color: #b36b00;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .final-result {
+            text-align: center;
+        }
+
+        .final-score {
+            font-size: 38px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .percentage {
+            font-size: 25px;
+            margin-bottom: 25px;
         }
 
         .hidden {
             display: none;
+        }
+
+        .instructions {
+            background: #f1f1f1;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px auto;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+            .question {
+                font-size: 19px;
+            }
         }
     </style>
 </head>
@@ -88,24 +174,59 @@
 
 <div class="container">
 
-    <h1>Auto-Marking Questionnaire</h1>
+    <div class="card">
 
-    <div id="quiz">
+        <h1>Auto-Marking Questionnaire</h1>
 
-        <div class="question" id="questionText"></div>
+        <p class="subtitle">
+            Type your answer and submit it for automatic marking.
+        </p>
 
-        <textarea
-            id="answerInput"
-            placeholder="Type your answer here..."
-        ></textarea>
+        <div class="instructions">
+            <strong>Marking rules:</strong><br>
+            • Capitalisation is ignored.<br>
+            • Punctuation is ignored.<br>
+            • Extra spaces are ignored.<br>
+            • Each correct word receives one mark.
+        </div>
 
-        <button onclick="submitAnswer()">Submit Answer</button>
+        <!-- QUIZ -->
+        <div id="quiz">
 
-        <div id="result"></div>
+            <div class="progress" id="progress"></div>
+
+            <div class="question" id="questionText"></div>
+
+            <textarea
+                id="answerInput"
+                placeholder="Type your answer here..."
+            ></textarea>
+
+            <button id="submitButton" onclick="submitAnswer()">
+                Submit Answer
+            </button>
+
+            <div id="result"></div>
+
+        </div>
+
+
+        <!-- FINAL RESULT -->
+        <div id="finalResult" class="final-result hidden">
+
+            <h2>Quiz Complete!</h2>
+
+            <div class="final-score" id="finalScore"></div>
+
+            <div class="percentage" id="finalPercentage"></div>
+
+            <button onclick="restartQuiz()">
+                Try Again
+            </button>
+
+        </div>
 
     </div>
-
-    <div id="finalResult" class="hidden"></div>
 
 </div>
 
@@ -113,12 +234,15 @@
 <script>
 
     /*
-     * ==========================================
-     * QUESTIONS
-     * ==========================================
-     *
-     * Add or change your questions here.
-     */
+    ==================================================
+    QUESTIONS
+    ==================================================
+
+    CHANGE THESE QUESTIONS AND ANSWERS TO YOUR OWN.
+
+    The "answer" is the correct answer used for marking.
+    ==================================================
+    */
 
     const questions = [
 
@@ -135,33 +259,47 @@
         {
             question: "What is machine learning?",
             answer: "Machine learning is a type of artificial intelligence that allows computers to learn from data"
+        },
+
+        {
+            question: "What is algorithmic bias?",
+            answer: "Algorithmic bias occurs when an algorithm produces systematically unfair outcomes"
+        },
+
+        {
+            question: "What is cybersecurity?",
+            answer: "Cybersecurity is the practice of protecting systems networks and programs from digital attacks"
         }
 
     ];
 
 
     /*
-     * ==========================================
-     * VARIABLES
-     * ==========================================
-     */
+    ==================================================
+    VARIABLES
+    ==================================================
+    */
 
     let currentQuestion = 0;
+
     let totalScore = 0;
+
     let totalPossibleMarks = 0;
 
 
     /*
-     * ==========================================
-     * NORMALISE ANSWER
-     * ==========================================
-     *
-     * This function:
-     *
-     * 1. Converts everything to lowercase
-     * 2. Removes punctuation
-     * 3. Removes extra spaces
-     */
+    ==================================================
+    NORMALISE TEXT
+    ==================================================
+
+    This function:
+
+    1. Converts text to lowercase.
+    2. Removes punctuation.
+    3. Converts multiple spaces into one space.
+    4. Removes spaces at the beginning and end.
+    ==================================================
+    */
 
     function normalizeText(text) {
 
@@ -169,21 +307,21 @@
             .toLowerCase()
 
             // Remove punctuation
-            .replace(/[.,!?;:'"()[\]{}\-_/\\]/g, "")
+            .replace(/[.,!?;:'"()[\]{}\-_/\\]/g, " ")
 
-            // Remove extra spaces
+            // Convert multiple spaces to one
             .replace(/\s+/g, " ")
 
-            // Remove spaces at beginning/end
+            // Remove beginning/end spaces
             .trim();
     }
 
 
     /*
-     * ==========================================
-     * DISPLAY QUESTION
-     * ==========================================
-     */
+    ==================================================
+    SHOW QUESTION
+    ==================================================
+    */
 
     function showQuestion() {
 
@@ -194,191 +332,314 @@
             return;
         }
 
-        document.getElementById("questionText").innerText =
+        document.getElementById("progress").innerText =
             "Question " +
             (currentQuestion + 1) +
-            ": " +
+            " of " +
+            questions.length;
+
+
+        document.getElementById("questionText").innerText =
             questions[currentQuestion].question;
+
 
         document.getElementById("answerInput").value = "";
 
         document.getElementById("result").innerHTML = "";
+
+        document.getElementById("submitButton").innerText =
+            "Submit Answer";
     }
 
 
     /*
-     * ==========================================
-     * MARK ANSWER
-     * ==========================================
-     */
+    ==================================================
+    SUBMIT ANSWER
+    ==================================================
+    */
 
     function submitAnswer() {
 
         const correctAnswer =
-            normalizeText(questions[currentQuestion].answer);
+            normalizeText(
+                questions[currentQuestion].answer
+            );
+
 
         const studentAnswer =
-            normalizeText(document.getElementById("answerInput").value);
+            normalizeText(
+                document.getElementById("answerInput").value
+            );
 
 
         /*
-         * Convert the answers into arrays of words.
-         */
+        Convert answers into arrays of words.
+        */
 
-        const correctWords = correctAnswer.split(" ");
+        const correctWords =
+            correctAnswer === ""
+                ? []
+                : correctAnswer.split(" ");
 
-        const studentWords = studentAnswer.split(" ");
 
-
-        /*
-         * The maximum mark is the number
-         * of words in the correct answer.
-         */
-
-        const questionMaxMark = correctWords.length;
-
-        let questionScore = 0;
-
-        let resultHTML = "<h3>Word-by-word result:</h3>";
+        const studentWords =
+            studentAnswer === ""
+                ? []
+                : studentAnswer.split(" ");
 
 
         /*
-         * Compare each correct word
-         * with the student's corresponding word.
-         */
+        The maximum mark is the number
+        of words in the correct answer.
+        */
+
+        const maximumMark = correctWords.length;
+
+
+        let score = 0;
+
+
+        let resultHTML =
+            "<div class='result'>";
+
+
+        resultHTML +=
+            "<div class='question-score'>" +
+            "Question Score: 0/" +
+            maximumMark +
+            "</div>";
+
+
+        resultHTML +=
+            "<div class='word-results'>";
+
+
+        /*
+        ==================================================
+        WORD-BY-WORD COMPARISON
+        ==================================================
+        */
 
         for (let i = 0; i < correctWords.length; i++) {
 
-            const correctWord = correctWords[i];
+            const correctWord =
+                correctWords[i];
 
-            const studentWord = studentWords[i];
+            const studentWord =
+                studentWords[i];
 
+
+            /*
+            Correct word
+            */
 
             if (studentWord === correctWord) {
 
-                questionScore++;
+                score++;
 
                 resultHTML +=
                     "<span class='correct'>" +
                     correctWord +
-                    " ✓</span> ";
+                    " ✓</span>";
 
-            } else {
+            }
+
+            /*
+            Missing or incorrect word
+            */
+
+            else {
 
                 resultHTML +=
                     "<span class='incorrect'>" +
                     correctWord +
-                    " ✗</span> ";
+                    " ✗</span>";
+
             }
+
         }
 
 
         /*
-         * Add this question's score
-         * to the overall score.
-         */
+        ==================================================
+        EXTRA WORDS
+        ==================================================
+        */
 
-        totalScore += questionScore;
+        if (studentWords.length > correctWords.length) {
 
-        totalPossibleMarks += questionMaxMark;
+            resultHTML +=
+                "<br><br><strong>Extra words:</strong><br>";
+
+            for (
+                let i = correctWords.length;
+                i < studentWords.length;
+                i++
+            ) {
+
+                resultHTML +=
+                    "<span class='extra'>" +
+                    studentWords[i] +
+                    " +</span>";
+
+            }
+
+        }
 
 
         /*
-         * Display the result.
-         */
+        Calculate percentage.
+        */
 
-        const percentage =
-            (questionScore / questionMaxMark) * 100;
+        let percentage = 0;
+
+        if (maximumMark > 0) {
+
+            percentage =
+                (score / maximumMark) * 100;
+
+        }
+
+
+        /*
+        Display score.
+        */
+
+        resultHTML += "</div>";
 
 
         resultHTML +=
-            "<p class='score'>" +
+            "<div class='question-score'>" +
             "Score: " +
-            questionScore +
+            score +
             "/" +
-            questionMaxMark +
+            maximumMark +
             " (" +
             percentage.toFixed(1) +
             "%)" +
-            "</p>";
+            "</div>";
 
 
-        document.getElementById("result").innerHTML = resultHTML;
+        resultHTML += "</div>";
+
+
+        document.getElementById("result").innerHTML =
+            resultHTML;
 
 
         /*
-         * Change button to move
-         * to the next question.
-         */
+        Add score to overall score.
+        */
 
-        const button = document.querySelector("button");
+        totalScore += score;
 
-        button.innerText = "Next Question";
+        totalPossibleMarks += maximumMark;
 
-        button.onclick = nextQuestion;
+
+        /*
+        Change button to Next Question.
+        */
+
+        const button =
+            document.getElementById("submitButton");
+
+
+        button.innerText =
+            currentQuestion === questions.length - 1
+                ? "Finish Quiz"
+                : "Next Question";
+
+
+        button.onclick =
+            nextQuestion;
+
     }
 
 
     /*
-     * ==========================================
-     * NEXT QUESTION
-     * ==========================================
-     */
+    ==================================================
+    NEXT QUESTION
+    ==================================================
+    */
 
     function nextQuestion() {
 
         currentQuestion++;
 
-        const button = document.querySelector("button");
-
-        button.innerText = "Submit Answer";
-
-        button.onclick = submitAnswer;
-
         showQuestion();
+
     }
 
 
     /*
-     * ==========================================
-     * FINAL RESULT
-     * ==========================================
-     */
+    ==================================================
+    FINAL RESULT
+    ==================================================
+    */
 
     function showFinalResult() {
 
-        document.getElementById("quiz").classList.add("hidden");
+        document.getElementById("quiz")
+            .classList.add("hidden");
+
+
+        document.getElementById("finalResult")
+            .classList.remove("hidden");
+
 
         const percentage =
-            (totalScore / totalPossibleMarks) * 100;
+            totalPossibleMarks > 0
+                ? (totalScore / totalPossibleMarks) * 100
+                : 0;
 
 
-        document.getElementById("finalResult").classList.remove("hidden");
-
-        document.getElementById("finalResult").innerHTML =
-
-            "<h2>Quiz Complete!</h2>" +
-
-            "<p class='score'>" +
-            "Total Score: " +
+        document.getElementById("finalScore").innerText =
             totalScore +
-            "/" +
-            totalPossibleMarks +
-            "</p>" +
+            " / " +
+            totalPossibleMarks;
 
-            "<p class='score'>" +
-            "Overall Percentage: " +
+
+        document.getElementById("finalPercentage").innerText =
+            "Overall Score: " +
             percentage.toFixed(1) +
-            "%" +
-            "</p>";
+            "%";
+
     }
 
 
     /*
-     * ==========================================
-     * START QUIZ
-     * ==========================================
-     */
+    ==================================================
+    RESTART QUIZ
+    ==================================================
+    */
+
+    function restartQuiz() {
+
+        currentQuestion = 0;
+
+        totalScore = 0;
+
+        totalPossibleMarks = 0;
+
+
+        document.getElementById("quiz")
+            .classList.remove("hidden");
+
+
+        document.getElementById("finalResult")
+            .classList.add("hidden");
+
+
+        showQuestion();
+
+    }
+
+
+    /*
+    ==================================================
+    START QUESTIONNAIRE
+    ==================================================
+    */
 
     showQuestion();
 
@@ -386,4 +647,3 @@
 
 </body>
 </html>
-```
