@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto-Marking Questionnaire</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .question {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 12px;
+            font-size: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            resize: vertical;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 12px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #333;
+            color: white;
+        }
+
+        button:hover {
+            background: #555;
+        }
+
+        #result {
+            margin-top: 25px;
+        }
+
+        .correct {
+            color: green;
+            font-weight: bold;
+        }
+
+        .incorrect {
+            color: red;
+            font-weight: bold;
+        }
+
+        .score {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Auto-Marking Questionnaire</h1>
+
+    <div id="quiz">
+
+        <div class="question" id="questionText"></div>
+
+        <textarea
+            id="answerInput"
+            placeholder="Type your answer here..."
+        ></textarea>
+
+        <button onclick="submitAnswer()">Submit Answer</button>
+
+        <div id="result"></div>
+
+    </div>
+
+    <div id="finalResult" class="hidden"></div>
+
+</div>
+
+
+<script>
+
+    /*
+     * ==========================================
+     * QUESTIONS
+     * ==========================================
+     *
+     * Add or change your questions here.
+     */
+
+    const questions = [
+
+        {
+            question: "What is the capital city of Australia?",
+            answer: "Canberra"
+        },
+
+        {
+            question: "What does AI stand for?",
+            answer: "Artificial Intelligence"
+        },
+
+        {
+            question: "What is machine learning?",
+            answer: "Machine learning is a type of artificial intelligence that allows computers to learn from data"
+        }
+
+    ];
+
+
+    /*
+     * ==========================================
+     * VARIABLES
+     * ==========================================
+     */
+
+    let currentQuestion = 0;
+    let totalScore = 0;
+    let totalPossibleMarks = 0;
+
+
+    /*
+     * ==========================================
+     * NORMALISE ANSWER
+     * ==========================================
+     *
+     * This function:
+     *
+     * 1. Converts everything to lowercase
+     * 2. Removes punctuation
+     * 3. Removes extra spaces
+     */
+
+    function normalizeText(text) {
+
+        return text
+            .toLowerCase()
+
+            // Remove punctuation
+            .replace(/[.,!?;:'"()[\]{}\-_/\\]/g, "")
+
+            // Remove extra spaces
+            .replace(/\s+/g, " ")
+
+            // Remove spaces at beginning/end
+            .trim();
+    }
+
+
+    /*
+     * ==========================================
+     * DISPLAY QUESTION
+     * ==========================================
+     */
+
+    function showQuestion() {
+
+        if (currentQuestion >= questions.length) {
+
+            showFinalResult();
+
+            return;
+        }
+
+        document.getElementById("questionText").innerText =
+            "Question " +
+            (currentQuestion + 1) +
+            ": " +
+            questions[currentQuestion].question;
+
+        document.getElementById("answerInput").value = "";
+
+        document.getElementById("result").innerHTML = "";
+    }
+
+
+    /*
+     * ==========================================
+     * MARK ANSWER
+     * ==========================================
+     */
+
+    function submitAnswer() {
+
+        const correctAnswer =
+            normalizeText(questions[currentQuestion].answer);
+
+        const studentAnswer =
+            normalizeText(document.getElementById("answerInput").value);
+
+
+        /*
+         * Convert the answers into arrays of words.
+         */
+
+        const correctWords = correctAnswer.split(" ");
+
+        const studentWords = studentAnswer.split(" ");
+
+
+        /*
+         * The maximum mark is the number
+         * of words in the correct answer.
+         */
+
+        const questionMaxMark = correctWords.length;
+
+        let questionScore = 0;
+
+        let resultHTML = "<h3>Word-by-word result:</h3>";
+
+
+        /*
+         * Compare each correct word
+         * with the student's corresponding word.
+         */
+
+        for (let i = 0; i < correctWords.length; i++) {
+
+            const correctWord = correctWords[i];
+
+            const studentWord = studentWords[i];
+
+
+            if (studentWord === correctWord) {
+
+                questionScore++;
+
+                resultHTML +=
+                    "<span class='correct'>" +
+                    correctWord +
+                    " ✓</span> ";
+
+            } else {
+
+                resultHTML +=
+                    "<span class='incorrect'>" +
+                    correctWord +
+                    " ✗</span> ";
+            }
+        }
+
+
+        /*
+         * Add this question's score
+         * to the overall score.
+         */
+
+        totalScore += questionScore;
+
+        totalPossibleMarks += questionMaxMark;
+
+
+        /*
+         * Display the result.
+         */
+
+        const percentage =
+            (questionScore / questionMaxMark) * 100;
+
+
+        resultHTML +=
+            "<p class='score'>" +
+            "Score: " +
+            questionScore +
+            "/" +
+            questionMaxMark +
+            " (" +
+            percentage.toFixed(1) +
+            "%)" +
+            "</p>";
+
+
+        document.getElementById("result").innerHTML = resultHTML;
+
+
+        /*
+         * Change button to move
+         * to the next question.
+         */
+
+        const button = document.querySelector("button");
+
+        button.innerText = "Next Question";
+
+        button.onclick = nextQuestion;
+    }
+
+
+    /*
+     * ==========================================
+     * NEXT QUESTION
+     * ==========================================
+     */
+
+    function nextQuestion() {
+
+        currentQuestion++;
+
+        const button = document.querySelector("button");
+
+        button.innerText = "Submit Answer";
+
+        button.onclick = submitAnswer;
+
+        showQuestion();
+    }
+
+
+    /*
+     * ==========================================
+     * FINAL RESULT
+     * ==========================================
+     */
+
+    function showFinalResult() {
+
+        document.getElementById("quiz").classList.add("hidden");
+
+        const percentage =
+            (totalScore / totalPossibleMarks) * 100;
+
+
+        document.getElementById("finalResult").classList.remove("hidden");
+
+        document.getElementById("finalResult").innerHTML =
+
+            "<h2>Quiz Complete!</h2>" +
+
+            "<p class='score'>" +
+            "Total Score: " +
+            totalScore +
+            "/" +
+            totalPossibleMarks +
+            "</p>" +
+
+            "<p class='score'>" +
+            "Overall Percentage: " +
+            percentage.toFixed(1) +
+            "%" +
+            "</p>";
+    }
+
+
+    /*
+     * ==========================================
+     * START QUIZ
+     * ==========================================
+     */
+
+    showQuestion();
+
+</script>
+
+</body>
+</html>
+```
