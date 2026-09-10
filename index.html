@@ -3,297 +3,273 @@
 
 <head>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Quiz & Revision System</title>
+<title>Quiz & Revision System</title>
 
-    <style>
+<style>
 
-        * {
-            box-sizing: border-box;
-        }
+* {
+    box-sizing: border-box;
+}
 
-        body {
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f4f6f8;
-            color: #222;
-        }
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f6f8;
+    color: #222;
+}
 
-        .container {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 20px;
-        }
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
 
-        .card {
-            background: white;
-            padding: 35px;
-            border-radius: 16px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-        }
+.card {
+    background: white;
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
 
-        h1 {
-            text-align: center;
-            margin-bottom: 10px;
-        }
+h1 {
+    text-align: center;
+    margin-bottom: 10px;
+}
 
-        .subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 30px;
-        }
+.subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+}
 
-        .setup {
-            text-align: center;
-        }
+.setup {
+    text-align: center;
+}
 
-        .setup h2 {
-            margin-bottom: 10px;
-        }
+.question-count {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 25px 0;
+}
 
-        .question-count {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin: 25px 0;
-        }
+.count-button {
+    padding: 12px 22px;
+    border: 2px solid #ddd;
+    background: white;
+    color: #222;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
 
-        .count-button {
-            padding: 12px 22px;
-            border: 2px solid #ddd;
-            background: white;
-            color: #222;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-        }
+.count-button:hover {
+    background: #f0f0f0;
+}
 
-        .count-button:hover {
-            background: #f0f0f0;
-        }
+.count-button.selected {
+    background: #222;
+    color: white;
+    border-color: #222;
+}
 
-        .count-button.selected {
-            background: #222;
-            color: white;
-            border-color: #222;
-        }
+.start-button,
+.action-button,
+.submit-button {
+    padding: 13px 28px;
+    border: none;
+    border-radius: 8px;
+    background: #222;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
 
-        .start-button,
-        .action-button {
-            padding: 13px 28px;
-            border: none;
-            border-radius: 8px;
-            background: #222;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 15px;
-        }
+.start-button:hover,
+.action-button:hover,
+.submit-button:hover {
+    background: #444;
+}
 
-        .start-button:hover,
-        .action-button:hover {
-            background: #444;
-        }
+.progress {
+    color: #666;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
 
-        .progress {
-            color: #666;
-            font-size: 15px;
-            margin-bottom: 15px;
-        }
+.question {
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 1.5;
+    margin-bottom: 8px;
+}
 
-        .question {
-            font-size: 22px;
-            font-weight: bold;
-            line-height: 1.5;
-            margin-bottom: 8px;
-        }
+.points {
+    color: #666;
+    font-size: 15px;
+    margin-bottom: 20px;
+}
 
-        .points {
-            color: #666;
-            font-size: 15px;
-            margin-bottom: 20px;
-        }
+/* SINGLE LINE ANSWER */
 
-        .answer-line {
-            margin-bottom: 15px;
-        }
+.answer-line {
+    margin-bottom: 18px;
+}
 
-        .line-label {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 5px;
-        }
+.line-label {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 6px;
+}
 
-        textarea {
-            width: 100%;
-            min-height: 110px;
-            padding: 14px;
-            font-size: 16px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            resize: vertical;
-            outline: none;
-            font-family: Arial, Helvetica, sans-serif;
-        }
+input[type="text"] {
+    width: 100%;
+    height: 48px;
+    padding: 12px 14px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+}
 
-        textarea:focus {
-            border-color: #555;
-        }
+input[type="text"]:focus {
+    border-color: #555;
+}
 
-        .single-answer {
-            min-height: 160px;
-        }
+.submit-button {
+    margin-top: 8px;
+}
 
-        .submit-button {
-            padding: 13px 28px;
-            border: none;
-            border-radius: 8px;
-            background: #222;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 5px;
-        }
+.result {
+    margin-top: 25px;
+    padding: 20px;
+    border-radius: 10px;
+    background: #f7f7f7;
+}
 
-        .submit-button:hover {
-            background: #444;
-        }
+.correct-result {
+    background: #edf8f0;
+    border-left: 5px solid #16803c;
+}
 
-        .result {
-            margin-top: 25px;
-            padding: 20px;
-            border-radius: 10px;
-            background: #f7f7f7;
-        }
+.wrong-result {
+    background: #fff0f0;
+    border-left: 5px solid #d62828;
+}
 
-        .correct-result {
-            background: #edf8f0;
-            border-left: 5px solid #16803c;
-        }
+.score {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
 
-        .wrong-result {
-            background: #fff0f0;
-            border-left: 5px solid #d62828;
-        }
+.word-results {
+    line-height: 2;
+    margin-top: 10px;
+}
 
-        .score {
-            font-size: 22px;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
+.correct {
+    color: #16803c;
+    font-weight: bold;
+    margin-right: 8px;
+}
 
-        .word-results {
-            line-height: 2;
-            margin-top: 10px;
-        }
+.incorrect {
+    color: #d62828;
+    font-weight: bold;
+    margin-right: 8px;
+}
 
-        .correct {
-            color: #16803c;
-            font-weight: bold;
-            margin-right: 8px;
-        }
+.extra {
+    color: #b36b00;
+    font-weight: bold;
+    margin-right: 8px;
+}
 
-        .incorrect {
-            color: #d62828;
-            font-weight: bold;
-            margin-right: 8px;
-        }
+.correct-answer {
+    margin-top: 18px;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+}
 
-        .missing {
-            color: #d62828;
-            font-weight: bold;
-            margin-right: 8px;
-        }
+.correct-answer strong {
+    color: #16803c;
+}
 
-        .extra {
-            color: #b36b00;
-            font-weight: bold;
-            margin-right: 8px;
-        }
+.final-result {
+    text-align: center;
+}
 
-        .correct-answer {
-            margin-top: 18px;
-            padding: 15px;
-            background: white;
-            border-radius: 8px;
-        }
+.final-score {
+    font-size: 42px;
+    font-weight: bold;
+    margin: 20px 0 10px;
+}
 
-        .correct-answer strong {
-            color: #16803c;
-        }
+.percentage {
+    font-size: 26px;
+    margin-bottom: 25px;
+}
 
-        .final-result {
-            text-align: center;
-        }
+.wrong-summary {
+    text-align: left;
+    background: #fff0f0;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 25px;
+}
 
-        .final-score {
-            font-size: 42px;
-            font-weight: bold;
-            margin: 20px 0 10px;
-        }
+.wrong-summary h3 {
+    color: #d62828;
+}
 
-        .percentage {
-            font-size: 26px;
-            margin-bottom: 25px;
-        }
+.wrong-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
 
-        .wrong-summary {
-            text-align: left;
-            background: #fff0f0;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 25px;
-        }
+.hidden {
+    display: none;
+}
 
-        .wrong-summary h3 {
-            color: #d62828;
-        }
+.info-box {
+    background: #f1f1f1;
+    padding: 15px;
+    border-radius: 8px;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
 
-        .wrong-item {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-        }
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
 
-        .hidden {
-            display: none;
-        }
+@media (max-width: 600px) {
 
-        .info-box {
-            background: #f1f1f1;
-            padding: 15px;
-            border-radius: 8px;
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
+    .container {
+        margin: 20px auto;
+        padding: 10px;
+    }
 
-        .button-group {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
+    .card {
+        padding: 22px;
+    }
 
-        @media (max-width: 600px) {
+    .question {
+        font-size: 19px;
+    }
 
-            .container {
-                margin: 20px auto;
-                padding: 10px;
-            }
+}
 
-            .card {
-                padding: 22px;
-            }
-
-            .question {
-                font-size: 19px;
-            }
-
-        }
-
-    </style>
+</style>
 
 </head>
 
@@ -303,203 +279,205 @@
 
 <div class="container">
 
-    <div class="card">
+<div class="card">
 
 
-        <!-- =========================================
-             SETUP SCREEN
-        ========================================== -->
+<!-- ==========================================
+     SETUP SCREEN
+=========================================== -->
 
-        <div id="setupScreen">
+<div id="setupScreen">
 
-            <h1>Quiz & Revision System</h1>
+<h1>Quiz & Revision System</h1>
 
-            <p class="subtitle">
-                Choose how many questions you want to answer.
-            </p>
+<p class="subtitle">
+Choose how many questions you want to answer.
+</p>
 
+<div class="info-box">
 
-            <div class="info-box">
+<strong>Marking rules:</strong>
 
-                <strong>How marking works:</strong>
+<br>
 
-                <br>
+• Questions are given in order.
+<br>
 
-                • Answers are checked word by word.
-                <br>
+• Capitalisation is ignored.
+<br>
 
-                • Capitalisation does not matter.
-                <br>
+• Punctuation is ignored.
+<br>
 
-                • Punctuation does not matter.
-                <br>
+• Extra spaces are ignored.
+<br>
 
-                • Extra spaces do not matter.
-                <br>
+• Answers are checked word by word.
+<br>
 
-                • Wrong questions are remembered for revision.
+• Wrong questions are remembered for revision.
 
-            </div>
+</div>
 
 
-            <div class="setup">
+<div class="setup">
 
-                <h2>Select Number of Questions</h2>
+<h2>Select Number of Questions</h2>
 
 
-                <div class="question-count">
+<div class="question-count">
 
-                    <button
-                        class="count-button"
-                        onclick="selectQuestionCount(5, this)">
-                        5
-                    </button>
+<button
+class="count-button"
+onclick="selectQuestionCount(5, this)">
+5
+</button>
 
-                    <button
-                        class="count-button"
-                        onclick="selectQuestionCount(10, this)">
-                        10
-                    </button>
+<button
+class="count-button"
+onclick="selectQuestionCount(10, this)">
+10
+</button>
 
-                    <button
-                        class="count-button"
-                        onclick="selectQuestionCount(20, this)">
-                        20
-                    </button>
+<button
+class="count-button"
+onclick="selectQuestionCount(20, this)">
+20
+</button>
 
-                    <button
-                        class="count-button"
-                        onclick="selectQuestionCount(30, this)">
-                        30
-                    </button>
+<button
+class="count-button"
+onclick="selectQuestionCount(30, this)">
+30
+</button>
 
-                    <button
-                        class="count-button"
-                        onclick="selectQuestionCount(40, this)">
-                        40
-                    </button>
+<button
+class="count-button"
+onclick="selectQuestionCount(40, this)">
+40
+</button>
 
-                </div>
+</div>
 
 
-                <p id="selectionMessage">
-                    Please select the number of questions.
-                </p>
+<p id="selectionMessage">
+Please select the number of questions.
+</p>
 
 
-                <button
-                    class="start-button"
-                    onclick="startQuiz()">
+<button
+class="start-button"
+onclick="startQuiz()">
 
-                    Start Quiz
+Start Quiz
 
-                </button>
+</button>
 
-            </div>
+</div>
 
-        </div>
+</div>
 
 
 
-        <!-- =========================================
-             QUIZ SCREEN
-        ========================================== -->
+<!-- ==========================================
+     QUIZ SCREEN
+=========================================== -->
 
-        <div id="quizScreen" class="hidden">
+<div id="quizScreen" class="hidden">
 
-            <div
-                class="progress"
-                id="progress">
-            </div>
+<div
+class="progress"
+id="progress">
+</div>
 
 
-            <div
-                class="question"
-                id="questionText">
-            </div>
+<div
+class="question"
+id="questionText">
+</div>
 
 
-            <div
-                class="points"
-                id="pointsText">
-            </div>
+<div
+class="points"
+id="pointsText">
+</div>
 
 
-            <div id="answerArea">
-            </div>
+<div id="answerArea">
+</div>
 
 
-            <button
-                class="submit-button"
-                id="submitButton"
-                onclick="submitAnswer()">
+<button
+class="submit-button"
+id="submitButton"
+onclick="submitAnswer()">
 
-                Submit Answer
+Submit Answer
 
-            </button>
+</button>
 
 
-            <div id="result">
-            </div>
+<div id="result">
+</div>
 
-        </div>
+</div>
 
 
 
-        <!-- =========================================
-             FINAL RESULT SCREEN
-        ========================================== -->
+<!-- ==========================================
+     FINAL SCREEN
+=========================================== -->
 
-        <div
-            id="finalScreen"
-            class="final-result hidden">
+<div
+id="finalScreen"
+class="final-result hidden">
 
-            <h1>Quiz Complete!</h1>
+<h1>Quiz Complete!</h1>
 
 
-            <div
-                class="final-score"
-                id="finalScore">
-            </div>
+<div
+class="final-score"
+id="finalScore">
+</div>
 
 
-            <div
-                class="percentage"
-                id="finalPercentage">
-            </div>
+<div
+class="percentage"
+id="finalPercentage">
+</div>
 
 
-            <div
-                id="wrongSummary">
-            </div>
+<div
+id="wrongSummary">
+</div>
 
 
-            <div class="button-group">
+<div class="button-group">
 
-                <button
-                    class="action-button"
-                    id="repeatButton"
-                    onclick="repeatWrongQuestions()">
+<button
+class="action-button"
+id="repeatButton"
+onclick="repeatWrongQuestions()">
 
-                    Repeat Wrong Questions
+Repeat Wrong Questions
 
-                </button>
+</button>
 
 
-                <button
-                    class="action-button"
-                    onclick="restartQuiz()">
+<button
+class="action-button"
+onclick="restartQuiz()">
 
-                    Start New Quiz
+Start New Quiz
 
-                </button>
+</button>
 
-            </div>
+</div>
 
-        </div>
+</div>
 
 
-    </div>
+</div>
 
 </div>
 
@@ -509,409 +487,353 @@
 
 
 /*
-======================================================
+====================================================
 QUESTION DATABASE
-======================================================
+====================================================
+
+PUT YOUR 40 QUESTIONS HERE.
 
 IMPORTANT:
 
-You can have up to 40 questions here.
+The questions will NOT be shuffled.
 
-Each question can be:
+If the user chooses 5 questions:
+Q1 → Q2 → Q3 → Q4 → Q5
 
-1. A SINGLE answer
+If the user chooses 10:
+Q1 → Q2 → ... → Q10
 
-OR
-
-2. Multiple answer lines
-
-------------------------------------------------------
-
-SINGLE ANSWER EXAMPLE:
-
-{
-    question: "What does AI stand for?",
-    points: 2,
-    answer: "Artificial Intelligence"
-}
-
-------------------------------------------------------
-
-MULTI-LINE ANSWER EXAMPLE:
-
-{
-    question: "List three benefits of AI.",
-    points: 3,
-
-    lines: [
-        {
-            answer: "Improves efficiency",
-            points: 1
-        },
-
-        {
-            answer: "Reduces human error",
-            points: 1
-        },
-
-        {
-            answer: "Automates repetitive tasks",
-            points: 1
-        }
-    ]
-}
-
-======================================================
+====================================================
 */
 
 
 const questions = [
 
-    /*
-    QUESTION 1
-    */
+/* QUESTION 1 */
 
-    {
-        question: "What is the capital city of Australia?",
-        points: 1,
-        answer: "Canberra"
-    },
+{
+    question: "What is the capital city of Australia?",
+    points: 1,
+    answer: "Canberra"
+},
 
 
-    /*
-    QUESTION 2
-    */
+/* QUESTION 2 */
 
-    {
-        question: "What does AI stand for?",
-        points: 2,
-        answer: "Artificial Intelligence"
-    },
+{
+    question: "What does AI stand for?",
+    points: 2,
+    answer: "Artificial Intelligence"
+},
 
 
-    /*
-    QUESTION 3
-    */
+/* QUESTION 3 */
 
-    {
-        question: "What is machine learning?",
-        points: 3,
-        answer: "Machine learning is a type of artificial intelligence that allows computers to learn from data"
-    },
+{
+    question: "What is machine learning?",
+    points: 3,
+    answer: "Machine learning is a type of artificial intelligence that allows computers to learn from data"
+},
 
 
-    /*
-    QUESTION 4
-    Multiple lines
-    */
+/* QUESTION 4 - MULTIPLE SINGLE-LINE ANSWERS */
 
-    {
-        question: "List three benefits of artificial intelligence in recruitment.",
-        points: 3,
+{
+    question: "List three benefits of artificial intelligence in recruitment.",
 
-        lines: [
+    points: 3,
 
-            {
-                answer: "Faster candidate screening",
-                points: 1
-            },
+    lines: [
 
-            {
-                answer: "Improved recruitment efficiency",
-                points: 1
-            },
+        {
+            answer: "Faster candidate screening",
+            points: 1
+        },
 
-            {
-                answer: "Reduced administrative workload",
-                points: 1
-            }
+        {
+            answer: "Improved recruitment efficiency",
+            points: 1
+        },
 
-        ]
-    },
+        {
+            answer: "Reduced administrative workload",
+            points: 1
+        }
 
+    ]
+},
 
-    /*
-    QUESTION 5
-    */
 
-    {
-        question: "What is algorithmic bias?",
-        points: 2,
-        answer: "Algorithmic bias occurs when an algorithm produces systematically unfair outcomes"
-    },
+/* QUESTION 5 */
 
+{
+    question: "What is algorithmic bias?",
+    points: 2,
+    answer: "Algorithmic bias occurs when an algorithm produces systematically unfair outcomes"
+},
 
-    /*
-    QUESTION 6
-    Multiple lines
-    */
 
-    {
-        question: "Name three common sources of bias in AI hiring systems.",
-        points: 3,
+/* QUESTION 6 */
 
-        lines: [
+{
+    question: "Name three common sources of bias in AI hiring systems.",
 
-            {
-                answer: "Historical hiring data",
-                points: 1
-            },
+    points: 3,
 
-            {
-                answer: "Biased training data",
-                points: 1
-            },
+    lines: [
 
-            {
-                answer: "Human decision making",
-                points: 1
-            }
+        {
+            answer: "Historical hiring data",
+            points: 1
+        },
 
-        ]
-    },
-
-
-    /*
-    QUESTION 7
-    */
-
-    {
-        question: "What is cybersecurity?",
-        points: 2,
-        answer: "Cybersecurity is the practice of protecting systems networks and programs from digital attacks"
-    },
-
-
-    /*
-    QUESTION 8
-    */
-
-    {
-        question: "What is fairness in artificial intelligence?",
-        points: 2,
-        answer: "Fairness in artificial intelligence means ensuring that systems do not produce unjust or discriminatory outcomes"
-    },
-
-
-    /*
-    QUESTION 9
-    */
-
-    {
-        question: "What is explainable AI?",
-        points: 2,
-        answer: "Explainable AI refers to methods that make the decisions of artificial intelligence systems understandable to humans"
-    },
-
-
-    /*
-    QUESTION 10
-    */
-
-    {
-        question: "What is data bias?",
-        points: 2,
-        answer: "Data bias occurs when training data does not fairly represent the population or contains systematic errors"
-    },
-
-
-    /*
-    QUESTIONS 11 - 40
-
-    Replace these examples with your own questions.
-
-    You can copy the structure above.
-    */
-
-
-    {
-        question: "Example Question 11",
-        points: 1,
-        answer: "Example answer eleven"
-    },
-
-    {
-        question: "Example Question 12",
-        points: 1,
-        answer: "Example answer twelve"
-    },
-
-    {
-        question: "Example Question 13",
-        points: 1,
-        answer: "Example answer thirteen"
-    },
-
-    {
-        question: "Example Question 14",
-        points: 1,
-        answer: "Example answer fourteen"
-    },
-
-    {
-        question: "Example Question 15",
-        points: 1,
-        answer: "Example answer fifteen"
-    },
-
-    {
-        question: "Example Question 16",
-        points: 1,
-        answer: "Example answer sixteen"
-    },
-
-    {
-        question: "Example Question 17",
-        points: 1,
-        answer: "Example answer seventeen"
-    },
-
-    {
-        question: "Example Question 18",
-        points: 1,
-        answer: "Example answer eighteen"
-    },
-
-    {
-        question: "Example Question 19",
-        points: 1,
-        answer: "Example answer nineteen"
-    },
-
-    {
-        question: "Example Question 20",
-        points: 1,
-        answer: "Example answer twenty"
-    },
-
-    {
-        question: "Example Question 21",
-        points: 1,
-        answer: "Example answer twenty one"
-    },
-
-    {
-        question: "Example Question 22",
-        points: 1,
-        answer: "Example answer twenty two"
-    },
-
-    {
-        question: "Example Question 23",
-        points: 1,
-        answer: "Example answer twenty three"
-    },
-
-    {
-        question: "Example Question 24",
-        points: 1,
-        answer: "Example answer twenty four"
-    },
-
-    {
-        question: "Example Question 25",
-        points: 1,
-        answer: "Example answer twenty five"
-    },
-
-    {
-        question: "Example Question 26",
-        points: 1,
-        answer: "Example answer twenty six"
-    },
-
-    {
-        question: "Example Question 27",
-        points: 1,
-        answer: "Example answer twenty seven"
-    },
-
-    {
-        question: "Example Question 28",
-        points: 1,
-        answer: "Example answer twenty eight"
-    },
-
-    {
-        question: "Example Question 29",
-        points: 1,
-        answer: "Example answer twenty nine"
-    },
-
-    {
-        question: "Example Question 30",
-        points: 1,
-        answer: "Example answer thirty"
-    },
-
-    {
-        question: "Example Question 31",
-        points: 1,
-        answer: "Example answer thirty one"
-    },
-
-    {
-        question: "Example Question 32",
-        points: 1,
-        answer: "Example answer thirty two"
-    },
-
-    {
-        question: "Example Question 33",
-        points: 1,
-        answer: "Example answer thirty three"
-    },
-
-    {
-        question: "Example Question 34",
-        points: 1,
-        answer: "Example answer thirty four"
-    },
-
-    {
-        question: "Example Question 35",
-        points: 1,
-        answer: "Example answer thirty five"
-    },
-
-    {
-        question: "Example Question 36",
-        points: 1,
-        answer: "Example answer thirty six"
-    },
-
-    {
-        question: "Example Question 37",
-        points: 1,
-        answer: "Example answer thirty seven"
-    },
-
-    {
-        question: "Example Question 38",
-        points: 1,
-        answer: "Example answer thirty eight"
-    },
-
-    {
-        question: "Example Question 39",
-        points: 1,
-        answer: "Example answer thirty nine"
-    },
-
-    {
-        question: "Example Question 40",
-        points: 1,
-        answer: "Example answer forty"
-    }
+        {
+            answer: "Biased training data",
+            points: 1
+        },
+
+        {
+            answer: "Human decision making",
+            points: 1
+        }
+
+    ]
+},
+
+
+/* QUESTION 7 */
+
+{
+    question: "What is cybersecurity?",
+    points: 2,
+    answer: "Cybersecurity is the practice of protecting systems networks and programs from digital attacks"
+},
+
+
+/* QUESTION 8 */
+
+{
+    question: "What is fairness in artificial intelligence?",
+    points: 2,
+    answer: "Fairness in artificial intelligence means ensuring that systems do not produce unjust or discriminatory outcomes"
+},
+
+
+/* QUESTION 9 */
+
+{
+    question: "What is explainable AI?",
+    points: 2,
+    answer: "Explainable AI refers to methods that make the decisions of artificial intelligence systems understandable to humans"
+},
+
+
+/* QUESTION 10 */
+
+{
+    question: "What is data bias?",
+    points: 2,
+    answer: "Data bias occurs when training data does not fairly represent the population or contains systematic errors"
+},
+
+
+/*
+====================================================
+QUESTIONS 11 - 40
+
+REPLACE THESE WITH YOUR ACTUAL QUESTIONS.
+====================================================
+*/
+
+
+{
+    question: "Example Question 11",
+    points: 1,
+    answer: "Example answer eleven"
+},
+
+{
+    question: "Example Question 12",
+    points: 1,
+    answer: "Example answer twelve"
+},
+
+{
+    question: "Example Question 13",
+    points: 1,
+    answer: "Example answer thirteen"
+},
+
+{
+    question: "Example Question 14",
+    points: 1,
+    answer: "Example answer fourteen"
+},
+
+{
+    question: "Example Question 15",
+    points: 1,
+    answer: "Example answer fifteen"
+},
+
+{
+    question: "Example Question 16",
+    points: 1,
+    answer: "Example answer sixteen"
+},
+
+{
+    question: "Example Question 17",
+    points: 1,
+    answer: "Example answer seventeen"
+},
+
+{
+    question: "Example Question 18",
+    points: 1,
+    answer: "Example answer eighteen"
+},
+
+{
+    question: "Example Question 19",
+    points: 1,
+    answer: "Example answer nineteen"
+},
+
+{
+    question: "Example Question 20",
+    points: 1,
+    answer: "Example answer twenty"
+},
+
+{
+    question: "Example Question 21",
+    points: 1,
+    answer: "Example answer twenty one"
+},
+
+{
+    question: "Example Question 22",
+    points: 1,
+    answer: "Example answer twenty two"
+},
+
+{
+    question: "Example Question 23",
+    points: 1,
+    answer: "Example answer twenty three"
+},
+
+{
+    question: "Example Question 24",
+    points: 1,
+    answer: "Example answer twenty four"
+},
+
+{
+    question: "Example Question 25",
+    points: 1,
+    answer: "Example answer twenty five"
+},
+
+{
+    question: "Example Question 26",
+    points: 1,
+    answer: "Example answer twenty six"
+},
+
+{
+    question: "Example Question 27",
+    points: 1,
+    answer: "Example answer twenty seven"
+},
+
+{
+    question: "Example Question 28",
+    points: 1,
+    answer: "Example answer twenty eight"
+},
+
+{
+    question: "Example Question 29",
+    points: 1,
+    answer: "Example answer twenty nine"
+},
+
+{
+    question: "Example Question 30",
+    points: 1,
+    answer: "Example answer thirty"
+},
+
+{
+    question: "Example Question 31",
+    points: 1,
+    answer: "Example answer thirty one"
+},
+
+{
+    question: "Example Question 32",
+    points: 1,
+    answer: "Example answer thirty two"
+},
+
+{
+    question: "Example Question 33",
+    points: 1,
+    answer: "Example answer thirty three"
+},
+
+{
+    question: "Example Question 34",
+    points: 1,
+    answer: "Example answer thirty four"
+},
+
+{
+    question: "Example Question 35",
+    points: 1,
+    answer: "Example answer thirty five"
+},
+
+{
+    question: "Example Question 36",
+    points: 1,
+    answer: "Example answer thirty six"
+},
+
+{
+    question: "Example Question 37",
+    points: 1,
+    answer: "Example answer thirty seven"
+},
+
+{
+    question: "Example Question 38",
+    points: 1,
+    answer: "Example answer thirty eight"
+},
+
+{
+    question: "Example Question 39",
+    points: 1,
+    answer: "Example answer thirty nine"
+},
+
+{
+    question: "Example Question 40",
+    points: 1,
+    answer: "Example answer forty"
+}
 
 ];
 
 
 
 /*
-======================================================
+====================================================
 VARIABLES
-======================================================
+====================================================
 */
 
 let selectedQuestionCount = 0;
@@ -926,14 +848,12 @@ let totalPossiblePoints = 0;
 
 let wrongQuestions = [];
 
-let currentQuestionScore = 0;
-
 
 
 /*
-======================================================
-SELECT NUMBER OF QUESTIONS
-======================================================
+====================================================
+SELECT QUESTION COUNT
+====================================================
 */
 
 function selectQuestionCount(count, button) {
@@ -941,90 +861,59 @@ function selectQuestionCount(count, button) {
     selectedQuestionCount = count;
 
 
-    const buttons =
-        document.querySelectorAll(".count-button");
+    document
+        .querySelectorAll(".count-button")
+        .forEach(function(btn) {
 
+            btn.classList.remove("selected");
 
-    buttons.forEach(function(btn) {
-
-        btn.classList.remove("selected");
-
-    });
+        });
 
 
     button.classList.add("selected");
 
 
-    document.getElementById("selectionMessage").innerText =
-        count + " questions selected.";
+    document.getElementById(
+        "selectionMessage"
+    ).innerText =
+
+        count +
+        " questions selected.";
 
 }
 
 
 
 /*
-======================================================
-SHUFFLE QUESTIONS
-======================================================
-*/
-
-function shuffleArray(array) {
-
-    const newArray = [...array];
-
-
-    for (
-        let i = newArray.length - 1;
-        i > 0;
-        i--
-    ) {
-
-        const j =
-            Math.floor(Math.random() * (i + 1));
-
-
-        [
-            newArray[i],
-            newArray[j]
-        ] =
-        [
-            newArray[j],
-            newArray[i]
-        ];
-
-    }
-
-
-    return newArray;
-
-}
-
-
-
-/*
-======================================================
+====================================================
 START QUIZ
-======================================================
+====================================================
 */
 
 function startQuiz() {
 
     if (selectedQuestionCount === 0) {
 
-        alert("Please select the number of questions first.");
+        alert(
+            "Please select the number of questions first."
+        );
 
         return;
-
     }
 
 
     /*
-    Randomly select questions.
+    NO SHUFFLING.
+
+    Take the first N questions
+    in their original order.
     */
 
     quizQuestions =
-        shuffleArray(questions)
-        .slice(0, selectedQuestionCount);
+        questions.slice(
+            0,
+            selectedQuestionCount
+        );
 
 
     currentQuestionIndex = 0;
@@ -1036,16 +925,19 @@ function startQuiz() {
     wrongQuestions = [];
 
 
-    document.getElementById("setupScreen")
-        .classList.add("hidden");
+    document.getElementById(
+        "setupScreen"
+    ).classList.add("hidden");
 
 
-    document.getElementById("finalScreen")
-        .classList.add("hidden");
+    document.getElementById(
+        "finalScreen"
+    ).classList.add("hidden");
 
 
-    document.getElementById("quizScreen")
-        .classList.remove("hidden");
+    document.getElementById(
+        "quizScreen"
+    ).classList.remove("hidden");
 
 
     showQuestion();
@@ -1055,16 +947,20 @@ function startQuiz() {
 
 
 /*
-======================================================
+====================================================
 NORMALISE TEXT
-======================================================
+====================================================
 
-This removes:
+Capitalisation:
+    Apple = apple
 
-- Capitalisation differences
-- Punctuation
-- Extra spaces
-======================================================
+Punctuation:
+    Apple! = apple
+
+Spaces:
+    apple     pie = apple pie
+
+====================================================
 */
 
 function normalizeText(text) {
@@ -1073,21 +969,15 @@ function normalizeText(text) {
 
         .toLowerCase()
 
-        /*
-        Replace punctuation with spaces.
-        */
+        .replace(
+            /[.,!?;:'"()[\]{}\-_/\\]/g,
+            " "
+        )
 
-        .replace(/[.,!?;:'"()[\]{}\-_/\\]/g, " ")
-
-        /*
-        Remove excessive spaces.
-        */
-
-        .replace(/\s+/g, " ")
-
-        /*
-        Remove spaces at beginning/end.
-        */
+        .replace(
+            /\s+/g,
+            " "
+        )
 
         .trim();
 
@@ -1096,35 +986,47 @@ function normalizeText(text) {
 
 
 /*
-======================================================
+====================================================
 COMPARE WORDS
-======================================================
+====================================================
 */
 
-function compareWords(correctText, studentText) {
+function compareWords(
+    correctText,
+    studentText
+) {
 
     const correctWords =
+
         normalizeText(correctText) === ""
+
             ? []
-            : normalizeText(correctText).split(" ");
+
+            :
+
+            normalizeText(correctText)
+                .split(" ");
 
 
     const studentWords =
+
         normalizeText(studentText) === ""
+
             ? []
-            : normalizeText(studentText).split(" ");
+
+            :
+
+            normalizeText(studentText)
+                .split(" ");
 
 
     let correctCount = 0;
-
 
     let resultHTML = "";
 
 
     /*
-    Compare each correct word
-    with the student's word in
-    the same position.
+    Compare each word.
     */
 
     for (
@@ -1141,14 +1043,19 @@ function compareWords(correctText, studentText) {
             studentWords[i];
 
 
-        if (studentWord === correctWord) {
+        if (
+            studentWord === correctWord
+        ) {
 
             correctCount++;
 
 
             resultHTML +=
+
                 "<span class='correct'>" +
+
                 correctWord +
+
                 " ✓</span>";
 
         }
@@ -1156,8 +1063,11 @@ function compareWords(correctText, studentText) {
         else {
 
             resultHTML +=
+
                 "<span class='incorrect'>" +
+
                 correctWord +
+
                 " ✗</span>";
 
         }
@@ -1166,7 +1076,7 @@ function compareWords(correctText, studentText) {
 
 
     /*
-    Show extra student words.
+    Show extra words.
     */
 
     if (
@@ -1185,8 +1095,11 @@ function compareWords(correctText, studentText) {
         ) {
 
             resultHTML +=
+
                 "<span class='extra'>" +
+
                 studentWords[i] +
+
                 " +</span>";
 
         }
@@ -1212,162 +1125,9 @@ function compareWords(correctText, studentText) {
 
 
 /*
-======================================================
-SHOW QUESTION
-======================================================
-*/
-
-function showQuestion() {
-
-    if (
-        currentQuestionIndex >=
-        quizQuestions.length
-    ) {
-
-        showFinalResult();
-
-        return;
-
-    }
-
-
-    const question =
-        quizQuestions[currentQuestionIndex];
-
-
-    currentQuestionScore = 0;
-
-
-    document.getElementById("progress").innerText =
-
-        "Question " +
-        (currentQuestionIndex + 1) +
-        " of " +
-        quizQuestions.length;
-
-
-    document.getElementById("questionText").innerText =
-        question.question;
-
-
-    /*
-    Display points.
-    */
-
-    const questionPoints =
-        getQuestionPoints(question);
-
-
-    document.getElementById("pointsText").innerText =
-
-        "This question is worth " +
-        questionPoints +
-        " point" +
-        (questionPoints === 1 ? "" : "s") +
-        ".";
-
-
-    /*
-    Create answer boxes.
-    */
-
-    const answerArea =
-        document.getElementById("answerArea");
-
-
-    answerArea.innerHTML = "";
-
-
-    /*
-    Multiple-line question.
-    */
-
-    if (question.lines) {
-
-
-        question.lines.forEach(
-            function(line, index) {
-
-
-                const wrapper =
-                    document.createElement("div");
-
-
-                wrapper.className =
-                    "answer-line";
-
-
-                wrapper.innerHTML =
-
-                    "<div class='line-label'>" +
-
-                    "Line " +
-                    (index + 1) +
-                    " — " +
-                    line.points +
-                    " point" +
-                    (line.points === 1 ? "" : "s") +
-
-                    "</div>" +
-
-                    "<textarea " +
-
-                    "id='answer-" +
-                    index +
-                    "'" +
-
-                    " placeholder='Type your answer here...'>" +
-
-                    "</textarea>";
-
-
-                answerArea.appendChild(wrapper);
-
-            }
-        );
-
-    }
-
-
-    /*
-    Single-answer question.
-    */
-
-    else {
-
-        answerArea.innerHTML =
-
-            "<textarea " +
-
-            "id='answer-single' " +
-
-            "class='single-answer' " +
-
-            "placeholder='Type your answer here...'>" +
-
-            "</textarea>";
-
-    }
-
-
-    document.getElementById("result").innerHTML = "";
-
-
-    document.getElementById("submitButton").innerText =
-        "Submit Answer";
-
-
-    document.getElementById("submitButton").disabled =
-        false;
-
-}
-
-
-
-/*
-======================================================
-GET QUESTION POINTS
-======================================================
+====================================================
+GET TOTAL POINTS
+====================================================
 */
 
 function getQuestionPoints(question) {
@@ -1396,9 +1156,199 @@ function getQuestionPoints(question) {
 
 
 /*
-======================================================
+====================================================
+SHOW QUESTION
+====================================================
+*/
+
+function showQuestion() {
+
+    if (
+        currentQuestionIndex >=
+        quizQuestions.length
+    ) {
+
+        showFinalResult();
+
+        return;
+
+    }
+
+
+    const question =
+        quizQuestions[currentQuestionIndex];
+
+
+    document.getElementById(
+        "progress"
+    ).innerText =
+
+        "Question " +
+
+        (currentQuestionIndex + 1) +
+
+        " of " +
+
+        quizQuestions.length;
+
+
+    document.getElementById(
+        "questionText"
+    ).innerText =
+
+        question.question;
+
+
+    const questionPoints =
+        getQuestionPoints(question);
+
+
+    document.getElementById(
+        "pointsText"
+    ).innerText =
+
+        "This question is worth " +
+
+        questionPoints +
+
+        " point" +
+
+        (
+            questionPoints === 1
+                ? ""
+                : "s"
+        ) +
+
+        ".";
+
+
+    const answerArea =
+        document.getElementById(
+            "answerArea"
+        );
+
+
+    answerArea.innerHTML = "";
+
+
+    /*
+    ==============================================
+    MULTIPLE SINGLE-LINE ANSWERS
+    ==============================================
+    */
+
+    if (question.lines) {
+
+
+        question.lines.forEach(
+
+            function(line, index) {
+
+                const wrapper =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                wrapper.className =
+                    "answer-line";
+
+
+                wrapper.innerHTML =
+
+                    "<div class='line-label'>" +
+
+                    "Answer " +
+
+                    (index + 1) +
+
+                    " — " +
+
+                    line.points +
+
+                    " point" +
+
+                    (
+                        line.points === 1
+                            ? ""
+                            : "s"
+                    ) +
+
+                    "</div>" +
+
+                    "<input " +
+
+                    "type='text' " +
+
+                    "id='answer-" +
+                    index +
+                    "' " +
+
+                    "placeholder='Type your answer...'>";
+
+
+                answerArea.appendChild(
+                    wrapper
+                );
+
+            }
+
+        );
+
+    }
+
+
+    /*
+    ==============================================
+    SINGLE SINGLE-LINE ANSWER
+    ==============================================
+    */
+
+    else {
+
+        answerArea.innerHTML =
+
+            "<div class='answer-line'>" +
+
+            "<input " +
+
+            "type='text' " +
+
+            "id='answer-single' " +
+
+            "placeholder='Type your answer...'>" +
+
+            "</div>";
+
+    }
+
+
+    document.getElementById(
+        "result"
+    ).innerHTML = "";
+
+
+    const button =
+        document.getElementById(
+            "submitButton"
+        );
+
+
+    button.innerText =
+        "Submit Answer";
+
+
+    button.onclick =
+        submitAnswer;
+
+}
+
+
+
+/*
+====================================================
 SUBMIT ANSWER
-======================================================
+====================================================
 */
 
 function submitAnswer() {
@@ -1409,7 +1359,7 @@ function submitAnswer() {
 
     let score = 0;
 
-    let maximumPoints =
+    const maximumPoints =
         getQuestionPoints(question);
 
 
@@ -1417,9 +1367,9 @@ function submitAnswer() {
 
 
     /*
-    ================================================
-    MULTI-LINE QUESTION
-    ================================================
+    ==============================================
+    MULTIPLE SINGLE-LINE ANSWERS
+    ==============================================
     */
 
     if (question.lines) {
@@ -1431,28 +1381,29 @@ function submitAnswer() {
 
 
                 const studentAnswer =
+
                     document.getElementById(
                         "answer-" + index
                     ).value;
 
 
                 const comparison =
+
                     compareWords(
                         line.answer,
                         studentAnswer
                     );
 
 
-                /*
-                Calculate word percentage.
-                */
-
                 let wordPercentage = 0;
 
 
-                if (comparison.totalWords > 0) {
+                if (
+                    comparison.totalWords > 0
+                ) {
 
                     wordPercentage =
+
                         comparison.correctCount /
                         comparison.totalWords;
 
@@ -1460,15 +1411,17 @@ function submitAnswer() {
 
 
                 /*
-                Give points based on
-                correct word percentage.
+                Calculate partial points.
                 */
 
                 const lineScore =
+
                     Math.round(
+
                         line.points *
                         wordPercentage *
                         100
+
                     ) / 100;
 
 
@@ -1481,24 +1434,31 @@ function submitAnswer() {
 
                     (
                         lineScore === line.points
+
                             ? "correct-result"
+
                             : "wrong-result"
                     ) +
 
                     "'>" +
 
+
                     "<strong>" +
 
-                    "Line " +
+                    "Answer " +
+
                     (index + 1) +
 
                     ": " +
 
                     lineScore +
+
                     "/" +
+
                     line.points +
 
                     "</strong>" +
+
 
                     "<div class='word-results'>" +
 
@@ -1510,19 +1470,19 @@ function submitAnswer() {
                     (
                         lineScore < line.points
 
-                        ?
+                            ?
 
-                        "<div class='correct-answer'>" +
+                            "<div class='correct-answer'>" +
 
-                        "<strong>Correct answer:</strong><br>" +
+                            "<strong>Correct answer:</strong><br>" +
 
-                        line.answer +
+                            line.answer +
 
-                        "</div>"
+                            "</div>"
 
-                        :
+                            :
 
-                        ""
+                            ""
 
                     ) +
 
@@ -1536,53 +1496,52 @@ function submitAnswer() {
 
 
     /*
-    ================================================
-    SINGLE-ANSWER QUESTION
-    ================================================
+    ==============================================
+    SINGLE ANSWER
+    ==============================================
     */
 
     else {
 
 
         const studentAnswer =
+
             document.getElementById(
                 "answer-single"
             ).value;
 
 
         const comparison =
+
             compareWords(
                 question.answer,
                 studentAnswer
             );
 
 
-        /*
-        Calculate percentage based
-        on correct words.
-        */
-
         let wordPercentage = 0;
 
 
-        if (comparison.totalWords > 0) {
+        if (
+            comparison.totalWords > 0
+        ) {
 
             wordPercentage =
+
                 comparison.correctCount /
                 comparison.totalWords;
 
         }
 
 
-        /*
-        Calculate question score.
-        */
-
         score =
+
             Math.round(
+
                 question.points *
                 wordPercentage *
                 100
+
             ) / 100;
 
 
@@ -1592,17 +1551,23 @@ function submitAnswer() {
 
             (
                 score === question.points
+
                     ? "correct-result"
+
                     : "wrong-result"
             ) +
 
             "'>" +
 
+
             "<div class='score'>" +
 
             "Score: " +
+
             score +
+
             "/" +
+
             question.points +
 
             "</div>" +
@@ -1618,21 +1583,22 @@ function submitAnswer() {
             (
                 score < question.points
 
-                ?
+                    ?
 
-                "<div class='correct-answer'>" +
+                    "<div class='correct-answer'>" +
 
-                "<strong>Correct answer:</strong><br>" +
+                    "<strong>Correct answer:</strong><br>" +
 
-                question.answer +
+                    question.answer +
 
-                "</div>"
+                    "</div>"
 
-                :
+                    :
 
-                ""
+                    ""
 
             ) +
+
 
             "</div>";
 
@@ -1640,38 +1606,33 @@ function submitAnswer() {
 
 
     /*
-    ================================================
-    SAVE SCORE
-    ================================================
+    ==============================================
+    ADD TO TOTAL SCORE
+    ==============================================
     */
 
-    currentQuestionScore = score;
-
-
     totalScore += score;
-
 
     totalPossiblePoints += maximumPoints;
 
 
     /*
-    ================================================
+    ==============================================
     REMEMBER WRONG QUESTION
-    ================================================
+    ==============================================
     */
 
-    if (score < maximumPoints) {
-
-
-        /*
-        Only add it once.
-        */
+    if (
+        score < maximumPoints
+    ) {
 
         if (
             !wrongQuestions.includes(question)
         ) {
 
-            wrongQuestions.push(question);
+            wrongQuestions.push(
+                question
+            );
 
         }
 
@@ -1679,30 +1640,37 @@ function submitAnswer() {
 
 
     /*
-    ================================================
+    ==============================================
     DISPLAY RESULT
-    ================================================
+    ==============================================
     */
 
-    document.getElementById("result").innerHTML =
-        resultHTML;
+    document.getElementById(
+        "result"
+    ).innerHTML = resultHTML;
 
 
-    /*
-    Disable submit button.
-    */
+    const button =
+        document.getElementById(
+            "submitButton"
+        );
 
-    document.getElementById("submitButton").innerText =
+
+    button.innerText =
 
         currentQuestionIndex ===
         quizQuestions.length - 1
 
-            ? "Finish Quiz"
+            ?
 
-            : "Next Question";
+            "Finish Quiz"
+
+            :
+
+            "Next Question";
 
 
-    document.getElementById("submitButton").onclick =
+    button.onclick =
         nextQuestion;
 
 }
@@ -1710,9 +1678,9 @@ function submitAnswer() {
 
 
 /*
-======================================================
+====================================================
 NEXT QUESTION
-======================================================
+====================================================
 */
 
 function nextQuestion() {
@@ -1726,19 +1694,21 @@ function nextQuestion() {
 
 
 /*
-======================================================
+====================================================
 FINAL RESULT
-======================================================
+====================================================
 */
 
 function showFinalResult() {
 
-    document.getElementById("quizScreen")
-        .classList.add("hidden");
+    document.getElementById(
+        "quizScreen"
+    ).classList.add("hidden");
 
 
-    document.getElementById("finalScreen")
-        .classList.remove("hidden");
+    document.getElementById(
+        "finalScreen"
+    ).classList.remove("hidden");
 
 
     const percentage =
@@ -1747,34 +1717,37 @@ function showFinalResult() {
 
             ?
 
-            (totalScore /
-             totalPossiblePoints) *
-            100
+            (
+                totalScore /
+                totalPossiblePoints
+            ) * 100
 
             :
 
             0;
 
 
-    document.getElementById("finalScore").innerText =
+    document.getElementById(
+        "finalScore"
+    ).innerText =
 
-        totalScore +
+        totalScore.toFixed(2) +
+
         " / " +
-        totalPossiblePoints;
+
+        totalPossiblePoints.toFixed(2);
 
 
-    document.getElementById("finalPercentage").innerText =
+    document.getElementById(
+        "finalPercentage"
+    ).innerText =
 
         "Overall Score: " +
+
         percentage.toFixed(1) +
+
         "%";
 
-
-    /*
-    ================================================
-    WRONG QUESTION SUMMARY
-    ================================================
-    */
 
     const summary =
         document.getElementById(
@@ -1782,7 +1755,15 @@ function showFinalResult() {
         );
 
 
-    if (wrongQuestions.length === 0) {
+    /*
+    ==============================================
+    NO WRONG QUESTIONS
+    ==============================================
+    */
+
+    if (
+        wrongQuestions.length === 0
+    ) {
 
         summary.innerHTML =
 
@@ -1806,7 +1787,9 @@ function showFinalResult() {
 
 
     /*
-    Display wrong questions.
+    ==============================================
+    WRONG QUESTIONS
+    ==============================================
     */
 
     let summaryHTML =
@@ -1818,7 +1801,6 @@ function showFinalResult() {
         wrongQuestions.length +
 
         "</h3>" +
-
 
         "<p>" +
 
@@ -1868,47 +1850,39 @@ function showFinalResult() {
 
 
 /*
-======================================================
+====================================================
 REPEAT WRONG QUESTIONS
-======================================================
+====================================================
+
+The wrong questions are repeated
+in their ORIGINAL ORDER.
+
+====================================================
 */
 
 function repeatWrongQuestions() {
 
-    /*
-    Put wrong questions into the quiz.
-    */
-
     quizQuestions =
-        shuffleArray(wrongQuestions);
+        [...wrongQuestions];
 
 
     currentQuestionIndex = 0;
-
-
-    /*
-    IMPORTANT:
-
-    We keep the previous score separate.
-
-    The repeat session is treated as
-    a new revision attempt.
-    */
 
     totalScore = 0;
 
     totalPossiblePoints = 0;
 
-
     wrongQuestions = [];
 
 
-    document.getElementById("finalScreen")
-        .classList.add("hidden");
+    document.getElementById(
+        "finalScreen"
+    ).classList.add("hidden");
 
 
-    document.getElementById("quizScreen")
-        .classList.remove("hidden");
+    document.getElementById(
+        "quizScreen"
+    ).classList.remove("hidden");
 
 
     showQuestion();
@@ -1918,9 +1892,9 @@ function repeatWrongQuestions() {
 
 
 /*
-======================================================
-RESTART
-======================================================
+====================================================
+START NEW QUIZ
+====================================================
 */
 
 function restartQuiz() {
@@ -1938,42 +1912,42 @@ function restartQuiz() {
     wrongQuestions = [];
 
 
-    document.getElementById("finalScreen")
-        .classList.add("hidden");
+    document.getElementById(
+        "finalScreen"
+    ).classList.add("hidden");
 
 
-    document.getElementById("quizScreen")
-        .classList.add("hidden");
+    document.getElementById(
+        "quizScreen"
+    ).classList.add("hidden");
 
 
-    document.getElementById("setupScreen")
-        .classList.remove("hidden");
+    document.getElementById(
+        "setupScreen"
+    ).classList.remove("hidden");
 
 
-    document.getElementById("selectionMessage").innerText =
+    document.getElementById(
+        "selectionMessage"
+    ).innerText =
 
         "Please select the number of questions.";
 
 
-    document.querySelectorAll(
-        ".count-button"
-    ).forEach(
-
-        function(button) {
+    document
+        .querySelectorAll(".count-button")
+        .forEach(function(button) {
 
             button.classList.remove(
                 "selected"
             );
 
-        }
-
-    );
+        });
 
 }
 
 
 </script>
-
 
 </body>
 
