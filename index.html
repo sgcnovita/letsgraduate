@@ -10,6 +10,10 @@
 
 <style>
 
+/* =====================================================
+   GENERAL
+===================================================== */
+
 * {
     box-sizing: border-box;
 }
@@ -22,16 +26,27 @@ body {
 }
 
 .container {
-    max-width: 900px;
-    margin: 40px auto;
+    max-width: 1200px;
+    margin: 30px auto;
     padding: 20px;
 }
 
 .card {
     background: white;
-    padding: 35px;
     border-radius: 16px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    overflow: hidden;
+}
+
+
+/* =====================================================
+   SETUP PAGE
+===================================================== */
+
+.setup {
+    padding: 40px;
+    max-width: 850px;
+    margin: auto;
 }
 
 h1 {
@@ -45,64 +60,173 @@ h1 {
     margin-bottom: 30px;
 }
 
-.setup {
-    text-align: center;
+.info-box {
+    background: #f1f1f1;
+    padding: 18px;
+    border-radius: 10px;
+    line-height: 1.7;
+    margin-bottom: 30px;
 }
 
-.question-count {
+.range-container {
     display: flex;
+    gap: 20px;
     justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
     margin: 25px 0;
 }
 
-.count-button {
-    padding: 12px 22px;
+.range-input {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.range-input label {
+    font-weight: bold;
+}
+
+.range-input input {
+    width: 140px;
+    padding: 12px;
+    font-size: 17px;
     border: 2px solid #ddd;
-    background: white;
-    color: #222;
     border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
 }
 
-.count-button:hover {
-    background: #f0f0f0;
+.range-input input:focus {
+    outline: none;
+    border-color: #555;
 }
 
-.count-button.selected {
+.start-button {
+    display: block;
+    margin: 25px auto 0;
+    padding: 14px 30px;
     background: #222;
     color: white;
-    border-color: #222;
-}
-
-.start-button,
-.action-button,
-.submit-button {
-    padding: 13px 28px;
     border: none;
     border-radius: 8px;
-    background: #222;
-    color: white;
     font-size: 16px;
     cursor: pointer;
 }
 
-.start-button:hover,
-.action-button:hover,
-.submit-button:hover {
+.start-button:hover {
     background: #444;
+}
+
+.selection-message {
+    text-align: center;
+    color: #666;
+    margin-top: 15px;
+}
+
+
+/* =====================================================
+   QUIZ LAYOUT
+===================================================== */
+
+.quiz-layout {
+    display: grid;
+    grid-template-columns: 230px 1fr;
+    min-height: 650px;
+}
+
+
+/* =====================================================
+   QUESTION NAVIGATION
+===================================================== */
+
+.question-sidebar {
+    background: #f7f7f7;
+    border-right: 1px solid #ddd;
+    padding: 20px;
+}
+
+.question-sidebar h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.sidebar-range {
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 15px;
+}
+
+.question-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 550px;
+    overflow-y: auto;
+}
+
+.question-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 9px 10px;
+    border: none;
+    border-radius: 7px;
+    background: transparent;
+    cursor: pointer;
+    text-align: left;
+    font-size: 14px;
+}
+
+.question-nav:hover {
+    background: #e9e9e9;
+}
+
+.question-nav.current {
+    background: #222;
+    color: white;
+}
+
+.question-symbol {
+    width: 22px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.question-nav.unanswered .question-symbol {
+    color: #777;
+}
+
+.question-nav.skipped .question-symbol {
+    color: #b36b00;
+}
+
+.question-nav.correct .question-symbol {
+    color: #16803c;
+}
+
+.question-nav.wrong .question-symbol {
+    color: #d62828;
+}
+
+.question-nav.current .question-symbol {
+    color: white;
+}
+
+
+/* =====================================================
+   QUIZ CONTENT
+===================================================== */
+
+.quiz-content {
+    padding: 35px;
 }
 
 .progress {
     color: #666;
-    font-size: 15px;
+    font-size: 14px;
     margin-bottom: 15px;
 }
 
 .question {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: bold;
     line-height: 1.5;
     margin-bottom: 8px;
@@ -110,11 +234,13 @@ h1 {
 
 .points {
     color: #666;
-    font-size: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
-/* SINGLE LINE ANSWER */
+
+/* =====================================================
+   ANSWER BOX
+===================================================== */
 
 .answer-line {
     margin-bottom: 18px;
@@ -140,15 +266,53 @@ input[type="text"]:focus {
     border-color: #555;
 }
 
-.submit-button {
-    margin-top: 8px;
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.quiz-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
 }
+
+.check-button,
+.next-button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.check-button {
+    background: #222;
+    color: white;
+}
+
+.check-button:hover {
+    background: #444;
+}
+
+.next-button {
+    background: #ddd;
+    color: #222;
+}
+
+.next-button:hover {
+    background: #ccc;
+}
+
+
+/* =====================================================
+   RESULT
+===================================================== */
 
 .result {
     margin-top: 25px;
     padding: 20px;
     border-radius: 10px;
-    background: #f7f7f7;
 }
 
 .correct-result {
@@ -161,15 +325,9 @@ input[type="text"]:focus {
     border-left: 5px solid #d62828;
 }
 
-.score {
-    font-size: 22px;
-    font-weight: bold;
-    margin-bottom: 15px;
-}
-
 .word-results {
     line-height: 2;
-    margin-top: 10px;
+    margin-top: 12px;
 }
 
 .correct {
@@ -201,7 +359,13 @@ input[type="text"]:focus {
     color: #16803c;
 }
 
-.final-result {
+
+/* =====================================================
+   FINAL PAGE
+===================================================== */
+
+.final-screen {
+    padding: 40px;
     text-align: center;
 }
 
@@ -212,59 +376,81 @@ input[type="text"]:focus {
 }
 
 .percentage {
-    font-size: 26px;
+    font-size: 25px;
     margin-bottom: 25px;
 }
 
-.wrong-summary {
+.summary-box {
+    max-width: 700px;
+    margin: 25px auto;
     text-align: left;
-    background: #fff0f0;
+    background: #f7f7f7;
     padding: 20px;
     border-radius: 10px;
-    margin-top: 25px;
 }
 
-.wrong-summary h3 {
-    color: #d62828;
-}
-
-.wrong-item {
+.wrong-item,
+.skipped-item {
     padding: 10px;
     border-bottom: 1px solid #ddd;
+}
+
+.action-button {
+    padding: 13px 25px;
+    background: #222;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 5px;
+}
+
+.action-button:hover {
+    background: #444;
 }
 
 .hidden {
     display: none;
 }
 
-.info-box {
-    background: #f1f1f1;
-    padding: 15px;
-    border-radius: 8px;
-    line-height: 1.6;
-    margin-bottom: 25px;
-}
 
-.button-group {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
+/* =====================================================
+   MOBILE
+===================================================== */
 
-@media (max-width: 600px) {
+@media (max-width: 750px) {
 
-    .container {
-        margin: 20px auto;
-        padding: 10px;
+    .quiz-layout {
+        grid-template-columns: 1fr;
     }
 
-    .card {
-        padding: 22px;
+    .question-sidebar {
+        border-right: none;
+        border-bottom: 1px solid #ddd;
     }
 
-    .question {
-        font-size: 19px;
+    .question-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+        max-height: none;
+    }
+
+    .question-nav {
+        width: auto;
+    }
+
+    .question-nav span:last-child {
+        display: none;
+    }
+
+    .quiz-content {
+        padding: 25px;
+    }
+
+    .range-container {
+        flex-direction: column;
+        align-items: center;
     }
 
 }
@@ -282,34 +468,41 @@ input[type="text"]:focus {
 <div class="card">
 
 
-<!-- ==========================================
+<!-- =====================================================
      SETUP SCREEN
-=========================================== -->
+===================================================== -->
 
-<div id="setupScreen">
+<div id="setupScreen" class="setup">
 
 <h1>Quiz & Revision System</h1>
 
 <p class="subtitle">
-Choose how many questions you want to answer.
+Choose the range of questions you want to practise.
 </p>
+
 
 <div class="info-box">
 
-<strong>Marking rules:</strong>
+<strong>How the quiz works:</strong>
 
 <br>
 
-• Questions are given in order.
+• Questions remain in their original order.
 <br>
 
-• Capitalisation is ignored.
+• Choose any question range, such as Q1–20 or Q20–25.
 <br>
 
-• Punctuation is ignored.
+• <strong>Check</strong> marks your answer and shows mistakes.
 <br>
 
-• Extra spaces are ignored.
+• <strong>Next</strong> skips the question temporarily.
+<br>
+
+• Skipped questions can be accessed from the question list.
+<br>
+
+• Capitalisation, punctuation and excessive spaces are ignored.
 <br>
 
 • Answers are checked word by word.
@@ -320,49 +513,53 @@ Choose how many questions you want to answer.
 </div>
 
 
-<div class="setup">
+<h2 style="text-align:center;">
+Select Question Range
+</h2>
 
-<h2>Select Number of Questions</h2>
 
+<div class="range-container">
 
-<div class="question-count">
+<div class="range-input">
 
-<button
-class="count-button"
-onclick="selectQuestionCount(5, this)">
-5
-</button>
+<label for="startQuestion">
+Start Question
+</label>
 
-<button
-class="count-button"
-onclick="selectQuestionCount(10, this)">
-10
-</button>
-
-<button
-class="count-button"
-onclick="selectQuestionCount(20, this)">
-20
-</button>
-
-<button
-class="count-button"
-onclick="selectQuestionCount(30, this)">
-30
-</button>
-
-<button
-class="count-button"
-onclick="selectQuestionCount(40, this)">
-40
-</button>
+<input
+type="number"
+id="startQuestion"
+min="1"
+max="40"
+value="1"
+>
 
 </div>
 
 
-<p id="selectionMessage">
-Please select the number of questions.
-</p>
+<div class="range-input">
+
+<label for="endQuestion">
+End Question
+</label>
+
+<input
+type="number"
+id="endQuestion"
+min="1"
+max="40"
+value="20"
+>
+
+</div>
+
+</div>
+
+
+<div
+id="selectionMessage"
+class="selection-message">
+</div>
 
 
 <button
@@ -375,88 +572,154 @@ Start Quiz
 
 </div>
 
-</div>
 
 
-
-<!-- ==========================================
+<!-- =====================================================
      QUIZ SCREEN
-=========================================== -->
-
-<div id="quizScreen" class="hidden">
+===================================================== -->
 
 <div
-class="progress"
-id="progress">
+id="quizScreen"
+class="quiz-layout hidden">
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<div class="question-sidebar">
+
+<h3>Questions</h3>
+
+<div
+id="sidebarRange"
+class="sidebar-range">
 </div>
 
 
 <div
-class="question"
-id="questionText">
+id="questionList"
+class="question-list">
+</div>
+
+
+<div style="margin-top:20px; font-size:13px; line-height:1.8;">
+
+<div>○ Not attempted</div>
+
+<div>→ Skipped</div>
+
+<div>✓ Correct</div>
+
+<div>✗ Wrong</div>
+
+</div>
+
+</div>
+
+
+
+<!-- =====================================================
+     MAIN QUIZ
+===================================================== -->
+
+<div class="quiz-content">
+
+<div
+id="progress"
+class="progress">
 </div>
 
 
 <div
-class="points"
-id="pointsText">
+id="questionText"
+class="question">
 </div>
 
 
-<div id="answerArea">
+<div
+id="pointsText"
+class="points">
 </div>
 
+
+<div
+id="answerArea">
+</div>
+
+
+<div
+id="result">
+</div>
+
+
+<div class="quiz-buttons">
 
 <button
-class="submit-button"
-id="submitButton"
-onclick="submitAnswer()">
+id="checkButton"
+class="check-button"
+onclick="checkAnswer()">
 
-Submit Answer
+Check
 
 </button>
 
 
-<div id="result">
+<button
+id="nextButton"
+class="next-button"
+onclick="nextQuestion()">
+
+Next
+
+</button>
+
+</div>
+
 </div>
 
 </div>
 
 
 
-<!-- ==========================================
+<!-- =====================================================
      FINAL SCREEN
-=========================================== -->
+===================================================== -->
 
 <div
 id="finalScreen"
-class="final-result hidden">
+class="final-screen hidden">
 
 <h1>Quiz Complete!</h1>
 
 
 <div
-class="final-score"
-id="finalScore">
+id="finalScore"
+class="final-score">
 </div>
 
 
 <div
-class="percentage"
-id="finalPercentage">
+id="finalPercentage"
+class="percentage">
 </div>
 
 
 <div
-id="wrongSummary">
+id="wrongSummary"
+class="summary-box">
 </div>
 
 
-<div class="button-group">
+<div
+id="skippedSummary"
+class="summary-box">
+</div>
+
 
 <button
-class="action-button"
 id="repeatButton"
+class="action-button"
 onclick="repeatWrongQuestions()">
 
 Repeat Wrong Questions
@@ -474,8 +737,6 @@ Start New Quiz
 
 </div>
 
-</div>
-
 
 </div>
 
@@ -486,30 +747,18 @@ Start New Quiz
 <script>
 
 
-/*
-====================================================
-QUESTION DATABASE
-====================================================
+/* =====================================================
+   QUESTION DATABASE
+=====================================================
 
-PUT YOUR 40 QUESTIONS HERE.
+   PUT YOUR 40 QUESTIONS HERE.
 
-IMPORTANT:
-
-The questions will NOT be shuffled.
-
-If the user chooses 5 questions:
-Q1 → Q2 → Q3 → Q4 → Q5
-
-If the user chooses 10:
-Q1 → Q2 → ... → Q10
-
-====================================================
-*/
-
+===================================================== */
 
 const questions = [
 
-/* QUESTION 1 */
+
+/* Q1 */
 
 {
     question: "What is the capital city of Australia?",
@@ -518,7 +767,7 @@ const questions = [
 },
 
 
-/* QUESTION 2 */
+/* Q2 */
 
 {
     question: "What does AI stand for?",
@@ -527,7 +776,7 @@ const questions = [
 },
 
 
-/* QUESTION 3 */
+/* Q3 */
 
 {
     question: "What is machine learning?",
@@ -536,7 +785,7 @@ const questions = [
 },
 
 
-/* QUESTION 4 - MULTIPLE SINGLE-LINE ANSWERS */
+/* Q4 */
 
 {
     question: "List three benefits of artificial intelligence in recruitment.",
@@ -564,7 +813,7 @@ const questions = [
 },
 
 
-/* QUESTION 5 */
+/* Q5 */
 
 {
     question: "What is algorithmic bias?",
@@ -573,7 +822,7 @@ const questions = [
 },
 
 
-/* QUESTION 6 */
+/* Q6 */
 
 {
     question: "Name three common sources of bias in AI hiring systems.",
@@ -601,7 +850,7 @@ const questions = [
 },
 
 
-/* QUESTION 7 */
+/* Q7 */
 
 {
     question: "What is cybersecurity?",
@@ -610,7 +859,7 @@ const questions = [
 },
 
 
-/* QUESTION 8 */
+/* Q8 */
 
 {
     question: "What is fairness in artificial intelligence?",
@@ -619,7 +868,7 @@ const questions = [
 },
 
 
-/* QUESTION 9 */
+/* Q9 */
 
 {
     question: "What is explainable AI?",
@@ -628,7 +877,7 @@ const questions = [
 },
 
 
-/* QUESTION 10 */
+/* Q10 */
 
 {
     question: "What is data bias?",
@@ -637,14 +886,7 @@ const questions = [
 },
 
 
-/*
-====================================================
-QUESTIONS 11 - 40
-
-REPLACE THESE WITH YOUR ACTUAL QUESTIONS.
-====================================================
-*/
-
+/* Q11 */
 
 {
     question: "Example Question 11",
@@ -652,11 +894,17 @@ REPLACE THESE WITH YOUR ACTUAL QUESTIONS.
     answer: "Example answer eleven"
 },
 
+
+/* Q12 */
+
 {
     question: "Example Question 12",
     points: 1,
     answer: "Example answer twelve"
 },
+
+
+/* Q13 */
 
 {
     question: "Example Question 13",
@@ -664,11 +912,17 @@ REPLACE THESE WITH YOUR ACTUAL QUESTIONS.
     answer: "Example answer thirteen"
 },
 
+
+/* Q14 */
+
 {
     question: "Example Question 14",
     points: 1,
     answer: "Example answer fourteen"
 },
+
+
+/* Q15 */
 
 {
     question: "Example Question 15",
@@ -676,11 +930,17 @@ REPLACE THESE WITH YOUR ACTUAL QUESTIONS.
     answer: "Example answer fifteen"
 },
 
+
+/* Q16 */
+
 {
     question: "Example Question 16",
     points: 1,
     answer: "Example answer sixteen"
 },
+
+
+/* Q17 */
 
 {
     question: "Example Question 17",
@@ -688,11 +948,17 @@ REPLACE THESE WITH YOUR ACTUAL QUESTIONS.
     answer: "Example answer seventeen"
 },
 
+
+/* Q18 */
+
 {
     question: "Example Question 18",
     points: 1,
     answer: "Example answer eighteen"
 },
+
+
+/* Q19 */
 
 {
     question: "Example Question 19",
@@ -700,11 +966,17 @@ REPLACE THESE WITH YOUR ACTUAL QUESTIONS.
     answer: "Example answer nineteen"
 },
 
+
+/* Q20 */
+
 {
     question: "Example Question 20",
     points: 1,
     answer: "Example answer twenty"
 },
+
+
+/* Q21 */
 
 {
     question: "Example Question 21",
@@ -712,11 +984,17 @@ REPLACE THESE WITH YOUR ACTUAL QUESTIONS.
     answer: "Example answer twenty one"
 },
 
+
+/* Q22 */
+
 {
     question: "Example Question 22",
     points: 1,
     answer: "Example answer twenty two"
 },
+
+
+/* Q23 */
 
 {
     question: "Example Question 23",
@@ -724,11 +1002,17 @@ REPLACE THESE WITH YOUR ACTUAL QUESTIONS.
     answer: "Example answer twenty three"
 },
 
+
+/* Q24 */
+
 {
     question: "Example Question 24",
     points: 1,
     answer: "Example answer twenty four"
 },
+
+
+/* Q25 */
 
 {
     question: "Example Question 25",
@@ -736,11 +1020,17 @@ REPLACE THESE WITH YOUR ACTUAL QUESTIONS.
     answer: "Example answer twenty five"
 },
 
+
+/* Q26 */
+
 {
     question: "Example Question 26",
     points: 1,
     answer: "Example answer twenty six"
 },
+
+
+/* Q27 */
 
 {
     question: "Example Question 27",
@@ -748,11 +1038,17 @@ REPLACE THESE WITH YOUR ACTUAL QUESTIONS.
     answer: "Example answer twenty seven"
 },
 
+
+/* Q28 */
+
 {
     question: "Example Question 28",
     points: 1,
     answer: "Example answer twenty eight"
 },
+
+
+/* Q29 */
 
 {
     question: "Example Question 29",
@@ -760,11 +1056,17 @@ REPLACE THESE WITH YOUR ACTUAL QUESTIONS.
     answer: "Example answer twenty nine"
 },
 
+
+/* Q30 */
+
 {
     question: "Example Question 30",
     points: 1,
     answer: "Example answer thirty"
 },
+
+
+/* Q31 */
 
 {
     question: "Example Question 31",
@@ -772,11 +1074,17 @@ REPLACE THESE WITH YOUR ACTUAL QUESTIONS.
     answer: "Example answer thirty one"
 },
 
+
+/* Q32 */
+
 {
     question: "Example Question 32",
     points: 1,
     answer: "Example answer thirty two"
 },
+
+
+/* Q33 */
 
 {
     question: "Example Question 33",
@@ -784,11 +1092,17 @@ REPLACE THESE WITH YOUR ACTUAL QUESTIONS.
     answer: "Example answer thirty three"
 },
 
+
+/* Q34 */
+
 {
     question: "Example Question 34",
     points: 1,
     answer: "Example answer thirty four"
 },
+
+
+/* Q35 */
 
 {
     question: "Example Question 35",
@@ -796,11 +1110,17 @@ REPLACE THESE WITH YOUR ACTUAL QUESTIONS.
     answer: "Example answer thirty five"
 },
 
+
+/* Q36 */
+
 {
     question: "Example Question 36",
     points: 1,
     answer: "Example answer thirty six"
 },
+
+
+/* Q37 */
 
 {
     question: "Example Question 37",
@@ -808,17 +1128,26 @@ REPLACE THESE WITH YOUR ACTUAL QUESTIONS.
     answer: "Example answer thirty seven"
 },
 
+
+/* Q38 */
+
 {
     question: "Example Question 38",
     points: 1,
     answer: "Example answer thirty eight"
 },
 
+
+/* Q39 */
+
 {
     question: "Example Question 39",
     points: 1,
     answer: "Example answer thirty nine"
 },
+
+
+/* Q40 */
 
 {
     question: "Example Question 40",
@@ -830,13 +1159,13 @@ REPLACE THESE WITH YOUR ACTUAL QUESTIONS.
 
 
 
-/*
-====================================================
-VARIABLES
-====================================================
-*/
+/* =====================================================
+   VARIABLES
+===================================================== */
 
-let selectedQuestionCount = 0;
+let startQuestion = 1;
+
+let endQuestion = 20;
 
 let quizQuestions = [];
 
@@ -846,73 +1175,168 @@ let totalScore = 0;
 
 let totalPossiblePoints = 0;
 
-let wrongQuestions = [];
 
+/*
+Status for every question:
+
+unanswered
+skipped
+correct
+wrong
+*/
+
+let questionStatuses = [];
 
 
 /*
-====================================================
-SELECT QUESTION COUNT
-====================================================
+Remember wrong questions
 */
 
-function selectQuestionCount(count, button) {
-
-    selectedQuestionCount = count;
+let wrongQuestions = [];
 
 
-    document
-        .querySelectorAll(".count-button")
-        .forEach(function(btn) {
+/*
+Remember skipped questions
+*/
 
-            btn.classList.remove("selected");
-
-        });
+let skippedQuestions = [];
 
 
-    button.classList.add("selected");
+
+/* =====================================================
+   RANGE PREVIEW
+===================================================== */
+
+function updateRangeMessage() {
+
+    const start =
+        parseInt(
+            document.getElementById(
+                "startQuestion"
+            ).value
+        );
+
+    const end =
+        parseInt(
+            document.getElementById(
+                "endQuestion"
+            ).value
+        );
 
 
-    document.getElementById(
-        "selectionMessage"
-    ).innerText =
+    const message =
+        document.getElementById(
+            "selectionMessage"
+        );
 
-        count +
-        " questions selected.";
+
+    if (
+        start >= 1 &&
+        end <= 40 &&
+        start <= end
+    ) {
+
+        const number =
+            end - start + 1;
+
+
+        message.innerText =
+            "You selected Q" +
+            start +
+            " – Q" +
+            end +
+            " (" +
+            number +
+            " questions).";
+
+    }
+
+    else {
+
+        message.innerText =
+            "Please enter a valid question range.";
+
+    }
 
 }
 
 
+document
+    .getElementById("startQuestion")
+    .addEventListener(
+        "input",
+        updateRangeMessage
+    );
 
-/*
-====================================================
-START QUIZ
-====================================================
-*/
+
+document
+    .getElementById("endQuestion")
+    .addEventListener(
+        "input",
+        updateRangeMessage
+    );
+
+
+updateRangeMessage();
+
+
+
+/* =====================================================
+   START QUIZ
+===================================================== */
 
 function startQuiz() {
 
-    if (selectedQuestionCount === 0) {
+    startQuestion =
+        parseInt(
+            document.getElementById(
+                "startQuestion"
+            ).value
+        );
+
+
+    endQuestion =
+        parseInt(
+            document.getElementById(
+                "endQuestion"
+            ).value
+        );
+
+
+    /*
+    Validate range.
+    */
+
+    if (
+        isNaN(startQuestion) ||
+        isNaN(endQuestion) ||
+        startQuestion < 1 ||
+        endQuestion > questions.length ||
+        startQuestion > endQuestion
+    ) {
 
         alert(
-            "Please select the number of questions first."
+            "Please enter a valid question range between 1 and 40."
         );
 
         return;
+
     }
 
 
     /*
-    NO SHUFFLING.
+    IMPORTANT:
 
-    Take the first N questions
-    in their original order.
+    No shuffle.
+
+    JavaScript arrays start at 0,
+    therefore subtract 1 from start.
     */
 
     quizQuestions =
         questions.slice(
-            0,
-            selectedQuestionCount
+            startQuestion - 1,
+            endQuestion
         );
 
 
@@ -924,21 +1348,39 @@ function startQuiz() {
 
     wrongQuestions = [];
 
-
-    document.getElementById(
-        "setupScreen"
-    ).classList.add("hidden");
+    skippedQuestions = [];
 
 
-    document.getElementById(
-        "finalScreen"
-    ).classList.add("hidden");
+    /*
+    Every question starts as unanswered.
+    */
+
+    questionStatuses =
+        quizQuestions.map(
+            function() {
+
+                return "unanswered";
+
+            }
+        );
 
 
-    document.getElementById(
-        "quizScreen"
-    ).classList.remove("hidden");
+    document
+        .getElementById("setupScreen")
+        .classList.add("hidden");
 
+
+    document
+        .getElementById("finalScreen")
+        .classList.add("hidden");
+
+
+    document
+        .getElementById("quizScreen")
+        .classList.remove("hidden");
+
+
+    buildQuestionNavigation();
 
     showQuestion();
 
@@ -946,22 +1388,185 @@ function startQuiz() {
 
 
 
-/*
-====================================================
-NORMALISE TEXT
-====================================================
+/* =====================================================
+   BUILD QUESTION NAVIGATION
+===================================================== */
 
-Capitalisation:
-    Apple = apple
+function buildQuestionNavigation() {
 
-Punctuation:
-    Apple! = apple
+    const list =
+        document.getElementById(
+            "questionList"
+        );
 
-Spaces:
-    apple     pie = apple pie
 
-====================================================
-*/
+    list.innerHTML = "";
+
+
+    document.getElementById(
+        "sidebarRange"
+    ).innerText =
+
+        "Questions " +
+
+        startQuestion +
+
+        "–" +
+
+        endQuestion;
+
+
+    quizQuestions.forEach(
+
+        function(question, index) {
+
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.className =
+                "question-nav unanswered";
+
+
+            button.id =
+                "nav-" + index;
+
+
+            button.onclick =
+                function() {
+
+                    goToQuestion(index);
+
+                };
+
+
+            button.innerHTML =
+
+                "<span class='question-symbol'>○</span>" +
+
+                "<span>Question " +
+
+                (startQuestion + index) +
+
+                "</span>";
+
+
+            list.appendChild(button);
+
+        }
+
+    );
+
+}
+
+
+
+/* =====================================================
+   UPDATE QUESTION NAVIGATION
+===================================================== */
+
+function updateQuestionNavigation() {
+
+    quizQuestions.forEach(
+
+        function(question, index) {
+
+
+            const button =
+                document.getElementById(
+                    "nav-" + index
+                );
+
+
+            if (!button) {
+                return;
+            }
+
+
+            const status =
+                questionStatuses[index];
+
+
+            button.className =
+                "question-nav " +
+                status;
+
+
+            if (
+                index === currentQuestionIndex
+            ) {
+
+                button.classList.add(
+                    "current"
+                );
+
+            }
+
+
+            let symbol = "○";
+
+
+            if (status === "skipped") {
+                symbol = "→";
+            }
+
+            if (status === "correct") {
+                symbol = "✓";
+            }
+
+            if (status === "wrong") {
+                symbol = "✗";
+            }
+
+
+            button.innerHTML =
+
+                "<span class='question-symbol'>" +
+
+                symbol +
+
+                "</span>" +
+
+                "<span>Question " +
+
+                (startQuestion + index) +
+
+                "</span>";
+
+        }
+
+    );
+
+}
+
+
+
+/* =====================================================
+   GO TO PARTICULAR QUESTION
+===================================================== */
+
+function goToQuestion(index) {
+
+    currentQuestionIndex = index;
+
+    showQuestion();
+
+}
+
+
+
+/* =====================================================
+   NORMALISE TEXT
+=====================================================
+
+   Capitalisation ignored.
+   Punctuation ignored.
+   Excessive spaces ignored.
+
+===================================================== */
 
 function normalizeText(text) {
 
@@ -969,10 +1574,18 @@ function normalizeText(text) {
 
         .toLowerCase()
 
+        /*
+        Replace punctuation with spaces.
+        */
+
         .replace(
             /[.,!?;:'"()[\]{}\-_/\\]/g,
             " "
         )
+
+        /*
+        Turn multiple spaces into one.
+        */
 
         .replace(
             /\s+/g,
@@ -985,39 +1598,37 @@ function normalizeText(text) {
 
 
 
-/*
-====================================================
-COMPARE WORDS
-====================================================
-*/
+/* =====================================================
+   COMPARE WORDS
+===================================================== */
 
 function compareWords(
     correctText,
     studentText
 ) {
 
+    const normalCorrect =
+        normalizeText(
+            correctText
+        );
+
+
+    const normalStudent =
+        normalizeText(
+            studentText
+        );
+
+
     const correctWords =
-
-        normalizeText(correctText) === ""
-
+        normalCorrect === ""
             ? []
-
-            :
-
-            normalizeText(correctText)
-                .split(" ");
+            : normalCorrect.split(" ");
 
 
     const studentWords =
-
-        normalizeText(studentText) === ""
-
+        normalStudent === ""
             ? []
-
-            :
-
-            normalizeText(studentText)
-                .split(" ");
+            : normalStudent.split(" ");
 
 
     let correctCount = 0;
@@ -1076,7 +1687,7 @@ function compareWords(
 
 
     /*
-    Show extra words.
+    Extra words typed by student.
     */
 
     if (
@@ -1124,11 +1735,9 @@ function compareWords(
 
 
 
-/*
-====================================================
-GET TOTAL POINTS
-====================================================
-*/
+/* =====================================================
+   QUESTION POINTS
+===================================================== */
 
 function getQuestionPoints(question) {
 
@@ -1155,18 +1764,19 @@ function getQuestionPoints(question) {
 
 
 
-/*
-====================================================
-SHOW QUESTION
-====================================================
-*/
+/* =====================================================
+   SHOW QUESTION
+===================================================== */
 
 function showQuestion() {
 
-    if (
-        currentQuestionIndex >=
-        quizQuestions.length
-    ) {
+    const question =
+        quizQuestions[
+            currentQuestionIndex
+        ];
+
+
+    if (!question) {
 
         showFinalResult();
 
@@ -1175,9 +1785,9 @@ function showQuestion() {
     }
 
 
-    const question =
-        quizQuestions[currentQuestionIndex];
-
+    /*
+    Progress
+    */
 
     document.getElementById(
         "progress"
@@ -1185,12 +1795,17 @@ function showQuestion() {
 
         "Question " +
 
-        (currentQuestionIndex + 1) +
+        (startQuestion +
+        currentQuestionIndex) +
 
         " of " +
 
-        quizQuestions.length;
+        endQuestion;
 
+
+    /*
+    Question text
+    */
 
     document.getElementById(
         "questionText"
@@ -1199,7 +1814,11 @@ function showQuestion() {
         question.question;
 
 
-    const questionPoints =
+    /*
+    Points
+    */
+
+    const points =
         getQuestionPoints(question);
 
 
@@ -1209,18 +1828,22 @@ function showQuestion() {
 
         "This question is worth " +
 
-        questionPoints +
+        points +
 
         " point" +
 
         (
-            questionPoints === 1
+            points === 1
                 ? ""
                 : "s"
         ) +
 
         ".";
 
+
+    /*
+    Answer area
+    */
 
     const answerArea =
         document.getElementById(
@@ -1232,9 +1855,7 @@ function showQuestion() {
 
 
     /*
-    ==============================================
-    MULTIPLE SINGLE-LINE ANSWERS
-    ==============================================
+    Multiple answer lines.
     */
 
     if (question.lines) {
@@ -1299,9 +1920,7 @@ function showQuestion() {
 
 
     /*
-    ==============================================
-    SINGLE SINGLE-LINE ANSWER
-    ==============================================
+    Single answer.
     */
 
     else {
@@ -1323,38 +1942,74 @@ function showQuestion() {
     }
 
 
+    /*
+    Show previous result if
+    the question has already been checked.
+    */
+
     document.getElementById(
         "result"
     ).innerHTML = "";
 
 
-    const button =
-        document.getElementById(
-            "submitButton"
+    /*
+    If question was already checked,
+    restore the result.
+    */
+
+    if (
+        questionStatuses[
+            currentQuestionIndex
+        ] === "correct" ||
+
+        questionStatuses[
+            currentQuestionIndex
+        ] === "wrong"
+    ) {
+
+        /*
+        We intentionally do not automatically
+        mark it again here.
+
+        User can answer it again and press Check.
+        */
+
+    }
+
+
+    updateQuestionNavigation();
+
+
+    /*
+    Put cursor in answer box.
+    */
+
+    const firstInput =
+        answerArea.querySelector(
+            "input"
         );
 
 
-    button.innerText =
-        "Submit Answer";
+    if (firstInput) {
 
+        firstInput.focus();
 
-    button.onclick =
-        submitAnswer;
+    }
 
 }
 
 
 
-/*
-====================================================
-SUBMIT ANSWER
-====================================================
-*/
+/* =====================================================
+   CHECK ANSWER
+===================================================== */
 
-function submitAnswer() {
+function checkAnswer() {
 
     const question =
-        quizQuestions[currentQuestionIndex];
+        quizQuestions[
+            currentQuestionIndex
+        ];
 
 
     let score = 0;
@@ -1367,9 +2022,9 @@ function submitAnswer() {
 
 
     /*
-    ==============================================
-    MULTIPLE SINGLE-LINE ANSWERS
-    ==============================================
+    =====================================================
+    MULTIPLE ANSWERS
+    =====================================================
     */
 
     if (question.lines) {
@@ -1380,29 +2035,31 @@ function submitAnswer() {
             function(line, index) {
 
 
-                const studentAnswer =
-
+                const input =
                     document.getElementById(
                         "answer-" + index
-                    ).value;
+                    );
+
+
+                const studentAnswer =
+                    input.value;
 
 
                 const comparison =
-
                     compareWords(
                         line.answer,
                         studentAnswer
                     );
 
 
-                let wordPercentage = 0;
+                let percentage = 0;
 
 
                 if (
                     comparison.totalWords > 0
                 ) {
 
-                    wordPercentage =
+                    percentage =
 
                         comparison.correctCount /
                         comparison.totalWords;
@@ -1410,16 +2067,12 @@ function submitAnswer() {
                 }
 
 
-                /*
-                Calculate partial points.
-                */
-
                 const lineScore =
 
                     Math.round(
 
                         line.points *
-                        wordPercentage *
+                        percentage *
                         100
 
                     ) / 100;
@@ -1438,6 +2091,7 @@ function submitAnswer() {
                             ? "correct-result"
 
                             : "wrong-result"
+
                     ) +
 
                     "'>" +
@@ -1496,37 +2150,39 @@ function submitAnswer() {
 
 
     /*
-    ==============================================
+    =====================================================
     SINGLE ANSWER
-    ==============================================
+    =====================================================
     */
 
     else {
 
 
-        const studentAnswer =
-
+        const input =
             document.getElementById(
                 "answer-single"
-            ).value;
+            );
+
+
+        const studentAnswer =
+            input.value;
 
 
         const comparison =
-
             compareWords(
                 question.answer,
                 studentAnswer
             );
 
 
-        let wordPercentage = 0;
+        let percentage = 0;
 
 
         if (
             comparison.totalWords > 0
         ) {
 
-            wordPercentage =
+            percentage =
 
                 comparison.correctCount /
                 comparison.totalWords;
@@ -1539,7 +2195,7 @@ function submitAnswer() {
             Math.round(
 
                 question.points *
-                wordPercentage *
+                percentage *
                 100
 
             ) / 100;
@@ -1555,12 +2211,13 @@ function submitAnswer() {
                     ? "correct-result"
 
                     : "wrong-result"
+
             ) +
 
             "'>" +
 
 
-            "<div class='score'>" +
+            "<strong>" +
 
             "Score: " +
 
@@ -1570,7 +2227,7 @@ function submitAnswer() {
 
             question.points +
 
-            "</div>" +
+            "</strong>" +
 
 
             "<div class='word-results'>" +
@@ -1606,9 +2263,9 @@ function submitAnswer() {
 
 
     /*
-    ==============================================
-    ADD TO TOTAL SCORE
-    ==============================================
+    =====================================================
+    SAVE SCORE
+    =====================================================
     */
 
     totalScore += score;
@@ -1617,14 +2274,31 @@ function submitAnswer() {
 
 
     /*
-    ==============================================
-    REMEMBER WRONG QUESTION
-    ==============================================
+    =====================================================
+    DETERMINE STATUS
+    =====================================================
     */
 
     if (
-        score < maximumPoints
+        score === maximumPoints
     ) {
+
+        questionStatuses[
+            currentQuestionIndex
+        ] = "correct";
+
+    }
+
+    else {
+
+        questionStatuses[
+            currentQuestionIndex
+        ] = "wrong";
+
+
+        /*
+        Remember wrong question.
+        */
 
         if (
             !wrongQuestions.includes(question)
@@ -1640,64 +2314,188 @@ function submitAnswer() {
 
 
     /*
-    ==============================================
+    =====================================================
+    IF IT WAS PREVIOUSLY SKIPPED,
+    REMOVE IT FROM SKIPPED LIST.
+    =====================================================
+    */
+
+    const skippedIndex =
+        skippedQuestions.indexOf(
+            question
+        );
+
+
+    if (
+        skippedIndex !== -1
+    ) {
+
+        skippedQuestions.splice(
+            skippedIndex,
+            1
+        );
+
+    }
+
+
+    /*
+    =====================================================
     DISPLAY RESULT
-    ==============================================
+    =====================================================
     */
 
     document.getElementById(
         "result"
-    ).innerHTML = resultHTML;
+    ).innerHTML =
+        resultHTML;
 
 
-    const button =
-        document.getElementById(
-            "submitButton"
-        );
-
-
-    button.innerText =
-
-        currentQuestionIndex ===
-        quizQuestions.length - 1
-
-            ?
-
-            "Finish Quiz"
-
-            :
-
-            "Next Question";
-
-
-    button.onclick =
-        nextQuestion;
+    updateQuestionNavigation();
 
 }
 
 
 
-/*
-====================================================
-NEXT QUESTION
-====================================================
-*/
+/* =====================================================
+   NEXT / SKIP
+===================================================== */
 
 function nextQuestion() {
 
-    currentQuestionIndex++;
+    const question =
+        quizQuestions[
+            currentQuestionIndex
+        ];
 
-    showQuestion();
+
+    /*
+    If the question has not been checked,
+    mark it as skipped.
+    */
+
+    if (
+        questionStatuses[
+            currentQuestionIndex
+        ] === "unanswered"
+    ) {
+
+        questionStatuses[
+            currentQuestionIndex
+        ] = "skipped";
+
+
+        if (
+            !skippedQuestions.includes(
+                question
+            )
+        ) {
+
+            skippedQuestions.push(
+                question
+            );
+
+        }
+
+    }
+
+
+    /*
+    Find the next unanswered/skipped
+    question first.
+
+    This allows the user to move
+    through the quiz normally.
+    */
+
+    let nextIndex = -1;
+
+
+    for (
+        let i =
+            currentQuestionIndex + 1;
+
+        i < quizQuestions.length;
+
+        i++
+    ) {
+
+        if (
+            questionStatuses[i] ===
+            "unanswered"
+        ) {
+
+            nextIndex = i;
+
+            break;
+
+        }
+
+    }
+
+
+    /*
+    If there is no later unanswered
+    question, look from the beginning.
+    */
+
+    if (nextIndex === -1) {
+
+        for (
+            let i = 0;
+
+            i < currentQuestionIndex;
+
+            i++
+        ) {
+
+            if (
+                questionStatuses[i] ===
+                "skipped"
+            ) {
+
+                nextIndex = i;
+
+                break;
+
+            }
+
+        }
+
+    }
+
+
+    /*
+    If there is another question,
+    go there.
+    */
+
+    if (
+        nextIndex !== -1
+    ) {
+
+        currentQuestionIndex =
+            nextIndex;
+
+        showQuestion();
+
+        return;
+
+    }
+
+
+    /*
+    Nothing left to do.
+    */
+
+    showFinalResult();
 
 }
 
 
 
-/*
-====================================================
-FINAL RESULT
-====================================================
-*/
+/* =====================================================
+   FINAL RESULT
+===================================================== */
 
 function showFinalResult() {
 
@@ -1742,128 +2540,188 @@ function showFinalResult() {
         "finalPercentage"
     ).innerText =
 
-        "Overall Score: " +
+        "Score: " +
 
         percentage.toFixed(1) +
 
         "%";
 
 
-    const summary =
+    /*
+    =====================================================
+    WRONG QUESTIONS
+    =====================================================
+    */
+
+    const wrongSummary =
         document.getElementById(
             "wrongSummary"
         );
 
 
+    if (
+        wrongQuestions.length === 0
+    ) {
+
+        wrongSummary.innerHTML =
+
+            "<h3>No Wrong Questions</h3>" +
+
+            "<p>Excellent! You answered everything correctly.</p>";
+
+    }
+
+    else {
+
+        let html =
+
+            "<h3>Wrong Questions</h3>" +
+
+            "<p>You can repeat these questions.</p>";
+
+
+        wrongQuestions.forEach(
+
+            function(question, index) {
+
+                html +=
+
+                    "<div class='wrong-item'>" +
+
+                    "<strong>" +
+
+                    (index + 1) +
+
+                    ". " +
+
+                    question.question +
+
+                    "</strong>" +
+
+                    "</div>";
+
+            }
+
+        );
+
+
+        wrongSummary.innerHTML =
+            html;
+
+    }
+
+
     /*
-    ==============================================
-    NO WRONG QUESTIONS
-    ==============================================
+    =====================================================
+    SKIPPED QUESTIONS
+    =====================================================
+    */
+
+    const skippedSummary =
+        document.getElementById(
+            "skippedSummary"
+        );
+
+
+    if (
+        skippedQuestions.length === 0
+    ) {
+
+        skippedSummary.innerHTML =
+
+            "<h3>No Skipped Questions</h3>";
+
+    }
+
+    else {
+
+        let html =
+
+            "<h3>Skipped Questions</h3>" +
+
+            "<p>These questions were not checked.</p>";
+
+
+        skippedQuestions.forEach(
+
+            function(question, index) {
+
+                html +=
+
+                    "<div class='skipped-item'>" +
+
+                    "<strong>" +
+
+                    (index + 1) +
+
+                    ". " +
+
+                    question.question +
+
+                    "</strong>" +
+
+                    "</div>";
+
+            }
+
+        );
+
+
+        skippedSummary.innerHTML =
+            html;
+
+    }
+
+
+    /*
+    Show/hide repeat button.
     */
 
     if (
         wrongQuestions.length === 0
     ) {
 
-        summary.innerHTML =
-
-            "<div class='result correct-result'>" +
-
-            "<h3>Excellent!</h3>" +
-
-            "<p>You answered all questions correctly.</p>" +
-
-            "</div>";
-
-
         document.getElementById(
             "repeatButton"
         ).classList.add("hidden");
 
-
-        return;
-
     }
 
+    else {
 
-    /*
-    ==============================================
-    WRONG QUESTIONS
-    ==============================================
-    */
+        document.getElementById(
+            "repeatButton"
+        ).classList.remove("hidden");
 
-    let summaryHTML =
-
-        "<div class='wrong-summary'>" +
-
-        "<h3>Wrong Questions: " +
-
-        wrongQuestions.length +
-
-        "</h3>" +
-
-        "<p>" +
-
-        "These questions can be repeated for revision." +
-
-        "</p>";
-
-
-    wrongQuestions.forEach(
-
-        function(question, index) {
-
-            summaryHTML +=
-
-                "<div class='wrong-item'>" +
-
-                "<strong>" +
-
-                (index + 1) +
-
-                ". " +
-
-                question.question +
-
-                "</strong>" +
-
-                "</div>";
-
-        }
-
-    );
-
-
-    summaryHTML += "</div>";
-
-
-    summary.innerHTML =
-        summaryHTML;
-
-
-    document.getElementById(
-        "repeatButton"
-    ).classList.remove("hidden");
+    }
 
 }
 
 
 
-/*
-====================================================
-REPEAT WRONG QUESTIONS
-====================================================
-
-The wrong questions are repeated
-in their ORIGINAL ORDER.
-
-====================================================
-*/
+/* =====================================================
+   REPEAT WRONG QUESTIONS
+===================================================== */
 
 function repeatWrongQuestions() {
 
+    /*
+    Use ONLY the wrong questions.
+    */
+
     quizQuestions =
         [...wrongQuestions];
+
+
+    /*
+    The repeated questions now have
+    their own navigation range.
+    */
+
+    startQuestion = 1;
+
+    endQuestion =
+        quizQuestions.length;
 
 
     currentQuestionIndex = 0;
@@ -1872,7 +2730,19 @@ function repeatWrongQuestions() {
 
     totalPossiblePoints = 0;
 
+    skippedQuestions = [];
+
     wrongQuestions = [];
+
+
+    questionStatuses =
+        quizQuestions.map(
+            function() {
+
+                return "unanswered";
+
+            }
+        );
 
 
     document.getElementById(
@@ -1885,17 +2755,17 @@ function repeatWrongQuestions() {
     ).classList.remove("hidden");
 
 
+    buildQuestionNavigation();
+
     showQuestion();
 
 }
 
 
 
-/*
-====================================================
-START NEW QUIZ
-====================================================
-*/
+/* =====================================================
+   RESTART
+===================================================== */
 
 function restartQuiz() {
 
@@ -1911,6 +2781,10 @@ function restartQuiz() {
 
     wrongQuestions = [];
 
+    skippedQuestions = [];
+
+    questionStatuses = [];
+
 
     document.getElementById(
         "finalScreen"
@@ -1925,24 +2799,6 @@ function restartQuiz() {
     document.getElementById(
         "setupScreen"
     ).classList.remove("hidden");
-
-
-    document.getElementById(
-        "selectionMessage"
-    ).innerText =
-
-        "Please select the number of questions.";
-
-
-    document
-        .querySelectorAll(".count-button")
-        .forEach(function(button) {
-
-            button.classList.remove(
-                "selected"
-            );
-
-        });
 
 }
 
