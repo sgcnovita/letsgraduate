@@ -4,15 +4,17 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Quiz & Revision System</title>
 
+
 <style>
 
-/* =====================================================
+/* =========================================================
    GENERAL
-===================================================== */
+========================================================= */
 
 * {
     box-sizing: border-box;
@@ -26,7 +28,7 @@ body {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1250px;
     margin: 30px auto;
     padding: 20px;
 }
@@ -38,13 +40,17 @@ body {
     overflow: hidden;
 }
 
+.hidden {
+    display: none !important;
+}
 
-/* =====================================================
-   SETUP PAGE
-===================================================== */
+
+/* =========================================================
+   SETUP SCREEN
+========================================================= */
 
 .setup {
-    padding: 40px;
+    padding: 45px;
     max-width: 850px;
     margin: auto;
 }
@@ -62,15 +68,15 @@ h1 {
 
 .info-box {
     background: #f1f1f1;
-    padding: 18px;
+    padding: 20px;
     border-radius: 10px;
-    line-height: 1.7;
+    line-height: 1.8;
     margin-bottom: 30px;
 }
 
 .range-container {
     display: flex;
-    gap: 20px;
+    gap: 25px;
     justify-content: center;
     margin: 25px 0;
 }
@@ -86,7 +92,7 @@ h1 {
 }
 
 .range-input input {
-    width: 140px;
+    width: 150px;
     padding: 12px;
     font-size: 17px;
     border: 2px solid #ddd;
@@ -101,7 +107,7 @@ h1 {
 .start-button {
     display: block;
     margin: 25px auto 0;
-    padding: 14px 30px;
+    padding: 14px 32px;
     background: #222;
     color: white;
     border: none;
@@ -121,20 +127,20 @@ h1 {
 }
 
 
-/* =====================================================
+/* =========================================================
    QUIZ LAYOUT
-===================================================== */
+========================================================= */
 
 .quiz-layout {
     display: grid;
-    grid-template-columns: 230px 1fr;
-    min-height: 650px;
+    grid-template-columns: 240px 1fr;
+    min-height: 700px;
 }
 
 
-/* =====================================================
-   QUESTION NAVIGATION
-===================================================== */
+/* =========================================================
+   SIDEBAR
+========================================================= */
 
 .question-sidebar {
     background: #f7f7f7;
@@ -144,7 +150,6 @@ h1 {
 
 .question-sidebar h3 {
     margin-top: 0;
-    margin-bottom: 15px;
 }
 
 .sidebar-range {
@@ -157,7 +162,7 @@ h1 {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    max-height: 550px;
+    max-height: 560px;
     overflow-y: auto;
 }
 
@@ -165,13 +170,21 @@ h1 {
     display: flex;
     align-items: center;
     gap: 10px;
+
     width: 100%;
+
     padding: 9px 10px;
+
     border: none;
+
     border-radius: 7px;
+
     background: transparent;
+
     cursor: pointer;
+
     text-align: left;
+
     font-size: 14px;
 }
 
@@ -210,13 +223,19 @@ h1 {
     color: white;
 }
 
+.legend {
+    margin-top: 20px;
+    font-size: 13px;
+    line-height: 1.9;
+}
 
-/* =====================================================
+
+/* =========================================================
    QUIZ CONTENT
-===================================================== */
+========================================================= */
 
 .quiz-content {
-    padding: 35px;
+    padding: 40px;
 }
 
 .progress {
@@ -238,51 +257,65 @@ h1 {
 }
 
 
-/* =====================================================
-   ANSWER BOX
-===================================================== */
+/* =========================================================
+   ANSWERS
+========================================================= */
+
+.answer-section {
+    margin-bottom: 25px;
+}
+
+.answer-number {
+    font-weight: bold;
+    font-size: 17px;
+    margin-bottom: 8px;
+}
 
 .answer-line {
-    margin-bottom: 18px;
+    margin-left: 25px;
+    margin-bottom: 8px;
 }
 
-.line-label {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 6px;
-}
-
-input[type="text"] {
+.answer-line input {
     width: 100%;
-    height: 48px;
-    padding: 12px 14px;
+    height: 46px;
+
+    padding: 10px 14px;
+
     font-size: 16px;
+
     border: 2px solid #ddd;
+
     border-radius: 8px;
+
     outline: none;
 }
 
-input[type="text"]:focus {
+.answer-line input:focus {
     border-color: #555;
 }
 
 
-/* =====================================================
+/* =========================================================
    BUTTONS
-===================================================== */
+========================================================= */
 
 .quiz-buttons {
     display: flex;
     gap: 10px;
-    margin-top: 25px;
+    margin-top: 30px;
 }
 
 .check-button,
 .next-button {
-    padding: 12px 25px;
+    padding: 12px 28px;
+
     border: none;
+
     border-radius: 8px;
+
     font-size: 16px;
+
     cursor: pointer;
 }
 
@@ -305,9 +338,9 @@ input[type="text"]:focus {
 }
 
 
-/* =====================================================
+/* =========================================================
    RESULT
-===================================================== */
+========================================================= */
 
 .result {
     margin-top: 25px;
@@ -330,19 +363,25 @@ input[type="text"]:focus {
     margin-top: 12px;
 }
 
-.correct {
+.correct-word {
     color: #16803c;
     font-weight: bold;
     margin-right: 8px;
 }
 
-.incorrect {
+.incorrect-word {
     color: #d62828;
     font-weight: bold;
     margin-right: 8px;
 }
 
-.extra {
+.missing-word {
+    color: #d62828;
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.extra-word {
     color: #b36b00;
     font-weight: bold;
     margin-right: 8px;
@@ -360,12 +399,12 @@ input[type="text"]:focus {
 }
 
 
-/* =====================================================
-   FINAL PAGE
-===================================================== */
+/* =========================================================
+   FINAL SCREEN
+========================================================= */
 
 .final-screen {
-    padding: 40px;
+    padding: 45px;
     text-align: center;
 }
 
@@ -381,7 +420,7 @@ input[type="text"]:focus {
 }
 
 .summary-box {
-    max-width: 700px;
+    max-width: 750px;
     margin: 25px auto;
     text-align: left;
     background: #f7f7f7;
@@ -389,9 +428,8 @@ input[type="text"]:focus {
     border-radius: 10px;
 }
 
-.wrong-item,
-.skipped-item {
-    padding: 10px;
+.summary-item {
+    padding: 12px;
     border-bottom: 1px solid #ddd;
 }
 
@@ -410,14 +448,10 @@ input[type="text"]:focus {
     background: #444;
 }
 
-.hidden {
-    display: none;
-}
 
-
-/* =====================================================
+/* =========================================================
    MOBILE
-===================================================== */
+========================================================= */
 
 @media (max-width: 750px) {
 
@@ -468,16 +502,16 @@ input[type="text"]:focus {
 <div class="card">
 
 
-<!-- =====================================================
+<!-- =======================================================
      SETUP SCREEN
-===================================================== -->
+======================================================= -->
 
 <div id="setupScreen" class="setup">
 
 <h1>Quiz & Revision System</h1>
 
 <p class="subtitle">
-Choose the range of questions you want to practise.
+Choose which questions you want to practise.
 </p>
 
 
@@ -488,24 +522,39 @@ Choose the range of questions you want to practise.
 <br>
 
 • Questions remain in their original order.
+
 <br>
 
-• Choose any question range, such as Q1–20 or Q20–25.
+• You can choose any question range.
+
 <br>
 
-• <strong>Check</strong> marks your answer and shows mistakes.
+• <strong>Check</strong> marks your answer immediately.
+
 <br>
 
 • <strong>Next</strong> skips the question temporarily.
+
 <br>
 
-• Skipped questions can be accessed from the question list.
+• Click any question in the sidebar to return to it.
+
 <br>
 
-• Capitalisation, punctuation and excessive spaces are ignored.
+• Capitalisation is ignored.
+
 <br>
 
-• Answers are checked word by word.
+• Punctuation is ignored.
+
+<br>
+
+• Extra spaces are ignored.
+
+<br>
+
+• Answers are compared word by word.
+
 <br>
 
 • Wrong questions are remembered for revision.
@@ -574,18 +623,16 @@ Start Quiz
 
 
 
-<!-- =====================================================
+<!-- =======================================================
      QUIZ SCREEN
-===================================================== -->
+======================================================= -->
 
 <div
 id="quizScreen"
 class="quiz-layout hidden">
 
 
-<!-- =====================================================
-     SIDEBAR
-===================================================== -->
+<!-- SIDEBAR -->
 
 <div class="question-sidebar">
 
@@ -603,7 +650,7 @@ class="question-list">
 </div>
 
 
-<div style="margin-top:20px; font-size:13px; line-height:1.8;">
+<div class="legend">
 
 <div>○ Not attempted</div>
 
@@ -619,9 +666,7 @@ class="question-list">
 
 
 
-<!-- =====================================================
-     MAIN QUIZ
-===================================================== -->
+<!-- MAIN CONTENT -->
 
 <div class="quiz-content">
 
@@ -682,9 +727,9 @@ Next
 
 
 
-<!-- =====================================================
+<!-- =======================================================
      FINAL SCREEN
-===================================================== -->
+======================================================= -->
 
 <div
 id="finalScreen"
@@ -720,9 +765,7 @@ class="summary-box">
 <button
 id="repeatButton"
 class="action-button"
-onclick="repeatWrongQuestions()">
-
-Repeat Wrong Questions
+onclick="repeatWrongQuestions">
 
 </button>
 
@@ -747,411 +790,587 @@ Start New Quiz
 <script>
 
 
-/* =====================================================
+/* =========================================================
    QUESTION DATABASE
-=====================================================
 
-   PUT YOUR 40 QUESTIONS HERE.
+   IMPORTANT:
 
-===================================================== */
+   Put your 40 real questions here.
+
+========================================================= */
 
 const questions = [
 
 
-/* Q1 */
+/* =========================================================
+   QUESTION 1
+========================================================= */
 
 {
     question: "What is the capital city of Australia?",
+
     points: 1,
+
     answer: "Canberra"
 },
 
 
-/* Q2 */
+
+/* =========================================================
+   QUESTION 2
+========================================================= */
 
 {
     question: "What does AI stand for?",
+
     points: 2,
+
     answer: "Artificial Intelligence"
 },
 
 
-/* Q3 */
+
+/* =========================================================
+   QUESTION 3
+========================================================= */
 
 {
     question: "What is machine learning?",
+
     points: 3,
+
     answer: "Machine learning is a type of artificial intelligence that allows computers to learn from data"
 },
 
 
-/* Q4 */
+
+/* =========================================================
+   QUESTION 4 - MULTIPLE ANSWERS
+========================================================= */
 
 {
     question: "List three benefits of artificial intelligence in recruitment.",
 
-    points: 3,
-
-    lines: [
+    answers: [
 
         {
             answer: "Faster candidate screening",
-            points: 1
+
+            points: 1,
+
+            lines: 1
         },
 
         {
             answer: "Improved recruitment efficiency",
-            points: 1
+
+            points: 1,
+
+            lines: 1
         },
 
         {
             answer: "Reduced administrative workload",
-            points: 1
+
+            points: 1,
+
+            lines: 1
         }
 
     ]
 },
 
 
-/* Q5 */
+
+/* =========================================================
+   QUESTION 5
+========================================================= */
 
 {
     question: "What is algorithmic bias?",
+
     points: 2,
+
     answer: "Algorithmic bias occurs when an algorithm produces systematically unfair outcomes"
 },
 
 
-/* Q6 */
+
+/* =========================================================
+   QUESTION 6 - MULTIPLE ANSWERS
+========================================================= */
 
 {
     question: "Name three common sources of bias in AI hiring systems.",
 
-    points: 3,
-
-    lines: [
+    answers: [
 
         {
             answer: "Historical hiring data",
-            points: 1
+
+            points: 1,
+
+            lines: 1
         },
 
         {
             answer: "Biased training data",
-            points: 1
+
+            points: 1,
+
+            lines: 1
         },
 
         {
             answer: "Human decision making",
-            points: 1
+
+            points: 1,
+
+            lines: 1
         }
 
     ]
 },
 
 
-/* Q7 */
+
+/* =========================================================
+   QUESTION 7 - MULTIPLE LINES UNDER ANSWER 3
+========================================================= */
+
+{
+    question: "Explain the following three aspects of AI hiring systems.",
+
+    answers: [
+
+        {
+            answer: "Candidate screening",
+
+            points: 1,
+
+            lines: 1
+        },
+
+        {
+            answer: "Candidate ranking",
+
+            points: 1,
+
+            lines: 1
+        },
+
+        {
+            answer: "Candidate selection is the process of choosing the most suitable candidate based on the evaluation criteria",
+
+            points: 3,
+
+            lines: 3
+        }
+
+    ]
+},
+
+
+
+/* =========================================================
+   QUESTION 8
+========================================================= */
 
 {
     question: "What is cybersecurity?",
+
     points: 2,
+
     answer: "Cybersecurity is the practice of protecting systems networks and programs from digital attacks"
 },
 
 
-/* Q8 */
+
+/* =========================================================
+   QUESTION 9
+========================================================= */
 
 {
     question: "What is fairness in artificial intelligence?",
+
     points: 2,
+
     answer: "Fairness in artificial intelligence means ensuring that systems do not produce unjust or discriminatory outcomes"
 },
 
 
-/* Q9 */
+
+/* =========================================================
+   QUESTION 10
+========================================================= */
 
 {
     question: "What is explainable AI?",
+
     points: 2,
+
     answer: "Explainable AI refers to methods that make the decisions of artificial intelligence systems understandable to humans"
 },
 
 
-/* Q10 */
 
-{
-    question: "What is data bias?",
-    points: 2,
-    answer: "Data bias occurs when training data does not fairly represent the population or contains systematic errors"
-},
-
-
-/* Q11 */
+/* =========================================================
+   QUESTION 11
+========================================================= */
 
 {
     question: "Example Question 11",
+
     points: 1,
+
     answer: "Example answer eleven"
 },
+
 
 
 /* Q12 */
 
 {
     question: "Example Question 12",
+
     points: 1,
+
     answer: "Example answer twelve"
 },
+
 
 
 /* Q13 */
 
 {
     question: "Example Question 13",
+
     points: 1,
+
     answer: "Example answer thirteen"
 },
+
 
 
 /* Q14 */
 
 {
     question: "Example Question 14",
+
     points: 1,
+
     answer: "Example answer fourteen"
 },
+
 
 
 /* Q15 */
 
 {
     question: "Example Question 15",
+
     points: 1,
+
     answer: "Example answer fifteen"
 },
+
 
 
 /* Q16 */
 
 {
     question: "Example Question 16",
+
     points: 1,
+
     answer: "Example answer sixteen"
 },
+
 
 
 /* Q17 */
 
 {
     question: "Example Question 17",
+
     points: 1,
+
     answer: "Example answer seventeen"
 },
+
 
 
 /* Q18 */
 
 {
     question: "Example Question 18",
+
     points: 1,
+
     answer: "Example answer eighteen"
 },
+
 
 
 /* Q19 */
 
 {
     question: "Example Question 19",
+
     points: 1,
+
     answer: "Example answer nineteen"
 },
+
 
 
 /* Q20 */
 
 {
     question: "Example Question 20",
+
     points: 1,
+
     answer: "Example answer twenty"
 },
+
 
 
 /* Q21 */
 
 {
     question: "Example Question 21",
+
     points: 1,
+
     answer: "Example answer twenty one"
 },
+
 
 
 /* Q22 */
 
 {
     question: "Example Question 22",
+
     points: 1,
+
     answer: "Example answer twenty two"
 },
+
 
 
 /* Q23 */
 
 {
     question: "Example Question 23",
+
     points: 1,
+
     answer: "Example answer twenty three"
 },
+
 
 
 /* Q24 */
 
 {
     question: "Example Question 24",
+
     points: 1,
+
     answer: "Example answer twenty four"
 },
+
 
 
 /* Q25 */
 
 {
     question: "Example Question 25",
+
     points: 1,
+
     answer: "Example answer twenty five"
 },
+
 
 
 /* Q26 */
 
 {
     question: "Example Question 26",
+
     points: 1,
+
     answer: "Example answer twenty six"
 },
+
 
 
 /* Q27 */
 
 {
     question: "Example Question 27",
+
     points: 1,
+
     answer: "Example answer twenty seven"
 },
+
 
 
 /* Q28 */
 
 {
     question: "Example Question 28",
+
     points: 1,
+
     answer: "Example answer twenty eight"
 },
+
 
 
 /* Q29 */
 
 {
     question: "Example Question 29",
+
     points: 1,
+
     answer: "Example answer twenty nine"
 },
+
 
 
 /* Q30 */
 
 {
     question: "Example Question 30",
+
     points: 1,
+
     answer: "Example answer thirty"
 },
+
 
 
 /* Q31 */
 
 {
     question: "Example Question 31",
+
     points: 1,
+
     answer: "Example answer thirty one"
 },
+
 
 
 /* Q32 */
 
 {
     question: "Example Question 32",
+
     points: 1,
+
     answer: "Example answer thirty two"
 },
+
 
 
 /* Q33 */
 
 {
     question: "Example Question 33",
+
     points: 1,
+
     answer: "Example answer thirty three"
 },
+
 
 
 /* Q34 */
 
 {
     question: "Example Question 34",
+
     points: 1,
+
     answer: "Example answer thirty four"
 },
+
 
 
 /* Q35 */
 
 {
     question: "Example Question 35",
+
     points: 1,
+
     answer: "Example answer thirty five"
 },
+
 
 
 /* Q36 */
 
 {
     question: "Example Question 36",
+
     points: 1,
+
     answer: "Example answer thirty six"
 },
+
 
 
 /* Q37 */
 
 {
     question: "Example Question 37",
+
     points: 1,
+
     answer: "Example answer thirty seven"
 },
+
 
 
 /* Q38 */
 
 {
     question: "Example Question 38",
+
     points: 1,
+
     answer: "Example answer thirty eight"
 },
+
 
 
 /* Q39 */
 
 {
     question: "Example Question 39",
+
     points: 1,
+
     answer: "Example answer thirty nine"
 },
+
 
 
 /* Q40 */
 
 {
     question: "Example Question 40",
+
     points: 1,
+
     answer: "Example answer forty"
 }
 
@@ -1159,9 +1378,9 @@ const questions = [
 
 
 
-/* =====================================================
+/* =========================================================
    VARIABLES
-===================================================== */
+========================================================= */
 
 let startQuestion = 1;
 
@@ -1175,64 +1394,40 @@ let totalScore = 0;
 
 let totalPossiblePoints = 0;
 
-
-/*
-Status for every question:
-
-unanswered
-skipped
-correct
-wrong
-*/
-
 let questionStatuses = [];
 
+let wrongQuestionIndices = [];
 
-/*
-Remember wrong questions
-*/
+let skippedQuestionIndices = [];
 
-let wrongQuestions = [];
-
-
-/*
-Remember skipped questions
-*/
-
-let skippedQuestions = [];
+let originalQuestionNumbers = [];
 
 
 
-/* =====================================================
-   RANGE PREVIEW
-===================================================== */
+/* =========================================================
+   RANGE MESSAGE
+========================================================= */
 
 function updateRangeMessage() {
 
     const start =
         parseInt(
-            document.getElementById(
-                "startQuestion"
-            ).value
+            document.getElementById("startQuestion").value
         );
 
     const end =
         parseInt(
-            document.getElementById(
-                "endQuestion"
-            ).value
+            document.getElementById("endQuestion").value
         );
 
 
     const message =
-        document.getElementById(
-            "selectionMessage"
-        );
+        document.getElementById("selectionMessage");
 
 
     if (
         start >= 1 &&
-        end <= 40 &&
+        end <= questions.length &&
         start <= end
     ) {
 
@@ -1281,31 +1476,23 @@ updateRangeMessage();
 
 
 
-/* =====================================================
+/* =========================================================
    START QUIZ
-===================================================== */
+========================================================= */
 
 function startQuiz() {
 
     startQuestion =
         parseInt(
-            document.getElementById(
-                "startQuestion"
-            ).value
+            document.getElementById("startQuestion").value
         );
 
 
     endQuestion =
         parseInt(
-            document.getElementById(
-                "endQuestion"
-            ).value
+            document.getElementById("endQuestion").value
         );
 
-
-    /*
-    Validate range.
-    */
 
     if (
         isNaN(startQuestion) ||
@@ -1316,21 +1503,21 @@ function startQuiz() {
     ) {
 
         alert(
-            "Please enter a valid question range between 1 and 40."
+            "Please enter a valid question range between 1 and " +
+            questions.length +
+            "."
         );
 
         return;
-
     }
 
 
     /*
-    IMPORTANT:
+        IMPORTANT:
 
-    No shuffle.
+        No shuffle.
 
-    JavaScript arrays start at 0,
-    therefore subtract 1 from start.
+        slice() keeps the original order.
     */
 
     quizQuestions =
@@ -1340,20 +1527,26 @@ function startQuiz() {
         );
 
 
+    originalQuestionNumbers =
+        quizQuestions.map(
+            function(question, index) {
+
+                return startQuestion + index;
+
+            }
+        );
+
+
     currentQuestionIndex = 0;
 
     totalScore = 0;
 
     totalPossiblePoints = 0;
 
-    wrongQuestions = [];
+    wrongQuestionIndices = [];
 
-    skippedQuestions = [];
+    skippedQuestionIndices = [];
 
-
-    /*
-    Every question starts as unanswered.
-    */
 
     questionStatuses =
         quizQuestions.map(
@@ -1388,24 +1581,20 @@ function startQuiz() {
 
 
 
-/* =====================================================
-   BUILD QUESTION NAVIGATION
-===================================================== */
+/* =========================================================
+   QUESTION NAVIGATION
+========================================================= */
 
 function buildQuestionNavigation() {
 
     const list =
-        document.getElementById(
-            "questionList"
-        );
+        document.getElementById("questionList");
 
 
     list.innerHTML = "";
 
 
-    document.getElementById(
-        "sidebarRange"
-    ).innerText =
+    document.getElementById("sidebarRange").innerText =
 
         "Questions " +
 
@@ -1420,11 +1609,8 @@ function buildQuestionNavigation() {
 
         function(question, index) {
 
-
             const button =
-                document.createElement(
-                    "button"
-                );
+                document.createElement("button");
 
 
             button.className =
@@ -1449,7 +1635,7 @@ function buildQuestionNavigation() {
 
                 "<span>Question " +
 
-                (startQuestion + index) +
+                originalQuestionNumbers[index] +
 
                 "</span>";
 
@@ -1464,16 +1650,15 @@ function buildQuestionNavigation() {
 
 
 
-/* =====================================================
-   UPDATE QUESTION NAVIGATION
-===================================================== */
+/* =========================================================
+   UPDATE NAVIGATION
+========================================================= */
 
 function updateQuestionNavigation() {
 
     quizQuestions.forEach(
 
         function(question, index) {
-
 
             const button =
                 document.getElementById(
@@ -1499,9 +1684,7 @@ function updateQuestionNavigation() {
                 index === currentQuestionIndex
             ) {
 
-                button.classList.add(
-                    "current"
-                );
+                button.classList.add("current");
 
             }
 
@@ -1532,7 +1715,7 @@ function updateQuestionNavigation() {
 
                 "<span>Question " +
 
-                (startQuestion + index) +
+                originalQuestionNumbers[index] +
 
                 "</span>";
 
@@ -1544,9 +1727,9 @@ function updateQuestionNavigation() {
 
 
 
-/* =====================================================
-   GO TO PARTICULAR QUESTION
-===================================================== */
+/* =========================================================
+   GO TO QUESTION
+========================================================= */
 
 function goToQuestion(index) {
 
@@ -1558,15 +1741,9 @@ function goToQuestion(index) {
 
 
 
-/* =====================================================
+/* =========================================================
    NORMALISE TEXT
-=====================================================
-
-   Capitalisation ignored.
-   Punctuation ignored.
-   Excessive spaces ignored.
-
-===================================================== */
+========================================================= */
 
 function normalizeText(text) {
 
@@ -1575,7 +1752,10 @@ function normalizeText(text) {
         .toLowerCase()
 
         /*
-        Replace punctuation with spaces.
+        Remove punctuation.
+
+        Punctuation is replaced with spaces
+        so words do not accidentally join.
         */
 
         .replace(
@@ -1584,7 +1764,7 @@ function normalizeText(text) {
         )
 
         /*
-        Turn multiple spaces into one.
+        Remove excessive spaces.
         */
 
         .replace(
@@ -1598,37 +1778,33 @@ function normalizeText(text) {
 
 
 
-/* =====================================================
-   COMPARE WORDS
-===================================================== */
+/* =========================================================
+   WORD-BY-WORD COMPARISON
+========================================================= */
 
 function compareWords(
     correctText,
     studentText
 ) {
 
-    const normalCorrect =
-        normalizeText(
-            correctText
-        );
+    const correct =
+        normalizeText(correctText);
 
 
-    const normalStudent =
-        normalizeText(
-            studentText
-        );
+    const student =
+        normalizeText(studentText);
 
 
     const correctWords =
-        normalCorrect === ""
+        correct === ""
             ? []
-            : normalCorrect.split(" ");
+            : correct.split(" ");
 
 
     const studentWords =
-        normalStudent === ""
+        student === ""
             ? []
-            : normalStudent.split(" ");
+            : student.split(" ");
 
 
     let correctCount = 0;
@@ -1637,7 +1813,8 @@ function compareWords(
 
 
     /*
-    Compare each word.
+    Compare each correct word
+    with the corresponding student word.
     */
 
     for (
@@ -1663,7 +1840,7 @@ function compareWords(
 
             resultHTML +=
 
-                "<span class='correct'>" +
+                "<span class='correct-word'>" +
 
                 correctWord +
 
@@ -1675,9 +1852,13 @@ function compareWords(
 
             resultHTML +=
 
-                "<span class='incorrect'>" +
+                "<span class='incorrect-word'>" +
 
-                correctWord +
+                (
+                    studentWord
+                        ? studentWord
+                        : "[missing]"
+                ) +
 
                 " ✗</span>";
 
@@ -1687,7 +1868,7 @@ function compareWords(
 
 
     /*
-    Extra words typed by student.
+    Extra student words.
     */
 
     if (
@@ -1707,7 +1888,7 @@ function compareWords(
 
             resultHTML +=
 
-                "<span class='extra'>" +
+                "<span class='extra-word'>" +
 
                 studentWords[i] +
 
@@ -1735,28 +1916,35 @@ function compareWords(
 
 
 
-/* =====================================================
-   QUESTION POINTS
-===================================================== */
+/* =========================================================
+   GET TOTAL QUESTION POINTS
+========================================================= */
 
 function getQuestionPoints(question) {
 
-    if (question.lines) {
+    /*
+    Multiple-answer question.
+    */
 
-        return question.lines.reduce(
+    if (question.answers) {
 
-            function(total, line) {
+        return question.answers.reduce(
 
-                return total + line.points;
+            function(total, answer) {
+
+                return total + answer.points;
 
             },
 
             0
-
         );
 
     }
 
+
+    /*
+    Normal question.
+    */
 
     return question.points || 1;
 
@@ -1764,9 +1952,9 @@ function getQuestionPoints(question) {
 
 
 
-/* =====================================================
+/* =========================================================
    SHOW QUESTION
-===================================================== */
+========================================================= */
 
 function showQuestion() {
 
@@ -1789,42 +1977,42 @@ function showQuestion() {
     Progress
     */
 
-    document.getElementById(
-        "progress"
-    ).innerText =
+    document.getElementById("progress").innerText =
 
         "Question " +
 
-        (startQuestion +
-        currentQuestionIndex) +
+        originalQuestionNumbers[
+            currentQuestionIndex
+        ] +
+
+        " — " +
+
+        (
+            currentQuestionIndex + 1
+        ) +
 
         " of " +
 
-        endQuestion;
+        quizQuestions.length;
 
 
     /*
     Question text
     */
 
-    document.getElementById(
-        "questionText"
-    ).innerText =
-
+    document.getElementById("questionText").innerText =
         question.question;
 
 
     /*
-    Points
+    Total points
     */
 
     const points =
         getQuestionPoints(question);
 
 
-    document.getElementById(
-        "pointsText"
-    ).innerText =
+    document.getElementById("pointsText").innerText =
 
         "This question is worth " +
 
@@ -1846,71 +2034,101 @@ function showQuestion() {
     */
 
     const answerArea =
-        document.getElementById(
-            "answerArea"
-        );
+        document.getElementById("answerArea");
 
 
     answerArea.innerHTML = "";
 
 
-    /*
-    Multiple answer lines.
-    */
+    /* =====================================================
+       MULTIPLE ANSWERS
+    ===================================================== */
 
-    if (question.lines) {
-
-
-        question.lines.forEach(
-
-            function(line, index) {
-
-                const wrapper =
-                    document.createElement(
-                        "div"
-                    );
+    if (question.answers) {
 
 
-                wrapper.className =
-                    "answer-line";
+        question.answers.forEach(
+
+            function(answer, answerIndex) {
 
 
-                wrapper.innerHTML =
-
-                    "<div class='line-label'>" +
-
-                    "Answer " +
-
-                    (index + 1) +
-
-                    " — " +
-
-                    line.points +
-
-                    " point" +
-
-                    (
-                        line.points === 1
-                            ? ""
-                            : "s"
-                    ) +
-
-                    "</div>" +
-
-                    "<input " +
-
-                    "type='text' " +
-
-                    "id='answer-" +
-                    index +
-                    "' " +
-
-                    "placeholder='Type your answer...'>";
+                const section =
+                    document.createElement("div");
 
 
-                answerArea.appendChild(
-                    wrapper
-                );
+                section.className =
+                    "answer-section";
+
+
+                const number =
+                    document.createElement("div");
+
+
+                number.className =
+                    "answer-number";
+
+
+                number.innerText =
+                    (answerIndex + 1) + ")";
+
+
+                section.appendChild(number);
+
+
+                /*
+                Create however many lines
+                this answer requires.
+                */
+
+                const lineCount =
+                    answer.lines || 1;
+
+
+                for (
+                    let lineIndex = 0;
+                    lineIndex < lineCount;
+                    lineIndex++
+                ) {
+
+                    const line =
+                        document.createElement("div");
+
+
+                    line.className =
+                        "answer-line";
+
+
+                    const input =
+                        document.createElement("input");
+
+
+                    input.type = "text";
+
+
+                    input.id =
+
+                        "answer-" +
+
+                        answerIndex +
+
+                        "-" +
+
+                        lineIndex;
+
+
+                    input.placeholder =
+                        "Type your answer...";
+
+
+                    line.appendChild(input);
+
+
+                    section.appendChild(line);
+
+                }
+
+
+                answerArea.appendChild(section);
 
             }
 
@@ -1919,75 +2137,60 @@ function showQuestion() {
     }
 
 
-    /*
-    Single answer.
-    */
+    /* =====================================================
+       SINGLE ANSWER
+    ===================================================== */
 
     else {
 
-        answerArea.innerHTML =
+        const section =
+            document.createElement("div");
 
-            "<div class='answer-line'>" +
 
-            "<input " +
+        section.className =
+            "answer-section";
 
-            "type='text' " +
 
-            "id='answer-single' " +
+        const input =
+            document.createElement("input");
 
-            "placeholder='Type your answer...'>" +
 
-            "</div>";
+        input.type = "text";
+
+        input.id = "answer-single";
+
+        input.placeholder =
+            "Type your answer...";
+
+
+        section.appendChild(input);
+
+
+        answerArea.appendChild(section);
 
     }
 
 
     /*
-    Show previous result if
-    the question has already been checked.
+    Clear previous result.
     */
 
-    document.getElementById(
-        "result"
-    ).innerHTML = "";
+    document.getElementById("result").innerHTML = "";
 
 
     /*
-    If question was already checked,
-    restore the result.
+    Update sidebar.
     */
-
-    if (
-        questionStatuses[
-            currentQuestionIndex
-        ] === "correct" ||
-
-        questionStatuses[
-            currentQuestionIndex
-        ] === "wrong"
-    ) {
-
-        /*
-        We intentionally do not automatically
-        mark it again here.
-
-        User can answer it again and press Check.
-        */
-
-    }
-
 
     updateQuestionNavigation();
 
 
     /*
-    Put cursor in answer box.
+    Focus first answer box.
     */
 
     const firstInput =
-        answerArea.querySelector(
-            "input"
-        );
+        answerArea.querySelector("input");
 
 
     if (firstInput) {
@@ -2000,9 +2203,63 @@ function showQuestion() {
 
 
 
-/* =====================================================
+/* =========================================================
+   GET TEXT FROM MULTIPLE LINES
+========================================================= */
+
+function getMultipleLineAnswer(
+    answerIndex,
+    lineCount
+) {
+
+    let combined = "";
+
+
+    for (
+        let lineIndex = 0;
+        lineIndex < lineCount;
+        lineIndex++
+    ) {
+
+        const input =
+            document.getElementById(
+
+                "answer-" +
+
+                answerIndex +
+
+                "-" +
+
+                lineIndex
+
+            );
+
+
+        if (input) {
+
+            if (combined !== "") {
+
+                combined += " ";
+
+            }
+
+
+            combined += input.value;
+
+        }
+
+    }
+
+
+    return combined;
+
+}
+
+
+
+/* =========================================================
    CHECK ANSWER
-===================================================== */
+========================================================= */
 
 function checkAnswer() {
 
@@ -2012,42 +2269,41 @@ function checkAnswer() {
         ];
 
 
-    let score = 0;
-
     const maximumPoints =
         getQuestionPoints(question);
 
 
+    let score = 0;
+
     let resultHTML = "";
 
 
-    /*
-    =====================================================
-    MULTIPLE ANSWERS
-    =====================================================
-    */
+    /* =====================================================
+       MULTIPLE ANSWERS
+    ===================================================== */
 
-    if (question.lines) {
+    if (question.answers) {
 
 
-        question.lines.forEach(
+        question.answers.forEach(
 
-            function(line, index) {
+            function(answer, answerIndex) {
 
 
-                const input =
-                    document.getElementById(
-                        "answer-" + index
-                    );
+                const lineCount =
+                    answer.lines || 1;
 
 
                 const studentAnswer =
-                    input.value;
+                    getMultipleLineAnswer(
+                        answerIndex,
+                        lineCount
+                    );
 
 
                 const comparison =
                     compareWords(
-                        line.answer,
+                        answer.answer,
                         studentAnswer
                     );
 
@@ -2067,12 +2323,26 @@ function checkAnswer() {
                 }
 
 
+                /*
+                Partial marking.
+
+                Example:
+
+                2 correct words out of 4
+
+                3 point answer
+
+                = 1.5 points
+                */
+
                 const lineScore =
 
                     Math.round(
 
-                        line.points *
+                        answer.points *
+
                         percentage *
+
                         100
 
                     ) / 100;
@@ -2081,17 +2351,18 @@ function checkAnswer() {
                 score += lineScore;
 
 
+                const completelyCorrect =
+                    lineScore === answer.points;
+
+
                 resultHTML +=
 
                     "<div class='result " +
 
                     (
-                        lineScore === line.points
-
+                        completelyCorrect
                             ? "correct-result"
-
                             : "wrong-result"
-
                     ) +
 
                     "'>" +
@@ -2099,17 +2370,15 @@ function checkAnswer() {
 
                     "<strong>" +
 
-                    "Answer " +
+                    (answerIndex + 1) +
 
-                    (index + 1) +
-
-                    ": " +
+                    ") Score: " +
 
                     lineScore +
 
                     "/" +
 
-                    line.points +
+                    answer.points +
 
                     "</strong>" +
 
@@ -2122,7 +2391,7 @@ function checkAnswer() {
 
 
                     (
-                        lineScore < line.points
+                        !completelyCorrect
 
                             ?
 
@@ -2130,7 +2399,7 @@ function checkAnswer() {
 
                             "<strong>Correct answer:</strong><br>" +
 
-                            line.answer +
+                            answer.answer +
 
                             "</div>"
 
@@ -2139,6 +2408,7 @@ function checkAnswer() {
                             ""
 
                     ) +
+
 
                     "</div>";
 
@@ -2149,11 +2419,9 @@ function checkAnswer() {
     }
 
 
-    /*
-    =====================================================
-    SINGLE ANSWER
-    =====================================================
-    */
+    /* =====================================================
+       SINGLE ANSWER
+    ===================================================== */
 
     else {
 
@@ -2195,7 +2463,9 @@ function checkAnswer() {
             Math.round(
 
                 question.points *
+
                 percentage *
+
                 100
 
             ) / 100;
@@ -2207,19 +2477,14 @@ function checkAnswer() {
 
             (
                 score === question.points
-
                     ? "correct-result"
-
                     : "wrong-result"
-
             ) +
 
             "'>" +
 
 
-            "<strong>" +
-
-            "Score: " +
+            "<strong>Score: " +
 
             score +
 
@@ -2262,22 +2527,18 @@ function checkAnswer() {
     }
 
 
-    /*
-    =====================================================
-    SAVE SCORE
-    =====================================================
-    */
+    /* =====================================================
+       SAVE SCORE
+    ===================================================== */
 
     totalScore += score;
 
     totalPossiblePoints += maximumPoints;
 
 
-    /*
-    =====================================================
-    DETERMINE STATUS
-    =====================================================
-    */
+    /* =====================================================
+       STATUS
+    ===================================================== */
 
     if (
         score === maximumPoints
@@ -2296,16 +2557,14 @@ function checkAnswer() {
         ] = "wrong";
 
 
-        /*
-        Remember wrong question.
-        */
-
         if (
-            !wrongQuestions.includes(question)
+            !wrongQuestionIndices.includes(
+                currentQuestionIndex
+            )
         ) {
 
-            wrongQuestions.push(
-                question
+            wrongQuestionIndices.push(
+                currentQuestionIndex
             );
 
         }
@@ -2314,15 +2573,13 @@ function checkAnswer() {
 
 
     /*
-    =====================================================
-    IF IT WAS PREVIOUSLY SKIPPED,
-    REMOVE IT FROM SKIPPED LIST.
-    =====================================================
+    If previously skipped,
+    remove skipped status.
     */
 
     const skippedIndex =
-        skippedQuestions.indexOf(
-            question
+        skippedQuestionIndices.indexOf(
+            currentQuestionIndex
         );
 
 
@@ -2330,7 +2587,7 @@ function checkAnswer() {
         skippedIndex !== -1
     ) {
 
-        skippedQuestions.splice(
+        skippedQuestionIndices.splice(
             skippedIndex,
             1
         );
@@ -2339,14 +2596,10 @@ function checkAnswer() {
 
 
     /*
-    =====================================================
-    DISPLAY RESULT
-    =====================================================
+    Display result.
     */
 
-    document.getElementById(
-        "result"
-    ).innerHTML =
+    document.getElementById("result").innerHTML =
         resultHTML;
 
 
@@ -2356,20 +2609,14 @@ function checkAnswer() {
 
 
 
-/* =====================================================
+/* =========================================================
    NEXT / SKIP
-===================================================== */
+========================================================= */
 
 function nextQuestion() {
 
-    const question =
-        quizQuestions[
-            currentQuestionIndex
-        ];
-
-
     /*
-    If the question has not been checked,
+    If this question hasn't been checked,
     mark it as skipped.
     */
 
@@ -2385,13 +2632,13 @@ function nextQuestion() {
 
 
         if (
-            !skippedQuestions.includes(
-                question
+            !skippedQuestionIndices.includes(
+                currentQuestionIndex
             )
         ) {
 
-            skippedQuestions.push(
-                question
+            skippedQuestionIndices.push(
+                currentQuestionIndex
             );
 
         }
@@ -2400,11 +2647,7 @@ function nextQuestion() {
 
 
     /*
-    Find the next unanswered/skipped
-    question first.
-
-    This allows the user to move
-    through the quiz normally.
+    Find the next unanswered question.
     */
 
     let nextIndex = -1;
@@ -2434,16 +2677,18 @@ function nextQuestion() {
 
 
     /*
-    If there is no later unanswered
-    question, look from the beginning.
+    If no unanswered question is ahead,
+    look for skipped questions.
     */
 
-    if (nextIndex === -1) {
+    if (
+        nextIndex === -1
+    ) {
 
         for (
             let i = 0;
 
-            i < currentQuestionIndex;
+            i < quizQuestions.length;
 
             i++
         ) {
@@ -2484,7 +2729,7 @@ function nextQuestion() {
 
 
     /*
-    Nothing left to do.
+    Everything has been checked.
     */
 
     showFinalResult();
@@ -2493,20 +2738,20 @@ function nextQuestion() {
 
 
 
-/* =====================================================
+/* =========================================================
    FINAL RESULT
-===================================================== */
+========================================================= */
 
 function showFinalResult() {
 
-    document.getElementById(
-        "quizScreen"
-    ).classList.add("hidden");
+    document
+        .getElementById("quizScreen")
+        .classList.add("hidden");
 
 
-    document.getElementById(
-        "finalScreen"
-    ).classList.remove("hidden");
+    document
+        .getElementById("finalScreen")
+        .classList.remove("hidden");
 
 
     const percentage =
@@ -2525,9 +2770,7 @@ function showFinalResult() {
             0;
 
 
-    document.getElementById(
-        "finalScore"
-    ).innerText =
+    document.getElementById("finalScore").innerText =
 
         totalScore.toFixed(2) +
 
@@ -2536,9 +2779,7 @@ function showFinalResult() {
         totalPossiblePoints.toFixed(2);
 
 
-    document.getElementById(
-        "finalPercentage"
-    ).innerText =
+    document.getElementById("finalPercentage").innerText =
 
         "Score: " +
 
@@ -2547,25 +2788,21 @@ function showFinalResult() {
         "%";
 
 
-    /*
-    =====================================================
-    WRONG QUESTIONS
-    =====================================================
-    */
+    /* =====================================================
+       WRONG QUESTIONS
+    ===================================================== */
 
     const wrongSummary =
-        document.getElementById(
-            "wrongSummary"
-        );
+        document.getElementById("wrongSummary");
 
 
     if (
-        wrongQuestions.length === 0
+        wrongQuestionIndices.length === 0
     ) {
 
         wrongSummary.innerHTML =
 
-            "<h3>No Wrong Questions</h3>" +
+            "<h3>Wrong Questions</h3>" +
 
             "<p>Excellent! You answered everything correctly.</p>";
 
@@ -2577,26 +2814,32 @@ function showFinalResult() {
 
             "<h3>Wrong Questions</h3>" +
 
-            "<p>You can repeat these questions.</p>";
+            "<p>" +
+
+            wrongQuestionIndices.length +
+
+            " question(s) need revision.</p>";
 
 
-        wrongQuestions.forEach(
+        wrongQuestionIndices.forEach(
 
-            function(question, index) {
+            function(index) {
+
+                const question =
+                    quizQuestions[index];
+
 
                 html +=
 
-                    "<div class='wrong-item'>" +
+                    "<div class='summary-item'>" +
 
-                    "<strong>" +
+                    "<strong>Question " +
 
-                    (index + 1) +
+                    originalQuestionNumbers[index] +
 
-                    ". " +
+                    "</strong><br>" +
 
                     question.question +
-
-                    "</strong>" +
 
                     "</div>";
 
@@ -2611,25 +2854,23 @@ function showFinalResult() {
     }
 
 
-    /*
-    =====================================================
-    SKIPPED QUESTIONS
-    =====================================================
-    */
+    /* =====================================================
+       SKIPPED QUESTIONS
+    ===================================================== */
 
     const skippedSummary =
-        document.getElementById(
-            "skippedSummary"
-        );
+        document.getElementById("skippedSummary");
 
 
     if (
-        skippedQuestions.length === 0
+        skippedQuestionIndices.length === 0
     ) {
 
         skippedSummary.innerHTML =
 
-            "<h3>No Skipped Questions</h3>";
+            "<h3>Skipped Questions</h3>" +
+
+            "<p>No questions were skipped.</p>";
 
     }
 
@@ -2637,28 +2878,28 @@ function showFinalResult() {
 
         let html =
 
-            "<h3>Skipped Questions</h3>" +
-
-            "<p>These questions were not checked.</p>";
+            "<h3>Skipped Questions</h3>";
 
 
-        skippedQuestions.forEach(
+        skippedQuestionIndices.forEach(
 
-            function(question, index) {
+            function(index) {
+
+                const question =
+                    quizQuestions[index];
+
 
                 html +=
 
-                    "<div class='skipped-item'>" +
+                    "<div class='summary-item'>" +
 
-                    "<strong>" +
+                    "<strong>Question " +
 
-                    (index + 1) +
+                    originalQuestionNumbers[index] +
 
-                    ". " +
+                    "</strong><br>" +
 
                     question.question +
-
-                    "</strong>" +
 
                     "</div>";
 
@@ -2674,24 +2915,33 @@ function showFinalResult() {
 
 
     /*
-    Show/hide repeat button.
+    Repeat button.
     */
 
-    if (
-        wrongQuestions.length === 0
-    ) {
-
+    const repeatButton =
         document.getElementById(
             "repeatButton"
-        ).classList.add("hidden");
+        );
+
+
+    if (
+        wrongQuestionIndices.length === 0
+    ) {
+
+        repeatButton.classList.add(
+            "hidden"
+        );
 
     }
 
     else {
 
-        document.getElementById(
-            "repeatButton"
-        ).classList.remove("hidden");
+        repeatButton.classList.remove(
+            "hidden"
+        );
+
+        repeatButton.innerText =
+            "Repeat Wrong Questions";
 
     }
 
@@ -2699,29 +2949,59 @@ function showFinalResult() {
 
 
 
-/* =====================================================
+/* =========================================================
    REPEAT WRONG QUESTIONS
-===================================================== */
+========================================================= */
 
 function repeatWrongQuestions() {
 
     /*
-    Use ONLY the wrong questions.
+    Create a new quiz containing only
+    the wrong questions.
     */
+
+    const oldQuestions =
+        quizQuestions;
+
+
+    const oldNumbers =
+        originalQuestionNumbers;
+
 
     quizQuestions =
-        [...wrongQuestions];
+        wrongQuestionIndices.map(
+
+            function(index) {
+
+                return oldQuestions[index];
+
+            }
+
+        );
 
 
-    /*
-    The repeated questions now have
-    their own navigation range.
-    */
+    originalQuestionNumbers =
+        wrongQuestionIndices.map(
 
-    startQuestion = 1;
+            function(index) {
+
+                return oldNumbers[index];
+
+            }
+
+        );
+
+
+    startQuestion =
+        originalQuestionNumbers.length > 0
+            ? Math.min(...originalQuestionNumbers)
+            : 1;
+
 
     endQuestion =
-        quizQuestions.length;
+        originalQuestionNumbers.length > 0
+            ? Math.max(...originalQuestionNumbers)
+            : quizQuestions.length;
 
 
     currentQuestionIndex = 0;
@@ -2730,29 +3010,31 @@ function repeatWrongQuestions() {
 
     totalPossiblePoints = 0;
 
-    skippedQuestions = [];
+    skippedQuestionIndices = [];
 
-    wrongQuestions = [];
+    wrongQuestionIndices = [];
 
 
     questionStatuses =
         quizQuestions.map(
+
             function() {
 
                 return "unanswered";
 
             }
+
         );
 
 
-    document.getElementById(
-        "finalScreen"
-    ).classList.add("hidden");
+    document
+        .getElementById("finalScreen")
+        .classList.add("hidden");
 
 
-    document.getElementById(
-        "quizScreen"
-    ).classList.remove("hidden");
+    document
+        .getElementById("quizScreen")
+        .classList.remove("hidden");
 
 
     buildQuestionNavigation();
@@ -2763,13 +3045,11 @@ function repeatWrongQuestions() {
 
 
 
-/* =====================================================
-   RESTART
-===================================================== */
+/* =========================================================
+   RESTART QUIZ
+========================================================= */
 
 function restartQuiz() {
-
-    selectedQuestionCount = 0;
 
     quizQuestions = [];
 
@@ -2779,29 +3059,30 @@ function restartQuiz() {
 
     totalPossiblePoints = 0;
 
-    wrongQuestions = [];
+    wrongQuestionIndices = [];
 
-    skippedQuestions = [];
+    skippedQuestionIndices = [];
+
+    originalQuestionNumbers = [];
 
     questionStatuses = [];
 
 
-    document.getElementById(
-        "finalScreen"
-    ).classList.add("hidden");
+    document
+        .getElementById("finalScreen")
+        .classList.add("hidden");
 
 
-    document.getElementById(
-        "quizScreen"
-    ).classList.add("hidden");
+    document
+        .getElementById("quizScreen")
+        .classList.add("hidden");
 
 
-    document.getElementById(
-        "setupScreen"
-    ).classList.remove("hidden");
+    document
+        .getElementById("setupScreen")
+        .classList.remove("hidden");
 
 }
-
 
 </script>
 
