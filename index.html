@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Auto-Marking Questionnaire</title>
+    <title>Quiz & Revision System</title>
 
     <style>
+
         * {
             box-sizing: border-box;
         }
@@ -19,16 +22,16 @@
         }
 
         .container {
-            max-width: 850px;
-            margin: 50px auto;
+            max-width: 900px;
+            margin: 40px auto;
             padding: 20px;
         }
 
         .card {
             background: white;
             padding: 35px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
         }
 
         h1 {
@@ -42,24 +45,93 @@
             margin-bottom: 30px;
         }
 
+        .setup {
+            text-align: center;
+        }
+
+        .setup h2 {
+            margin-bottom: 10px;
+        }
+
+        .question-count {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 25px 0;
+        }
+
+        .count-button {
+            padding: 12px 22px;
+            border: 2px solid #ddd;
+            background: white;
+            color: #222;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .count-button:hover {
+            background: #f0f0f0;
+        }
+
+        .count-button.selected {
+            background: #222;
+            color: white;
+            border-color: #222;
+        }
+
+        .start-button,
+        .action-button {
+            padding: 13px 28px;
+            border: none;
+            border-radius: 8px;
+            background: #222;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .start-button:hover,
+        .action-button:hover {
+            background: #444;
+        }
+
         .progress {
-            margin-bottom: 25px;
             color: #666;
             font-size: 15px;
+            margin-bottom: 15px;
         }
 
         .question {
             font-size: 22px;
             font-weight: bold;
-            margin-bottom: 20px;
             line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .points {
+            color: #666;
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+
+        .answer-line {
+            margin-bottom: 15px;
+        }
+
+        .line-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
         }
 
         textarea {
             width: 100%;
-            min-height: 180px;
-            padding: 15px;
-            font-size: 17px;
+            min-height: 110px;
+            padding: 14px;
+            font-size: 16px;
             border: 2px solid #ddd;
             border-radius: 10px;
             resize: vertical;
@@ -71,8 +143,11 @@
             border-color: #555;
         }
 
-        button {
-            margin-top: 18px;
+        .single-answer {
+            min-height: 160px;
+        }
+
+        .submit-button {
             padding: 13px 28px;
             border: none;
             border-radius: 8px;
@@ -80,9 +155,10 @@
             color: white;
             font-size: 16px;
             cursor: pointer;
+            margin-top: 5px;
         }
 
-        button:hover {
+        .submit-button:hover {
             background: #444;
         }
 
@@ -93,14 +169,25 @@
             background: #f7f7f7;
         }
 
-        .question-score {
-            font-size: 20px;
+        .correct-result {
+            background: #edf8f0;
+            border-left: 5px solid #16803c;
+        }
+
+        .wrong-result {
+            background: #fff0f0;
+            border-left: 5px solid #d62828;
+        }
+
+        .score {
+            font-size: 22px;
             font-weight: bold;
             margin-bottom: 15px;
         }
 
         .word-results {
             line-height: 2;
+            margin-top: 10px;
         }
 
         .correct {
@@ -127,36 +214,73 @@
             margin-right: 8px;
         }
 
+        .correct-answer {
+            margin-top: 18px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .correct-answer strong {
+            color: #16803c;
+        }
+
         .final-result {
             text-align: center;
         }
 
         .final-score {
-            font-size: 38px;
+            font-size: 42px;
             font-weight: bold;
-            margin: 20px 0;
+            margin: 20px 0 10px;
         }
 
         .percentage {
-            font-size: 25px;
+            font-size: 26px;
             margin-bottom: 25px;
+        }
+
+        .wrong-summary {
+            text-align: left;
+            background: #fff0f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+        }
+
+        .wrong-summary h3 {
+            color: #d62828;
+        }
+
+        .wrong-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
         }
 
         .hidden {
             display: none;
         }
 
-        .instructions {
+        .info-box {
             background: #f1f1f1;
             padding: 15px;
             border-radius: 8px;
-            margin-bottom: 25px;
             line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         @media (max-width: 600px) {
+
             .container {
                 margin: 20px auto;
+                padding: 10px;
             }
 
             .card {
@@ -166,484 +290,1691 @@
             .question {
                 font-size: 19px;
             }
+
         }
+
     </style>
+
 </head>
 
+
 <body>
+
 
 <div class="container">
 
     <div class="card">
 
-        <h1>Auto-Marking Questionnaire</h1>
 
-        <p class="subtitle">
-            Type your answer and submit it for automatic marking.
-        </p>
+        <!-- =========================================
+             SETUP SCREEN
+        ========================================== -->
 
-        <div class="instructions">
-            <strong>Marking rules:</strong><br>
-            • Capitalisation is ignored.<br>
-            • Punctuation is ignored.<br>
-            • Extra spaces are ignored.<br>
-            • Each correct word receives one mark.
+        <div id="setupScreen">
+
+            <h1>Quiz & Revision System</h1>
+
+            <p class="subtitle">
+                Choose how many questions you want to answer.
+            </p>
+
+
+            <div class="info-box">
+
+                <strong>How marking works:</strong>
+
+                <br>
+
+                • Answers are checked word by word.
+                <br>
+
+                • Capitalisation does not matter.
+                <br>
+
+                • Punctuation does not matter.
+                <br>
+
+                • Extra spaces do not matter.
+                <br>
+
+                • Wrong questions are remembered for revision.
+
+            </div>
+
+
+            <div class="setup">
+
+                <h2>Select Number of Questions</h2>
+
+
+                <div class="question-count">
+
+                    <button
+                        class="count-button"
+                        onclick="selectQuestionCount(5, this)">
+                        5
+                    </button>
+
+                    <button
+                        class="count-button"
+                        onclick="selectQuestionCount(10, this)">
+                        10
+                    </button>
+
+                    <button
+                        class="count-button"
+                        onclick="selectQuestionCount(20, this)">
+                        20
+                    </button>
+
+                    <button
+                        class="count-button"
+                        onclick="selectQuestionCount(30, this)">
+                        30
+                    </button>
+
+                    <button
+                        class="count-button"
+                        onclick="selectQuestionCount(40, this)">
+                        40
+                    </button>
+
+                </div>
+
+
+                <p id="selectionMessage">
+                    Please select the number of questions.
+                </p>
+
+
+                <button
+                    class="start-button"
+                    onclick="startQuiz()">
+
+                    Start Quiz
+
+                </button>
+
+            </div>
+
         </div>
 
-        <!-- QUIZ -->
-        <div id="quiz">
 
-            <div class="progress" id="progress"></div>
 
-            <div class="question" id="questionText"></div>
+        <!-- =========================================
+             QUIZ SCREEN
+        ========================================== -->
 
-            <textarea
-                id="answerInput"
-                placeholder="Type your answer here..."
-            ></textarea>
+        <div id="quizScreen" class="hidden">
 
-            <button id="submitButton" onclick="submitAnswer()">
+            <div
+                class="progress"
+                id="progress">
+            </div>
+
+
+            <div
+                class="question"
+                id="questionText">
+            </div>
+
+
+            <div
+                class="points"
+                id="pointsText">
+            </div>
+
+
+            <div id="answerArea">
+            </div>
+
+
+            <button
+                class="submit-button"
+                id="submitButton"
+                onclick="submitAnswer()">
+
                 Submit Answer
+
             </button>
 
-            <div id="result"></div>
+
+            <div id="result">
+            </div>
 
         </div>
 
 
-        <!-- FINAL RESULT -->
-        <div id="finalResult" class="final-result hidden">
 
-            <h2>Quiz Complete!</h2>
+        <!-- =========================================
+             FINAL RESULT SCREEN
+        ========================================== -->
 
-            <div class="final-score" id="finalScore"></div>
+        <div
+            id="finalScreen"
+            class="final-result hidden">
 
-            <div class="percentage" id="finalPercentage"></div>
+            <h1>Quiz Complete!</h1>
 
-            <button onclick="restartQuiz()">
-                Try Again
-            </button>
+
+            <div
+                class="final-score"
+                id="finalScore">
+            </div>
+
+
+            <div
+                class="percentage"
+                id="finalPercentage">
+            </div>
+
+
+            <div
+                id="wrongSummary">
+            </div>
+
+
+            <div class="button-group">
+
+                <button
+                    class="action-button"
+                    id="repeatButton"
+                    onclick="repeatWrongQuestions()">
+
+                    Repeat Wrong Questions
+
+                </button>
+
+
+                <button
+                    class="action-button"
+                    onclick="restartQuiz()">
+
+                    Start New Quiz
+
+                </button>
+
+            </div>
 
         </div>
+
 
     </div>
 
 </div>
 
 
+
 <script>
 
-    /*
-    ==================================================
-    QUESTIONS
-    ==================================================
 
-    CHANGE THESE QUESTIONS AND ANSWERS TO YOUR OWN.
+/*
+======================================================
+QUESTION DATABASE
+======================================================
 
-    The "answer" is the correct answer used for marking.
-    ==================================================
-    */
+IMPORTANT:
 
-    const questions = [
+You can have up to 40 questions here.
 
+Each question can be:
+
+1. A SINGLE answer
+
+OR
+
+2. Multiple answer lines
+
+------------------------------------------------------
+
+SINGLE ANSWER EXAMPLE:
+
+{
+    question: "What does AI stand for?",
+    points: 2,
+    answer: "Artificial Intelligence"
+}
+
+------------------------------------------------------
+
+MULTI-LINE ANSWER EXAMPLE:
+
+{
+    question: "List three benefits of AI.",
+    points: 3,
+
+    lines: [
         {
-            question: "What is the capital city of Australia?",
-            answer: "Canberra"
+            answer: "Improves efficiency",
+            points: 1
         },
 
         {
-            question: "What does AI stand for?",
-            answer: "Artificial Intelligence"
+            answer: "Reduces human error",
+            points: 1
         },
 
         {
-            question: "What is machine learning?",
-            answer: "Machine learning is a type of artificial intelligence that allows computers to learn from data"
-        },
-
-        {
-            question: "What is algorithmic bias?",
-            answer: "Algorithmic bias occurs when an algorithm produces systematically unfair outcomes"
-        },
-
-        {
-            question: "What is cybersecurity?",
-            answer: "Cybersecurity is the practice of protecting systems networks and programs from digital attacks"
+            answer: "Automates repetitive tasks",
+            points: 1
         }
+    ]
+}
 
-    ];
+======================================================
+*/
+
+
+const questions = [
+
+    /*
+    QUESTION 1
+    */
+
+    {
+        question: "What is the capital city of Australia?",
+        points: 1,
+        answer: "Canberra"
+    },
 
 
     /*
-    ==================================================
-    VARIABLES
-    ==================================================
+    QUESTION 2
     */
 
-    let currentQuestion = 0;
-
-    let totalScore = 0;
-
-    let totalPossibleMarks = 0;
+    {
+        question: "What does AI stand for?",
+        points: 2,
+        answer: "Artificial Intelligence"
+    },
 
 
     /*
-    ==================================================
-    NORMALISE TEXT
-    ==================================================
-
-    This function:
-
-    1. Converts text to lowercase.
-    2. Removes punctuation.
-    3. Converts multiple spaces into one space.
-    4. Removes spaces at the beginning and end.
-    ==================================================
+    QUESTION 3
     */
 
-    function normalizeText(text) {
-
-        return text
-            .toLowerCase()
-
-            // Remove punctuation
-            .replace(/[.,!?;:'"()[\]{}\-_/\\]/g, " ")
-
-            // Convert multiple spaces to one
-            .replace(/\s+/g, " ")
-
-            // Remove beginning/end spaces
-            .trim();
-    }
+    {
+        question: "What is machine learning?",
+        points: 3,
+        answer: "Machine learning is a type of artificial intelligence that allows computers to learn from data"
+    },
 
 
     /*
-    ==================================================
-    SHOW QUESTION
-    ==================================================
+    QUESTION 4
+    Multiple lines
     */
 
-    function showQuestion() {
+    {
+        question: "List three benefits of artificial intelligence in recruitment.",
+        points: 3,
 
-        if (currentQuestion >= questions.length) {
+        lines: [
 
-            showFinalResult();
+            {
+                answer: "Faster candidate screening",
+                points: 1
+            },
 
-            return;
-        }
+            {
+                answer: "Improved recruitment efficiency",
+                points: 1
+            },
 
-        document.getElementById("progress").innerText =
-            "Question " +
-            (currentQuestion + 1) +
-            " of " +
-            questions.length;
-
-
-        document.getElementById("questionText").innerText =
-            questions[currentQuestion].question;
-
-
-        document.getElementById("answerInput").value = "";
-
-        document.getElementById("result").innerHTML = "";
-
-        document.getElementById("submitButton").innerText =
-            "Submit Answer";
-    }
-
-
-    /*
-    ==================================================
-    SUBMIT ANSWER
-    ==================================================
-    */
-
-    function submitAnswer() {
-
-        const correctAnswer =
-            normalizeText(
-                questions[currentQuestion].answer
-            );
-
-
-        const studentAnswer =
-            normalizeText(
-                document.getElementById("answerInput").value
-            );
-
-
-        /*
-        Convert answers into arrays of words.
-        */
-
-        const correctWords =
-            correctAnswer === ""
-                ? []
-                : correctAnswer.split(" ");
-
-
-        const studentWords =
-            studentAnswer === ""
-                ? []
-                : studentAnswer.split(" ");
-
-
-        /*
-        The maximum mark is the number
-        of words in the correct answer.
-        */
-
-        const maximumMark = correctWords.length;
-
-
-        let score = 0;
-
-
-        let resultHTML =
-            "<div class='result'>";
-
-
-        resultHTML +=
-            "<div class='question-score'>" +
-            "Question Score: 0/" +
-            maximumMark +
-            "</div>";
-
-
-        resultHTML +=
-            "<div class='word-results'>";
-
-
-        /*
-        ==================================================
-        WORD-BY-WORD COMPARISON
-        ==================================================
-        */
-
-        for (let i = 0; i < correctWords.length; i++) {
-
-            const correctWord =
-                correctWords[i];
-
-            const studentWord =
-                studentWords[i];
-
-
-            /*
-            Correct word
-            */
-
-            if (studentWord === correctWord) {
-
-                score++;
-
-                resultHTML +=
-                    "<span class='correct'>" +
-                    correctWord +
-                    " ✓</span>";
-
+            {
+                answer: "Reduced administrative workload",
+                points: 1
             }
 
-            /*
-            Missing or incorrect word
-            */
+        ]
+    },
 
-            else {
 
-                resultHTML +=
-                    "<span class='incorrect'>" +
-                    correctWord +
-                    " ✗</span>";
+    /*
+    QUESTION 5
+    */
 
+    {
+        question: "What is algorithmic bias?",
+        points: 2,
+        answer: "Algorithmic bias occurs when an algorithm produces systematically unfair outcomes"
+    },
+
+
+    /*
+    QUESTION 6
+    Multiple lines
+    */
+
+    {
+        question: "Name three common sources of bias in AI hiring systems.",
+        points: 3,
+
+        lines: [
+
+            {
+                answer: "Historical hiring data",
+                points: 1
+            },
+
+            {
+                answer: "Biased training data",
+                points: 1
+            },
+
+            {
+                answer: "Human decision making",
+                points: 1
             }
 
-        }
+        ]
+    },
 
 
-        /*
-        ==================================================
-        EXTRA WORDS
-        ==================================================
-        */
+    /*
+    QUESTION 7
+    */
 
-        if (studentWords.length > correctWords.length) {
-
-            resultHTML +=
-                "<br><br><strong>Extra words:</strong><br>";
-
-            for (
-                let i = correctWords.length;
-                i < studentWords.length;
-                i++
-            ) {
-
-                resultHTML +=
-                    "<span class='extra'>" +
-                    studentWords[i] +
-                    " +</span>";
-
-            }
-
-        }
+    {
+        question: "What is cybersecurity?",
+        points: 2,
+        answer: "Cybersecurity is the practice of protecting systems networks and programs from digital attacks"
+    },
 
 
-        /*
-        Calculate percentage.
-        */
+    /*
+    QUESTION 8
+    */
 
-        let percentage = 0;
-
-        if (maximumMark > 0) {
-
-            percentage =
-                (score / maximumMark) * 100;
-
-        }
+    {
+        question: "What is fairness in artificial intelligence?",
+        points: 2,
+        answer: "Fairness in artificial intelligence means ensuring that systems do not produce unjust or discriminatory outcomes"
+    },
 
 
-        /*
-        Display score.
-        */
+    /*
+    QUESTION 9
+    */
 
-        resultHTML += "</div>";
-
-
-        resultHTML +=
-            "<div class='question-score'>" +
-            "Score: " +
-            score +
-            "/" +
-            maximumMark +
-            " (" +
-            percentage.toFixed(1) +
-            "%)" +
-            "</div>";
+    {
+        question: "What is explainable AI?",
+        points: 2,
+        answer: "Explainable AI refers to methods that make the decisions of artificial intelligence systems understandable to humans"
+    },
 
 
-        resultHTML += "</div>";
+    /*
+    QUESTION 10
+    */
+
+    {
+        question: "What is data bias?",
+        points: 2,
+        answer: "Data bias occurs when training data does not fairly represent the population or contains systematic errors"
+    },
 
 
-        document.getElementById("result").innerHTML =
-            resultHTML;
+    /*
+    QUESTIONS 11 - 40
+
+    Replace these examples with your own questions.
+
+    You can copy the structure above.
+    */
 
 
-        /*
-        Add score to overall score.
-        */
+    {
+        question: "Example Question 11",
+        points: 1,
+        answer: "Example answer eleven"
+    },
 
-        totalScore += score;
+    {
+        question: "Example Question 12",
+        points: 1,
+        answer: "Example answer twelve"
+    },
 
-        totalPossibleMarks += maximumMark;
+    {
+        question: "Example Question 13",
+        points: 1,
+        answer: "Example answer thirteen"
+    },
+
+    {
+        question: "Example Question 14",
+        points: 1,
+        answer: "Example answer fourteen"
+    },
+
+    {
+        question: "Example Question 15",
+        points: 1,
+        answer: "Example answer fifteen"
+    },
+
+    {
+        question: "Example Question 16",
+        points: 1,
+        answer: "Example answer sixteen"
+    },
+
+    {
+        question: "Example Question 17",
+        points: 1,
+        answer: "Example answer seventeen"
+    },
+
+    {
+        question: "Example Question 18",
+        points: 1,
+        answer: "Example answer eighteen"
+    },
+
+    {
+        question: "Example Question 19",
+        points: 1,
+        answer: "Example answer nineteen"
+    },
+
+    {
+        question: "Example Question 20",
+        points: 1,
+        answer: "Example answer twenty"
+    },
+
+    {
+        question: "Example Question 21",
+        points: 1,
+        answer: "Example answer twenty one"
+    },
+
+    {
+        question: "Example Question 22",
+        points: 1,
+        answer: "Example answer twenty two"
+    },
+
+    {
+        question: "Example Question 23",
+        points: 1,
+        answer: "Example answer twenty three"
+    },
+
+    {
+        question: "Example Question 24",
+        points: 1,
+        answer: "Example answer twenty four"
+    },
+
+    {
+        question: "Example Question 25",
+        points: 1,
+        answer: "Example answer twenty five"
+    },
+
+    {
+        question: "Example Question 26",
+        points: 1,
+        answer: "Example answer twenty six"
+    },
+
+    {
+        question: "Example Question 27",
+        points: 1,
+        answer: "Example answer twenty seven"
+    },
+
+    {
+        question: "Example Question 28",
+        points: 1,
+        answer: "Example answer twenty eight"
+    },
+
+    {
+        question: "Example Question 29",
+        points: 1,
+        answer: "Example answer twenty nine"
+    },
+
+    {
+        question: "Example Question 30",
+        points: 1,
+        answer: "Example answer thirty"
+    },
+
+    {
+        question: "Example Question 31",
+        points: 1,
+        answer: "Example answer thirty one"
+    },
+
+    {
+        question: "Example Question 32",
+        points: 1,
+        answer: "Example answer thirty two"
+    },
+
+    {
+        question: "Example Question 33",
+        points: 1,
+        answer: "Example answer thirty three"
+    },
+
+    {
+        question: "Example Question 34",
+        points: 1,
+        answer: "Example answer thirty four"
+    },
+
+    {
+        question: "Example Question 35",
+        points: 1,
+        answer: "Example answer thirty five"
+    },
+
+    {
+        question: "Example Question 36",
+        points: 1,
+        answer: "Example answer thirty six"
+    },
+
+    {
+        question: "Example Question 37",
+        points: 1,
+        answer: "Example answer thirty seven"
+    },
+
+    {
+        question: "Example Question 38",
+        points: 1,
+        answer: "Example answer thirty eight"
+    },
+
+    {
+        question: "Example Question 39",
+        points: 1,
+        answer: "Example answer thirty nine"
+    },
+
+    {
+        question: "Example Question 40",
+        points: 1,
+        answer: "Example answer forty"
+    }
+
+];
 
 
-        /*
-        Change button to Next Question.
-        */
 
-        const button =
-            document.getElementById("submitButton");
+/*
+======================================================
+VARIABLES
+======================================================
+*/
+
+let selectedQuestionCount = 0;
+
+let quizQuestions = [];
+
+let currentQuestionIndex = 0;
+
+let totalScore = 0;
+
+let totalPossiblePoints = 0;
+
+let wrongQuestions = [];
+
+let currentQuestionScore = 0;
 
 
-        button.innerText =
-            currentQuestion === questions.length - 1
-                ? "Finish Quiz"
-                : "Next Question";
+
+/*
+======================================================
+SELECT NUMBER OF QUESTIONS
+======================================================
+*/
+
+function selectQuestionCount(count, button) {
+
+    selectedQuestionCount = count;
 
 
-        button.onclick =
-            nextQuestion;
+    const buttons =
+        document.querySelectorAll(".count-button");
+
+
+    buttons.forEach(function(btn) {
+
+        btn.classList.remove("selected");
+
+    });
+
+
+    button.classList.add("selected");
+
+
+    document.getElementById("selectionMessage").innerText =
+        count + " questions selected.";
+
+}
+
+
+
+/*
+======================================================
+SHUFFLE QUESTIONS
+======================================================
+*/
+
+function shuffleArray(array) {
+
+    const newArray = [...array];
+
+
+    for (
+        let i = newArray.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(Math.random() * (i + 1));
+
+
+        [
+            newArray[i],
+            newArray[j]
+        ] =
+        [
+            newArray[j],
+            newArray[i]
+        ];
+
+    }
+
+
+    return newArray;
+
+}
+
+
+
+/*
+======================================================
+START QUIZ
+======================================================
+*/
+
+function startQuiz() {
+
+    if (selectedQuestionCount === 0) {
+
+        alert("Please select the number of questions first.");
+
+        return;
 
     }
 
 
     /*
-    ==================================================
-    NEXT QUESTION
-    ==================================================
+    Randomly select questions.
     */
 
-    function nextQuestion() {
-
-        currentQuestion++;
-
-        showQuestion();
-
-    }
+    quizQuestions =
+        shuffleArray(questions)
+        .slice(0, selectedQuestionCount);
 
 
-    /*
-    ==================================================
-    FINAL RESULT
-    ==================================================
-    */
+    currentQuestionIndex = 0;
 
-    function showFinalResult() {
+    totalScore = 0;
 
-        document.getElementById("quiz")
-            .classList.add("hidden");
+    totalPossiblePoints = 0;
+
+    wrongQuestions = [];
 
 
-        document.getElementById("finalResult")
-            .classList.remove("hidden");
+    document.getElementById("setupScreen")
+        .classList.add("hidden");
 
 
-        const percentage =
-            totalPossibleMarks > 0
-                ? (totalScore / totalPossibleMarks) * 100
-                : 0;
+    document.getElementById("finalScreen")
+        .classList.add("hidden");
 
 
-        document.getElementById("finalScore").innerText =
-            totalScore +
-            " / " +
-            totalPossibleMarks;
+    document.getElementById("quizScreen")
+        .classList.remove("hidden");
 
-
-        document.getElementById("finalPercentage").innerText =
-            "Overall Score: " +
-            percentage.toFixed(1) +
-            "%";
-
-    }
-
-
-    /*
-    ==================================================
-    RESTART QUIZ
-    ==================================================
-    */
-
-    function restartQuiz() {
-
-        currentQuestion = 0;
-
-        totalScore = 0;
-
-        totalPossibleMarks = 0;
-
-
-        document.getElementById("quiz")
-            .classList.remove("hidden");
-
-
-        document.getElementById("finalResult")
-            .classList.add("hidden");
-
-
-        showQuestion();
-
-    }
-
-
-    /*
-    ==================================================
-    START QUESTIONNAIRE
-    ==================================================
-    */
 
     showQuestion();
 
+}
+
+
+
+/*
+======================================================
+NORMALISE TEXT
+======================================================
+
+This removes:
+
+- Capitalisation differences
+- Punctuation
+- Extra spaces
+======================================================
+*/
+
+function normalizeText(text) {
+
+    return text
+
+        .toLowerCase()
+
+        /*
+        Replace punctuation with spaces.
+        */
+
+        .replace(/[.,!?;:'"()[\]{}\-_/\\]/g, " ")
+
+        /*
+        Remove excessive spaces.
+        */
+
+        .replace(/\s+/g, " ")
+
+        /*
+        Remove spaces at beginning/end.
+        */
+
+        .trim();
+
+}
+
+
+
+/*
+======================================================
+COMPARE WORDS
+======================================================
+*/
+
+function compareWords(correctText, studentText) {
+
+    const correctWords =
+        normalizeText(correctText) === ""
+            ? []
+            : normalizeText(correctText).split(" ");
+
+
+    const studentWords =
+        normalizeText(studentText) === ""
+            ? []
+            : normalizeText(studentText).split(" ");
+
+
+    let correctCount = 0;
+
+
+    let resultHTML = "";
+
+
+    /*
+    Compare each correct word
+    with the student's word in
+    the same position.
+    */
+
+    for (
+        let i = 0;
+        i < correctWords.length;
+        i++
+    ) {
+
+        const correctWord =
+            correctWords[i];
+
+
+        const studentWord =
+            studentWords[i];
+
+
+        if (studentWord === correctWord) {
+
+            correctCount++;
+
+
+            resultHTML +=
+                "<span class='correct'>" +
+                correctWord +
+                " ✓</span>";
+
+        }
+
+        else {
+
+            resultHTML +=
+                "<span class='incorrect'>" +
+                correctWord +
+                " ✗</span>";
+
+        }
+
+    }
+
+
+    /*
+    Show extra student words.
+    */
+
+    if (
+        studentWords.length >
+        correctWords.length
+    ) {
+
+        resultHTML +=
+            "<br><br><strong>Extra words:</strong><br>";
+
+
+        for (
+            let i = correctWords.length;
+            i < studentWords.length;
+            i++
+        ) {
+
+            resultHTML +=
+                "<span class='extra'>" +
+                studentWords[i] +
+                " +</span>";
+
+        }
+
+    }
+
+
+    return {
+
+        correctCount:
+            correctCount,
+
+        totalWords:
+            correctWords.length,
+
+        resultHTML:
+            resultHTML
+
+    };
+
+}
+
+
+
+/*
+======================================================
+SHOW QUESTION
+======================================================
+*/
+
+function showQuestion() {
+
+    if (
+        currentQuestionIndex >=
+        quizQuestions.length
+    ) {
+
+        showFinalResult();
+
+        return;
+
+    }
+
+
+    const question =
+        quizQuestions[currentQuestionIndex];
+
+
+    currentQuestionScore = 0;
+
+
+    document.getElementById("progress").innerText =
+
+        "Question " +
+        (currentQuestionIndex + 1) +
+        " of " +
+        quizQuestions.length;
+
+
+    document.getElementById("questionText").innerText =
+        question.question;
+
+
+    /*
+    Display points.
+    */
+
+    const questionPoints =
+        getQuestionPoints(question);
+
+
+    document.getElementById("pointsText").innerText =
+
+        "This question is worth " +
+        questionPoints +
+        " point" +
+        (questionPoints === 1 ? "" : "s") +
+        ".";
+
+
+    /*
+    Create answer boxes.
+    */
+
+    const answerArea =
+        document.getElementById("answerArea");
+
+
+    answerArea.innerHTML = "";
+
+
+    /*
+    Multiple-line question.
+    */
+
+    if (question.lines) {
+
+
+        question.lines.forEach(
+            function(line, index) {
+
+
+                const wrapper =
+                    document.createElement("div");
+
+
+                wrapper.className =
+                    "answer-line";
+
+
+                wrapper.innerHTML =
+
+                    "<div class='line-label'>" +
+
+                    "Line " +
+                    (index + 1) +
+                    " — " +
+                    line.points +
+                    " point" +
+                    (line.points === 1 ? "" : "s") +
+
+                    "</div>" +
+
+                    "<textarea " +
+
+                    "id='answer-" +
+                    index +
+                    "'" +
+
+                    " placeholder='Type your answer here...'>" +
+
+                    "</textarea>";
+
+
+                answerArea.appendChild(wrapper);
+
+            }
+        );
+
+    }
+
+
+    /*
+    Single-answer question.
+    */
+
+    else {
+
+        answerArea.innerHTML =
+
+            "<textarea " +
+
+            "id='answer-single' " +
+
+            "class='single-answer' " +
+
+            "placeholder='Type your answer here...'>" +
+
+            "</textarea>";
+
+    }
+
+
+    document.getElementById("result").innerHTML = "";
+
+
+    document.getElementById("submitButton").innerText =
+        "Submit Answer";
+
+
+    document.getElementById("submitButton").disabled =
+        false;
+
+}
+
+
+
+/*
+======================================================
+GET QUESTION POINTS
+======================================================
+*/
+
+function getQuestionPoints(question) {
+
+    if (question.lines) {
+
+        return question.lines.reduce(
+
+            function(total, line) {
+
+                return total + line.points;
+
+            },
+
+            0
+
+        );
+
+    }
+
+
+    return question.points || 1;
+
+}
+
+
+
+/*
+======================================================
+SUBMIT ANSWER
+======================================================
+*/
+
+function submitAnswer() {
+
+    const question =
+        quizQuestions[currentQuestionIndex];
+
+
+    let score = 0;
+
+    let maximumPoints =
+        getQuestionPoints(question);
+
+
+    let resultHTML = "";
+
+
+    /*
+    ================================================
+    MULTI-LINE QUESTION
+    ================================================
+    */
+
+    if (question.lines) {
+
+
+        question.lines.forEach(
+
+            function(line, index) {
+
+
+                const studentAnswer =
+                    document.getElementById(
+                        "answer-" + index
+                    ).value;
+
+
+                const comparison =
+                    compareWords(
+                        line.answer,
+                        studentAnswer
+                    );
+
+
+                /*
+                Calculate word percentage.
+                */
+
+                let wordPercentage = 0;
+
+
+                if (comparison.totalWords > 0) {
+
+                    wordPercentage =
+                        comparison.correctCount /
+                        comparison.totalWords;
+
+                }
+
+
+                /*
+                Give points based on
+                correct word percentage.
+                */
+
+                const lineScore =
+                    Math.round(
+                        line.points *
+                        wordPercentage *
+                        100
+                    ) / 100;
+
+
+                score += lineScore;
+
+
+                resultHTML +=
+
+                    "<div class='result " +
+
+                    (
+                        lineScore === line.points
+                            ? "correct-result"
+                            : "wrong-result"
+                    ) +
+
+                    "'>" +
+
+                    "<strong>" +
+
+                    "Line " +
+                    (index + 1) +
+
+                    ": " +
+
+                    lineScore +
+                    "/" +
+                    line.points +
+
+                    "</strong>" +
+
+                    "<div class='word-results'>" +
+
+                    comparison.resultHTML +
+
+                    "</div>" +
+
+
+                    (
+                        lineScore < line.points
+
+                        ?
+
+                        "<div class='correct-answer'>" +
+
+                        "<strong>Correct answer:</strong><br>" +
+
+                        line.answer +
+
+                        "</div>"
+
+                        :
+
+                        ""
+
+                    ) +
+
+                    "</div>";
+
+            }
+
+        );
+
+    }
+
+
+    /*
+    ================================================
+    SINGLE-ANSWER QUESTION
+    ================================================
+    */
+
+    else {
+
+
+        const studentAnswer =
+            document.getElementById(
+                "answer-single"
+            ).value;
+
+
+        const comparison =
+            compareWords(
+                question.answer,
+                studentAnswer
+            );
+
+
+        /*
+        Calculate percentage based
+        on correct words.
+        */
+
+        let wordPercentage = 0;
+
+
+        if (comparison.totalWords > 0) {
+
+            wordPercentage =
+                comparison.correctCount /
+                comparison.totalWords;
+
+        }
+
+
+        /*
+        Calculate question score.
+        */
+
+        score =
+            Math.round(
+                question.points *
+                wordPercentage *
+                100
+            ) / 100;
+
+
+        resultHTML =
+
+            "<div class='result " +
+
+            (
+                score === question.points
+                    ? "correct-result"
+                    : "wrong-result"
+            ) +
+
+            "'>" +
+
+            "<div class='score'>" +
+
+            "Score: " +
+            score +
+            "/" +
+            question.points +
+
+            "</div>" +
+
+
+            "<div class='word-results'>" +
+
+            comparison.resultHTML +
+
+            "</div>" +
+
+
+            (
+                score < question.points
+
+                ?
+
+                "<div class='correct-answer'>" +
+
+                "<strong>Correct answer:</strong><br>" +
+
+                question.answer +
+
+                "</div>"
+
+                :
+
+                ""
+
+            ) +
+
+            "</div>";
+
+    }
+
+
+    /*
+    ================================================
+    SAVE SCORE
+    ================================================
+    */
+
+    currentQuestionScore = score;
+
+
+    totalScore += score;
+
+
+    totalPossiblePoints += maximumPoints;
+
+
+    /*
+    ================================================
+    REMEMBER WRONG QUESTION
+    ================================================
+    */
+
+    if (score < maximumPoints) {
+
+
+        /*
+        Only add it once.
+        */
+
+        if (
+            !wrongQuestions.includes(question)
+        ) {
+
+            wrongQuestions.push(question);
+
+        }
+
+    }
+
+
+    /*
+    ================================================
+    DISPLAY RESULT
+    ================================================
+    */
+
+    document.getElementById("result").innerHTML =
+        resultHTML;
+
+
+    /*
+    Disable submit button.
+    */
+
+    document.getElementById("submitButton").innerText =
+
+        currentQuestionIndex ===
+        quizQuestions.length - 1
+
+            ? "Finish Quiz"
+
+            : "Next Question";
+
+
+    document.getElementById("submitButton").onclick =
+        nextQuestion;
+
+}
+
+
+
+/*
+======================================================
+NEXT QUESTION
+======================================================
+*/
+
+function nextQuestion() {
+
+    currentQuestionIndex++;
+
+    showQuestion();
+
+}
+
+
+
+/*
+======================================================
+FINAL RESULT
+======================================================
+*/
+
+function showFinalResult() {
+
+    document.getElementById("quizScreen")
+        .classList.add("hidden");
+
+
+    document.getElementById("finalScreen")
+        .classList.remove("hidden");
+
+
+    const percentage =
+
+        totalPossiblePoints > 0
+
+            ?
+
+            (totalScore /
+             totalPossiblePoints) *
+            100
+
+            :
+
+            0;
+
+
+    document.getElementById("finalScore").innerText =
+
+        totalScore +
+        " / " +
+        totalPossiblePoints;
+
+
+    document.getElementById("finalPercentage").innerText =
+
+        "Overall Score: " +
+        percentage.toFixed(1) +
+        "%";
+
+
+    /*
+    ================================================
+    WRONG QUESTION SUMMARY
+    ================================================
+    */
+
+    const summary =
+        document.getElementById(
+            "wrongSummary"
+        );
+
+
+    if (wrongQuestions.length === 0) {
+
+        summary.innerHTML =
+
+            "<div class='result correct-result'>" +
+
+            "<h3>Excellent!</h3>" +
+
+            "<p>You answered all questions correctly.</p>" +
+
+            "</div>";
+
+
+        document.getElementById(
+            "repeatButton"
+        ).classList.add("hidden");
+
+
+        return;
+
+    }
+
+
+    /*
+    Display wrong questions.
+    */
+
+    let summaryHTML =
+
+        "<div class='wrong-summary'>" +
+
+        "<h3>Wrong Questions: " +
+
+        wrongQuestions.length +
+
+        "</h3>" +
+
+
+        "<p>" +
+
+        "These questions can be repeated for revision." +
+
+        "</p>";
+
+
+    wrongQuestions.forEach(
+
+        function(question, index) {
+
+            summaryHTML +=
+
+                "<div class='wrong-item'>" +
+
+                "<strong>" +
+
+                (index + 1) +
+
+                ". " +
+
+                question.question +
+
+                "</strong>" +
+
+                "</div>";
+
+        }
+
+    );
+
+
+    summaryHTML += "</div>";
+
+
+    summary.innerHTML =
+        summaryHTML;
+
+
+    document.getElementById(
+        "repeatButton"
+    ).classList.remove("hidden");
+
+}
+
+
+
+/*
+======================================================
+REPEAT WRONG QUESTIONS
+======================================================
+*/
+
+function repeatWrongQuestions() {
+
+    /*
+    Put wrong questions into the quiz.
+    */
+
+    quizQuestions =
+        shuffleArray(wrongQuestions);
+
+
+    currentQuestionIndex = 0;
+
+
+    /*
+    IMPORTANT:
+
+    We keep the previous score separate.
+
+    The repeat session is treated as
+    a new revision attempt.
+    */
+
+    totalScore = 0;
+
+    totalPossiblePoints = 0;
+
+
+    wrongQuestions = [];
+
+
+    document.getElementById("finalScreen")
+        .classList.add("hidden");
+
+
+    document.getElementById("quizScreen")
+        .classList.remove("hidden");
+
+
+    showQuestion();
+
+}
+
+
+
+/*
+======================================================
+RESTART
+======================================================
+*/
+
+function restartQuiz() {
+
+    selectedQuestionCount = 0;
+
+    quizQuestions = [];
+
+    currentQuestionIndex = 0;
+
+    totalScore = 0;
+
+    totalPossiblePoints = 0;
+
+    wrongQuestions = [];
+
+
+    document.getElementById("finalScreen")
+        .classList.add("hidden");
+
+
+    document.getElementById("quizScreen")
+        .classList.add("hidden");
+
+
+    document.getElementById("setupScreen")
+        .classList.remove("hidden");
+
+
+    document.getElementById("selectionMessage").innerText =
+
+        "Please select the number of questions.";
+
+
+    document.querySelectorAll(
+        ".count-button"
+    ).forEach(
+
+        function(button) {
+
+            button.classList.remove(
+                "selected"
+            );
+
+        }
+
+    );
+
+}
+
+
 </script>
 
+
 </body>
+
 </html>
