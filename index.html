@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -278,18 +277,17 @@ h1 {
 }
 
 .answer-row {
-    display: grid;
-    grid-template-columns: 28px 1fr;
-    gap: 8px;
-    align-items: center;
-    margin-bottom: 8px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
 }
 
 .answer-number,
 .answer-number-spacer {
-    width: 28px;
-    min-width: 28px;
-    padding-top: 0;
+    width: 30px;
+    min-width: 30px;
+    padding-top: 16px;
 }
 
 .answer-number {
@@ -527,26 +525,34 @@ h1 {
 
 }
 
-
-/* =========================================================
-   TEXTAREA SIZING
-========================================================= */
-
-.answer-row textarea {
-    width: 100%;
-    min-height: 110px;
-    padding: 14px 16px;
-    font-size: 17px;
-    line-height: 1.5;
-    border: 2px solid #ddd;
-    border-radius: 10px;
-    outline: none;
-    resize: none;
-    overflow-y: hidden;
-    font-family: Arial, Helvetica, sans-serif;
+/* Correct layout for numbered multi-part answers */
+.answer-row {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 8px;
 }
 
-.answer-row textarea:focus {
+.answer-number {
+    margin-bottom: 0;
+}
+
+.answer-number-spacer {
+    width: 28px;
+}
+
+.answer-row input {
+    width: 100%;
+    height: 46px;
+    padding: 10px 14px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+}
+
+.answer-row input:focus {
     border-color: #555;
 }
 
@@ -834,7 +840,7 @@ class="summary-box">
 <button
 id="repeatButton"
 class="action-button"
-onclick="repeatWrongQuestions">
+onclick="repeatWrongQuestions()">
 
 </button>
 
@@ -863,7 +869,9 @@ Start New Quiz
    QUESTION DATABASE
 
    IMPORTANT:
+
    Put your 40 real questions here.
+
 ========================================================= */
 
 const questions = [
@@ -892,21 +900,21 @@ const questions = [
 {
     question: "Q3: In the Bible, there is the tree of life and the tree of the knowledge of good and evil. 1) Write what the fruit of the tree of life is, 2) and what the fruit of the tree of good and evil is today, respectively.",
     points: 2,
-    lines: [
+   lines: [
 
         {
             answer: "word of the fulfilled reality of Revelation",
             points: 1,
-            lines: 1
+           lines: 1
         },
 
         {
             answer: "false doctrines (commentaries) of false pastors",
             points: 1,
-            lines: 1
+           lines: 1
         }
 
-    ]
+    ]    
 },
 
 
@@ -922,19 +930,19 @@ const questions = [
         {
             answer: "prophetic vision revelation, fulfilled reality revelation",
             points: 1,
-            lines: 1
+           lines: 1
         },
 
         {
             answer: "fulfilled reality revelation",
             points: 1,
-            lines: 1
+           lines: 1
         },
 
         {
             answer: "God -> Jesus -> angel -> New John -> servants",
             points: 1,
-            lines: 1
+           lines: 1
         }
 
     ]
@@ -946,25 +954,24 @@ const questions = [
 {
     question: "Q5: In Rv 1:3, who is 1) ‘the one who reads,’ 2) ‘those who hear,’ and 3) ‘those who keep’? Write the answer along with the applicable chapter (reference verse) of Revelation, respectively.",
     points: 3,
-
     lines: [
 
         {
             answer: "New John who received and ate the opened book, Rv 10",
             points: 1,
-            lines: 1
+           lines: 1
         },
 
         {
             answer: "peoples, nations, languages, and kings who learn from New John, Rv 10:11",
             points: 1,
-            lines: 1
+           lines: 1
         },
 
         {
             answer: "Including New John, the 12 tribes, the 144,000 and the multitude in white, Rv 7",
             points: 1,
-            lines: 1
+           lines: 1
         }
 
     ]
@@ -983,19 +990,19 @@ const questions = [
         {
             answer: "Jesus at the second coming, Rv 1, 2, 3",
             points: 1,
-            lines: 1
+           lines: 1
         },
 
         {
             answer: "1966",
             points: 1,
-            lines: 1
+           lines: 1
         },
 
         {
             answer: "Tabernacle Temple in Gwacheon, at the base of Mt. Cheonggye",
             points: 1,
-            lines: 1
+           lines: 1
         }
 
     ]
@@ -1006,255 +1013,593 @@ const questions = [
 
 {
     question: "Q7: 1) How many kinds of content and what are the contents of the letters sent in Rv 2-3? 2) Write the three entities who appear in Rv 2-3 in order, and write 3) what each did, respectively.",
-
-    points: 3,
-
+    points: 5,
     lines: [
-
         {
             answer: "Three kinds: what you have seen, what is now, and what will take place later",
             points: 1,
             lines: 1
         },
-
         {
-            answer: "Three kinds: what you have seen, what is now, and what will take place later",
+            answer: "Seven messengers, Nicolaitans, John",
             points: 1,
             lines: 1
         },
-
         {
             answer: "Seven messengers: the work of the lamp that prepares the way",
             points: 1,
-            lines: 3
+            lines: 1
+        },
+        {
+            answer: "Nicolaitans: food sacrificed to idols and teachings, adultery",
+            points: 1,
+            lines: 1
+        },
+        {
+            answer: "John: letters of repentance and the word of promise",
+            points: 1,
+            lines: 1
         }
-
     ]
-},
+}
 
 
-/* Q8 */
+/* =========================================================
+   QUESTION 8
+========================================================= */
 
 {
     question: "Q8: Write what the 3 mysteries of Revelation are. Include references.",
 
     points: 3,
 
-    lines: [
+   lines: [
 
         {
             answer: "Mystery of the seven stars and the seven golden lampstands, Rv 1:20",
             points: 1,
-            lines: 1
+           lines: 1
         },
 
         {
             answer: "Mystery of the prostitute, Babylon, and the beast with seven heads and ten horns, Rv 17: 5-7",
             points: 1,
-            lines: 1
+           lines: 1
         },
 
         {
             answer: "Mystery of the last, seventh trumpet, Rv 10:7",
             points: 1,
-            lines: 1
+           lines: 1
         }
 
     ]
 },
 
 
-/* Q9 */
+
+/* =========================================================
+   QUESTION 9
+========================================================= */
 
 {
     question: "Q9: 1) Write the blessings promised in Rv 2-3 given to the one who overcomes. 2) Besides this, write 1 more blessing the one who overcomes will receive along with the reference.",
 
     points: 2,
 
-    lines: [
+     lines: [
 
         {
             answer: "Fruit of the tree of life, crown of life, not be hurt at all by the second death, hidden manna, white stone, iron scepter, morning star, dressed in white clothes, name written in the book of life, pillar in God’s temple, write on him God’s name, the name of the Holy City, new Jerusalem, and Jesus’ new name, right to sit on Jesus’ throne",
             points: 1,
-            lines: 1
+           lines: 1
         },
 
         {
             answer: "Becomes the son who receives the inheritance, Rv 21:7",
             points: 1,
-            lines: 1
+           lines: 1
         }
 
     ]
 },
 
 
-/* Q10 */
+
+/* =========================================================
+   QUESTION 10
+========================================================= */
 
 {
     question: "Q10: 1) What does it mean to ‘write on him who overcomes God’s name, the name of the Holy City, new Jerusalem, and Jesus’ new name’? 2) Who receives the blessings Jesus promised in Rv 2-3?",
 
     points: 2,
 
-    lines: [
+     lines: [
 
         {
             answer: "God, heaven, and Jesus (come) to the (one who overcomes)",
             points: 1,
-            lines: 1
+           lines: 1
         },
 
         {
             answer: "the (one who fights and overcomes) Satan’s Nicolaitans",
             points: 1,
-            lines: 1
+           lines: 1
         }
 
     ]
 },
 
 
-/* Q11 */
+
+/* =========================================================
+   QUESTION 11
+========================================================= */
 
 {
-    question: "Example Question 11",
-    points: 1,
-    answer: "Example answer eleven"
+    question: "Q11: Rv 4:8 says that God’s throne will come down to this earth. 1) In which chapter of Revelation and to where does God’s throne come down, and 2) where is the reality of that place?",
+
+     points: 2,
+
+     lines: [
+
+        {
+            answer: "Mt Zion, where the 12 tribes, the sealed 144,000 of Rv 14 are",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "Shincheonji Church of Jesus, the Temple of the Tabernacle of the Testimony",
+            points: 1,
+           lines: 1
+        }
+
+    ]
 },
+
+
 
 
 /* Q12 */
 
 {
-    question: "Example Question 12",
-    points: 1,
-    answer: "Example answer twelve"
+    question: "Q12: The book sealed with 7 seals in God’s right hand in Rv 5 is the book of Revelation. 1) What is the reason no one in heaven or on earth knew the contents of the sealed book all this time, and 2) what is the content of the sealed book?",
+
+     points: 2,
+
+     lines: [
+
+        {
+            answer: "because the fulfilled reality had not appeared yet",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "God’s mystery that must be fulfilled",
+            points: 1,
+           lines: 1
+        }
+
+    ]
 },
+
+
 
 
 /* Q13 */
 
 {
-    question: "Example Question 13",
-    points: 1,
-    answer: "Example answer thirteen"
-},
+    question: "Q13: Regarding the blood and flesh of Jesus promised as the new covenant in Lk 22:14-20, write 1) when, 2) where, and 3) who is able to eat it along with 3 references.",
 
+     points: 3,
+
+     lines: [
+
+        {
+            answer: "at the time of the fulfillment of Revelation",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "God’s kingdom, the 12 tribes of Shincheonji of Rv 7",
+            points: 1,
+           lines: 1
+        },
+        
+        {
+            answer: "the 144,000 and the multitude in white, Rv 1:5-6, Rv 5:9-10, Rv 7:9-14",
+            points: 1,
+           lines: 1
+        }
+
+    ]
+},
 
 /* Q14 */
 
 {
-    question: "Example Question 14",
-    points: 1,
-    answer: "Example answer fourteen"
+    question: "In Rv 6, 1) who and through whom judges 2) who? 3) In which 2 chapters were those who were driven out in Rv 6 killed?",
+
+    points: 3,
+
+     lines: [
+
+        {
+            answer: "Jesus, 4 living creatures",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "the chosen people who betrayed, the 7 messengers and the saints of the tabernacle",
+            points: 1,
+           lines: 1
+        },
+        
+        {
+            answer: "Rv 8, Rv 9",
+            points: 1,
+           lines: 1
+        }
+
+    ]
 },
+
 
 
 /* Q15 */
 
 {
-    question: "Example Question 15",
-    points: 1,
-    answer: "Example answer fifteen"
+    question: "Q15: From Mt 8, write who 1) the subjects of the kingdom who were thrown outside into the darkness and 2) those who come from the east and the west and sit in the kingdom of heaven are along with a related Bible chapter of each.",
+
+     points: 2,
+
+     lines: [
+
+        {
+            answer: "the traditional churches that became corrupt Spiritual Israel, Rv 6 Rv 13",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "The harvested and sealed 12 tribes of Shincheonji New Spiritual Israel, Rv 7 Rv 14",
+            points: 1,
+           lines: 1
+        }
+
+    ]
 },
+
+
 
 
 /* Q16 */
 
 {
-    question: "Example Question 16",
-    points: 1,
-    answer: "Example answer sixteen"
+    question: "Q16: 1) After what event do those who are sealed of Rv 7 [appear] and 2) where do they come from and how do they appear, and 3) who are the fulfilled realities of these people?",
+
+     points: 3,
+
+     lines: [
+
+        {
+            answer: "After the judgement of the sun, moon, and stars of the former heaven who betrayed of Rv 6",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "harvested from the harvest field",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "144,000 of the 12 tribes of Shincheonji",
+            points: 1,
+           lines: 1
+        }
+
+    ]
 },
+
+
 
 
 /* Q17 */
 
 {
-    question: "Example Question 17",
-    points: 1,
-    answer: "Example answer seventeen"
+    question: "Q17: 1) Why do the trumpets sound in Rv 8? 2) Who gets killed in Rv 8-9? 3) What is the difference between the first to the sixth trumpet sounds and the seventh trumpet sound?",
+
+    points: 3,
+
+     lines: [
+
+        {
+            answer: "Because all the seals are opened, and the book is opened and read",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "Those who were thrown out in Rv 6",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "first-sixth trumpet: death of the betrayers",
+            points: 1,
+           lines: 1
+        },
+       
+       {
+            answer: "seventh trumpet: trumpet of salvation",
+            points: 1,
+           lines: 1
+        }
+
+   ]
 },
 
 
 /* Q18 */
 
 {
-    question: "Example Question 18",
-    points: 1,
-    answer: "Example answer eighteen"
+    question: "Q18: In Revelation, 1) what are the 3 chapters in which the gentile beast (destroyer) judges the tabernacle of the chosen people? 2) What are the actual entities of the seven trumpets received by the seven angels? Write along with the Bible chapter.",
+
+    points: 2,
+
+     lines: [
+
+        {
+            answer: "Rv 8, Rv 9, Rv 13",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "saints brought out through the seed of faith during judgment, Rv 6",
+            points: 1,
+           lines: 1
+        }
+
+      ]
 },
 
 
 /* Q19 */
 
 {
-    question: "Example Question 19",
-    points: 1,
-    answer: "Example answer nineteen"
+    question: "Q19: 1) What kind of entities are the rider and the horse in Rv 9 and Rv 19, and who do they belong to, respectively? What are the 2) head and 3) tail of the horses that appear in Rv 9 and the 4) fire, smoke, and sulfur that come out of its mouth?",
+
+    points: 4,
+
+     lines: [
+
+        {
+            answer: "Rv 9: spirits and flesh that belong to the devil",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "Rv 19: spirits and flesh that belong to God",
+            points: 1,
+           lines: 1
+        },
+       
+        {
+            answer: "seven pastors of the dragon",
+            points: 1,
+           lines: 1
+        },
+
+       {
+            answer: "false prophets",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "false doctrines and ecclesiastical laws",
+            points: 1,
+           lines: 1
+        }
+      ]
 },
+
 
 
 /* Q20 */
 
 {
-    question: "Example Question 20",
-    points: 1,
-    answer: "Example answer twenty"
-},
+    question: "Q20: As seen in Rv 9:15, 1) who are the people that get killed by the four angels that sinned during the plague of the sixth trumpet, and 2) when and what event is the reality of this very hour and day and mouth and year when they get killed? ",
 
+    points: 2,
+
+     lines: [
+
+        {
+            answer: "people of the Tabernacle Temple that betrayed6",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "September 20,1981, 2 pm, pastor ordination ceremony",
+            points: 1,
+           lines: 1
+        }
+
+
+      ]
+},
 
 /* Q21 */
 
 {
-    question: "Example Question 21",
+    question: "Q21: What does it mean that John ‘ate the opened scroll’ in Rv 10?",
+
     points: 1,
-    answer: "Example answer twenty one"
+
+    answer: "To completely understand and master the true meaning and fulfilled realities of Revelation and seal it in the heart."
 },
 
 
 /* Q22 */
 
 {
-    question: "Example Question 22",
-    points: 1,
-    answer: "Example answer twenty two"
+    question: "At the first coming, 1) who ate ‘the revelation of the Old Testament fulfillment’ and where did he testify it? Write along with the reference verses. At the second coming, 2) who ate ‘the revelation of the New Testament fulfillment’ and where does he testify it? Write along with the reference verses. Also, as seen in Rv 1:2, it says one person who received the command delivered God’s word. Write 3)in which chapter of Revelation he received this word that he delivered.",
+
+    points: 3,
+
+     lines: [
+
+        {
+            answer: "Jesus, rebellious Israel, Ez 3, Mt 15:24",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "New John, churches in the midst of sin, Rv 10, Rv 22:8,16",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "Rv 10",
+            points: 1,
+           lines: 1
+        }
+      ]
 },
+
 
 
 /* Q23 */
 
 {
-    question: "Example Question 23",
-    points: 1,
-    answer: "Example answer twenty three"
+    question: "Q23: 1) Who is the actual entity of the seventh trumpet? 2) What is the seventh trumpet sound? Furthermore, 3) what are the 4 verses of the Old and New Testament where the ‘seventh trumpet’ appears?",
+
+    points: 3,
+
+     lines: [
+
+        {
+            answer: "promised pastor, New John",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "revealed testimony of New John",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "Jos 16:15~16, 1 Cor 15:51~54, Rv 10:7. Rv 11:15",
+            points: 1,
+           lines: 1
+        }
+      ]
 },
+
 
 
 /* Q24 */
 
 {
-    question: "Example Question 24",
-    points: 1,
-    answer: "Example answer twenty four"
+    question: "Q24: 1) What happens ‘when the seventh trumpet sounds’? 2) What is the ‘mystery of the last trumpet’? Write along with 2 related verses.",
+
+    points: 2,
+
+     lines: [
+
+        {
+            answer: "the kingdom of the world becomes the kingdom of God",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "resurrection and eternal life, that is, changing into a new creation, Rv 10:7. 1 Cor 15:51~54",
+            points: 1,
+           lines: 1
+        }
+
+    ]
 },
+
 
 
 /* Q25 */
 
 {
-    question: "Example Question 25",
-    points: 1,
-    answer: "Example answer twenty five"
+    question: "Q25: What is 1)’the blood of the Lamb’ and 2)’the word of testimony,’ which are the weapons that the male child and his brothers use to fight and overcome the dragon’s group in Rv 12:9-11? 3) After what event does the kingdom of God and salvation come? Also, 4) in which chapter are the promises of Rv 2-3 fulfilled? ",
+
+    points: 4,
+
+     lines: [
+
+        {
+            answer: "Jesus’ word of life",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "the word of testimony of the fulfilled realities of Revelation",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "after fighting and overcoming the dragon’s group",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "Rv 12",
+            points: 1,
+           lines: 1
+        }
+
+    ]
 },
 
 
 /* Q26 */
 
 {
-    question: "Example Question 26",
-    points: 1,
-    answer: "Example answer twenty six"
+    question: "Q26: Where is 1) heaven, the location of the event of Rv 13, and 2) who from which chapter of Revelation are the seven heads and ten horns in Rv 13?",
+
+    points: 2,
+
+     lines: [
+
+        {
+            answer: "Tabernacle Temple, the same location as Rv 2-3",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "seven pastors and ten authority figures of Babylon in Rv 17",
+            points: 1,
+           lines: 1
+        }
+
+    ]
 },
 
 
@@ -1262,2213 +1607,779 @@ const questions = [
 
 {
     question: "Example Question 27",
+
     points: 1,
+
     answer: "Example answer twenty seven"
 },
+
 
 
 /* Q28 */
 
 {
     question: "Example Question 28",
+
     points: 1,
+
     answer: "Example answer twenty eight"
 },
+
 
 
 /* Q29 */
 
 {
     question: "Example Question 29",
+
     points: 1,
+
     answer: "Example answer twenty nine"
 },
+
 
 
 /* Q30 */
 
 {
     question: "Example Question 30",
+
     points: 1,
+
     answer: "Example answer thirty"
 },
+
 
 
 /* Q31 */
 
 {
     question: "Example Question 31",
+
     points: 1,
+
     answer: "Example answer thirty one"
 },
+
 
 
 /* Q32 */
 
 {
     question: "Example Question 32",
+
     points: 1,
+
     answer: "Example answer thirty two"
 },
+
 
 
 /* Q33 */
 
 {
     question: "Example Question 33",
+
     points: 1,
+
     answer: "Example answer thirty three"
 },
+
 
 
 /* Q34 */
 
 {
     question: "Example Question 34",
+
     points: 1,
+
     answer: "Example answer thirty four"
 },
+
 
 
 /* Q35 */
 
 {
     question: "Example Question 35",
+
     points: 1,
+
     answer: "Example answer thirty five"
 },
+
 
 
 /* Q36 */
 
 {
     question: "Example Question 36",
+
     points: 1,
+
     answer: "Example answer thirty six"
 },
+
 
 
 /* Q37 */
 
 {
     question: "Example Question 37",
+
     points: 1,
+
     answer: "Example answer thirty seven"
 },
+
 
 
 /* Q38 */
 
 {
     question: "Example Question 38",
+
     points: 1,
+
     answer: "Example answer thirty eight"
 },
+
 
 
 /* Q39 */
 
 {
     question: "Example Question 39",
+
     points: 1,
+
     answer: "Example answer thirty nine"
 },
+
 
 
 /* Q40 */
 
 {
     question: "Example Question 40",
+
     points: 1,
+
     answer: "Example answer forty"
 }
 
 ];
 
-
 /* =========================================================
    QUIZ LOGIC
+   The question/answer database above is kept unchanged.
 ========================================================= */
 
 let startQuestion = 1;
 let endQuestion = 20;
-
 let quizQuestions = [];
 let originalQuestionNumbers = [];
-
 let currentQuestionIndex = 0;
-
 let questionStates = [];
-
 let totalScore = 0;
 let totalPossiblePoints = 0;
-
 let wrongQuestionIndices = [];
 let skippedQuestionIndices = [];
 
-
-/* =========================================================
-   POINT CALCULATION
-========================================================= */
-
 function getQuestionPoints(question) {
-
     if (Array.isArray(question.lines)) {
-
         return question.lines.reduce(function(total, item) {
-
             return total + (Number(item.points) || 0);
-
         }, 0);
-
     }
-
     return Number(question.points) || 1;
 }
 
-
-/* =========================================================
-   ANSWER STRUCTURE
-========================================================= */
-
 function createAnswerStructure(question) {
-
     if (Array.isArray(question.lines)) {
-
         return question.lines.map(function(item) {
-
             return Array(Number(item.lines) || 1).fill("");
-
         });
-
     }
-
     return [[""]];
 }
 
-
-/* =========================================================
-   QUESTION STATE
-========================================================= */
-
 function createQuestionState(question) {
-
     return {
-
         status: "unanswered",
-
         score: 0,
-
         maxPoints: getQuestionPoints(question),
-
         userAnswers: createAnswerStructure(question),
-
         resultHTML: ""
-
     };
-
 }
-
-
-/* =========================================================
-   RANGE MESSAGE
-========================================================= */
 
 function updateRangeMessage() {
+    const start = parseInt(document.getElementById("startQuestion").value, 10);
+    const end = parseInt(document.getElementById("endQuestion").value, 10);
+    const message = document.getElementById("selectionMessage");
 
-    const start =
-        parseInt(
-            document.getElementById("startQuestion").value,
-            10
-        );
-
-    const end =
-        parseInt(
-            document.getElementById("endQuestion").value,
-            10
-        );
-
-    const message =
-        document.getElementById("selectionMessage");
-
-
-    if (
-        Number.isInteger(start) &&
-        Number.isInteger(end) &&
-        start >= 1 &&
-        end <= questions.length &&
-        start <= end
-    ) {
-
+    if (Number.isInteger(start) && Number.isInteger(end) &&
+        start >= 1 && end <= questions.length && start <= end) {
         const number = end - start + 1;
-
-        message.innerText =
-            "You selected Q" +
-            start +
-            " – Q" +
-            end +
-            " (" +
-            number +
-            " questions).";
-
+        message.innerText = "You selected Q" + start + " – Q" + end +
+            " (" + number + " questions).";
     } else {
-
-        message.innerText =
-            "Please enter a valid question range.";
-
+        message.innerText = "Please enter a valid question range.";
     }
-
 }
 
-
-document
-    .getElementById("startQuestion")
-    .addEventListener(
-        "input",
-        updateRangeMessage
-    );
-
-
-document
-    .getElementById("endQuestion")
-    .addEventListener(
-        "input",
-        updateRangeMessage
-    );
-
-
+document.getElementById("startQuestion").addEventListener("input", updateRangeMessage);
+document.getElementById("endQuestion").addEventListener("input", updateRangeMessage);
 updateRangeMessage();
 
-
-/* =========================================================
-   START QUIZ
-========================================================= */
-
 function startQuiz() {
+    startQuestion = parseInt(document.getElementById("startQuestion").value, 10);
+    endQuestion = parseInt(document.getElementById("endQuestion").value, 10);
 
-    startQuestion =
-        parseInt(
-            document.getElementById("startQuestion").value,
-            10
-        );
-
-    endQuestion =
-        parseInt(
-            document.getElementById("endQuestion").value,
-            10
-        );
-
-
-    if (
-        !Number.isInteger(startQuestion) ||
-        !Number.isInteger(endQuestion) ||
-        startQuestion < 1 ||
-        endQuestion > questions.length ||
-        startQuestion > endQuestion
-    ) {
-
-        alert(
-            "Please enter a valid question range between 1 and " +
-            questions.length +
-            "."
-        );
-
+    if (!Number.isInteger(startQuestion) || !Number.isInteger(endQuestion) ||
+        startQuestion < 1 || endQuestion > questions.length ||
+        startQuestion > endQuestion) {
+        alert("Please enter a valid question range between 1 and " + questions.length + ".");
         return;
     }
 
-
-    quizQuestions =
-        questions.slice(
-            startQuestion - 1,
-            endQuestion
-        );
-
-
-    originalQuestionNumbers =
-        quizQuestions.map(function(_, index) {
-
-            return startQuestion + index;
-
-        });
-
-
+    quizQuestions = questions.slice(startQuestion - 1, endQuestion);
+    originalQuestionNumbers = quizQuestions.map(function(_, index) {
+        return startQuestion + index;
+    });
     currentQuestionIndex = 0;
-
-
-    questionStates =
-        quizQuestions.map(
-            createQuestionState
-        );
-
-
+    questionStates = quizQuestions.map(createQuestionState);
     totalScore = 0;
-
     totalPossiblePoints = 0;
-
     wrongQuestionIndices = [];
-
     skippedQuestionIndices = [];
 
-
-    document
-        .getElementById("setupScreen")
-        .classList.add("hidden");
-
-
-    document
-        .getElementById("finalScreen")
-        .classList.add("hidden");
-
-
-    document
-        .getElementById("quizScreen")
-        .classList.remove("hidden");
-
+    document.getElementById("setupScreen").classList.add("hidden");
+    document.getElementById("finalScreen").classList.add("hidden");
+    document.getElementById("quizScreen").classList.remove("hidden");
 
     buildQuestionNavigation();
-
     showQuestion();
-
 }
-
-
-/* =========================================================
-   SIDEBAR NAVIGATION
-========================================================= */
 
 function buildQuestionNavigation() {
-
-    const list =
-        document.getElementById("questionList");
-
+    const list = document.getElementById("questionList");
     list.innerHTML = "";
-
-
-    document
-        .getElementById("sidebarRange")
-        .innerText =
-            "Questions " +
-            startQuestion +
-            "–" +
-            endQuestion;
-
+    document.getElementById("sidebarRange").innerText =
+        "Questions " + startQuestion + "–" + endQuestion;
 
     quizQuestions.forEach(function(_, index) {
-
-        const button =
-            document.createElement("button");
-
-
-        button.className =
-            "question-nav unanswered";
-
-
-        button.id =
-            "nav-" + index;
-
-
+        const button = document.createElement("button");
+        button.className = "question-nav unanswered";
+        button.id = "nav-" + index;
         button.type = "button";
-
-
         button.onclick = function() {
-
             goToQuestion(index);
-
         };
-
-
         list.appendChild(button);
-
     });
 
-
     updateQuestionNavigation();
-
 }
-
-
-/* =========================================================
-   UPDATE SIDEBAR
-========================================================= */
 
 function updateQuestionNavigation() {
-
     quizQuestions.forEach(function(_, index) {
-
-        const button =
-            document.getElementById(
-                "nav-" + index
-            );
-
-
+        const button = document.getElementById("nav-" + index);
         if (!button) return;
 
-
-        const status =
-            questionStates[index]
-                ? questionStates[index].status
-                : "unanswered";
-
-
-        button.className =
-            "question-nav " +
-            status;
-
-
-        if (
-            index === currentQuestionIndex
-        ) {
-
-            button.classList.add("current");
-
-        }
-
+        const status = questionStates[index] ? questionStates[index].status : "unanswered";
+        button.className = "question-nav " + status;
+        if (index === currentQuestionIndex) button.classList.add("current");
 
         let symbol = "○";
-
-
-        if (status === "skipped") {
-
-            symbol = "→";
-
-        }
-
-
-        if (status === "correct") {
-
-            symbol = "✓";
-
-        }
-
-
-        if (status === "wrong") {
-
-            symbol = "✗";
-
-        }
-
+        if (status === "skipped") symbol = "→";
+        if (status === "correct") symbol = "✓";
+        if (status === "wrong") symbol = "✗";
 
         button.innerHTML =
-            "<span class='question-symbol'>" +
-            symbol +
-            "</span>" +
-
-            "<span>Question " +
-            originalQuestionNumbers[index] +
-            "</span>";
-
+            "<span class='question-symbol'>" + symbol + "</span>" +
+            "<span>Question " + originalQuestionNumbers[index] + "</span>";
     });
-
 }
-
-
-/* =========================================================
-   SAVE INPUTS
-========================================================= */
 
 function saveCurrentInputs() {
-
-    const question =
-        quizQuestions[currentQuestionIndex];
-
-    const state =
-        questionStates[currentQuestionIndex];
-
-
+    const question = quizQuestions[currentQuestionIndex];
+    const state = questionStates[currentQuestionIndex];
     if (!question || !state) return;
 
-
     if (Array.isArray(question.lines)) {
-
-        question.lines.forEach(
-            function(item, answerIndex) {
-
-                const lineCount =
-                    Number(item.lines) || 1;
-
-
-                state.userAnswers[answerIndex] =
-                    [];
-
-
-                for (
-                    let lineIndex = 0;
-                    lineIndex < lineCount;
-                    lineIndex++
-                ) {
-
-                    const input =
-                        document.getElementById(
-                            "answer-" +
-                            answerIndex +
-                            "-" +
-                            lineIndex
-                        );
-
-
-                    state.userAnswers[
-                        answerIndex
-                    ][lineIndex] =
-                        input
-                            ? input.value
-                            : "";
-
-                }
-
+        question.lines.forEach(function(item, answerIndex) {
+            const lineCount = Number(item.lines) || 1;
+            state.userAnswers[answerIndex] = [];
+            for (let lineIndex = 0; lineIndex < lineCount; lineIndex++) {
+                const input = document.getElementById("answer-" + answerIndex + "-" + lineIndex);
+                state.userAnswers[answerIndex][lineIndex] = input ? input.value : "";
             }
-        );
-
+        });
     } else {
-
-        const input =
-            document.getElementById(
-                "answer-single"
-            );
-
-
-        state.userAnswers[0][0] =
-            input
-                ? input.value
-                : "";
-
+        const input = document.getElementById("answer-single");
+        state.userAnswers[0][0] = input ? input.value : "";
     }
-
 }
-
-
-/* =========================================================
-   GO TO QUESTION
-========================================================= */
 
 function goToQuestion(index) {
-
-    if (
-        index < 0 ||
-        index >= quizQuestions.length
-    ) {
-
-        return;
-
-    }
-
-
+    if (index < 0 || index >= quizQuestions.length) return;
     saveCurrentInputs();
-
-
-    currentQuestionIndex =
-        index;
-
-
+    currentQuestionIndex = index;
     showQuestion();
-
 }
-
-
-/* =========================================================
-   NORMALIZE TEXT
-========================================================= */
 
 function normalizeText(text) {
-
     return String(text ?? "")
-
         .toLowerCase()
-
         .replace(/[’']/g, "")
-
-        .replace(
-            /[^\p{L}\p{N}\s]/gu,
-            " "
-        )
-
-        .replace(
-            /\s+/g,
-            " "
-        )
-
+        .replace(/[^\p{L}\p{N}\s]/gu, " ")
+        .replace(/\s+/g, " ")
         .trim();
-
 }
-
-
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
 
 function escapeHTML(text) {
-
     return String(text ?? "")
-
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-
-        .replace(
-            /</g,
-            "&lt;"
-        )
-
-        .replace(
-            />/g,
-            "&gt;"
-        )
-
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
-
-/* =========================================================
-   WORD COMPARISON
-========================================================= */
-
-function compareWords(
-    correctText,
-    studentText
-) {
-
-    const correct =
-        normalizeText(correctText);
-
-
-    const student =
-        normalizeText(studentText);
-
-
-    const correctWords =
-        correct
-            ? correct.split(" ")
-            : [];
-
-
-    const studentWords =
-        student
-            ? student.split(" ")
-            : [];
-
+function compareWords(correctText, studentText) {
+    const correct = normalizeText(correctText);
+    const student = normalizeText(studentText);
+    const correctWords = correct ? correct.split(" ") : [];
+    const studentWords = student ? student.split(" ") : [];
 
     let correctCount = 0;
-
     let resultHTML = "";
 
+    for (let i = 0; i < correctWords.length; i++) {
+        const correctWord = correctWords[i];
+        const studentWord = studentWords[i];
 
-    for (
-        let i = 0;
-        i < correctWords.length;
-        i++
-    ) {
-
-        const correctWord =
-            correctWords[i];
-
-
-        const studentWord =
-            studentWords[i];
-
-
-        if (
-            studentWord === correctWord
-        ) {
-
+        if (studentWord === correctWord) {
             correctCount++;
-
-
-            resultHTML +=
-                "<span class='correct-word'>" +
-                escapeHTML(correctWord) +
-                " ✓</span>";
-
+            resultHTML += "<span class='correct-word'>" +
+                escapeHTML(correctWord) + " ✓</span>";
         } else {
-
-            resultHTML +=
-                "<span class='incorrect-word'>" +
-                escapeHTML(
-                    studentWord ||
-                    "[missing]"
-                ) +
-                " ✗</span>";
-
+            resultHTML += "<span class='incorrect-word'>" +
+                escapeHTML(studentWord || "[missing]") + " ✗</span>";
         }
-
     }
 
-
-    if (
-        studentWords.length >
-        correctWords.length
-    ) {
-
-        resultHTML +=
-            "<br><br>" +
-            "<strong>Extra words:</strong>" +
-            "<br>";
-
-
-        for (
-            let i = correctWords.length;
-            i < studentWords.length;
-            i++
-        ) {
-
-            resultHTML +=
-                "<span class='extra-word'>" +
-                escapeHTML(
-                    studentWords[i]
-                ) +
-                " +</span>";
-
+    if (studentWords.length > correctWords.length) {
+        resultHTML += "<br><br><strong>Extra words:</strong><br>";
+        for (let i = correctWords.length; i < studentWords.length; i++) {
+            resultHTML += "<span class='extra-word'>" +
+                escapeHTML(studentWords[i]) + " +</span>";
         }
-
     }
-
 
     return {
-
-        correctCount:
-            correctCount,
-
-        totalWords:
-            correctWords.length,
-
-        resultHTML:
-            resultHTML
-
+        correctCount: correctCount,
+        totalWords: correctWords.length,
+        resultHTML: resultHTML
     };
-
 }
 
-
-/* =========================================================
-   PARTIAL SCORE
-========================================================= */
-
-function calculatePartialScore(
-    points,
-    comparison
-) {
-
-    if (!comparison.totalWords) {
-
-        return 0;
-
-    }
-
-
-    return Math.round(
-
-        points *
-        (
-            comparison.correctCount /
-            comparison.totalWords
-        ) *
-        100
-
-    ) / 100;
-
+function calculatePartialScore(points, comparison) {
+    if (!comparison.totalWords) return 0;
+    return Math.round(points * (comparison.correctCount / comparison.totalWords) * 100) / 100;
 }
-
-
-/* =========================================================
-   AUTO GROW TEXTAREA
-========================================================= */
 
 function autoGrow(element) {
-
-    element.style.height =
-        "auto";
-
-
-    element.style.height =
-        Math.max(
-            element.scrollHeight,
-            110
-        ) +
-        "px";
-
+    element.style.height = "auto";
+    element.style.height = Math.max(element.scrollHeight, 110) + "px";
 }
-
-
-/* =========================================================
-   SHOW QUESTION
-========================================================= */
 
 function showQuestion() {
-
-    const question =
-        quizQuestions[currentQuestionIndex];
-
-
-    const state =
-        questionStates[currentQuestionIndex];
-
+    const question = quizQuestions[currentQuestionIndex];
+    const state = questionStates[currentQuestionIndex];
 
     if (!question || !state) {
-
         showFinalResult();
-
         return;
-
     }
 
+    document.getElementById("progress").innerText =
+        "Question " + originalQuestionNumbers[currentQuestionIndex] +
+        " — " + (currentQuestionIndex + 1) + " of " + quizQuestions.length;
 
-    document
-        .getElementById("progress")
-        .innerText =
-            "Question " +
-            originalQuestionNumbers[
-                currentQuestionIndex
-            ] +
-            " — " +
-            (currentQuestionIndex + 1) +
-            " of " +
-            quizQuestions.length;
+    document.getElementById("questionText").innerText = question.question;
 
+    const points = getQuestionPoints(question);
+    document.getElementById("pointsText").innerText =
+        "This question is worth " + points + " point" + (points === 1 ? "" : "s") + ".";
 
-    document
-        .getElementById("questionText")
-        .innerText =
-            question.question;
-
-
-    const points =
-        getQuestionPoints(question);
-
-
-    document
-        .getElementById("pointsText")
-        .innerText =
-            "This question is worth " +
-            points +
-            " point" +
-            (points === 1 ? "" : "s") +
-            ".";
-
-
-    const answerArea =
-        document.getElementById(
-            "answerArea"
-        );
-
-
+    const answerArea = document.getElementById("answerArea");
     answerArea.innerHTML = "";
 
-
-    /* =====================================================
-       MULTI-PART QUESTION
-    ===================================================== */
-
     if (Array.isArray(question.lines)) {
+        question.lines.forEach(function(answer, answerIndex) {
+            const section = document.createElement("div");
+            section.className = "answer-section";
 
-        question.lines.forEach(
-            function(answer, answerIndex) {
+            const lineCount = Number(answer.lines) || 1;
 
-                const section =
-                    document.createElement(
-                        "div"
-                    );
+            for (let lineIndex = 0; lineIndex < lineCount; lineIndex++) {
+                const row = document.createElement("div");
+                row.className = "answer-row" + (lineIndex > 0 ? " continuation" : "");
 
+                const number = document.createElement("div");
+                number.className = lineIndex === 0 ? "answer-number" : "answer-number-spacer";
+                if (lineIndex === 0) number.innerText = (answerIndex + 1) + ")";
 
-                section.className =
-                    "answer-section";
+                const input = document.createElement("textarea");
+                input.id = "answer-" + answerIndex + "-" + lineIndex;
+                input.placeholder = "Type your answer...";
+                input.value = (state.userAnswers[answerIndex] && state.userAnswers[answerIndex][lineIndex]) || "";
+                input.rows = 4;
+                input.addEventListener("input", function() { autoGrow(this); saveCurrentInputs(); });
 
-
-                const lineCount =
-                    Number(answer.lines) || 1;
-
-
-                for (
-                    let lineIndex = 0;
-                    lineIndex < lineCount;
-                    lineIndex++
-                ) {
-
-                    const row =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    row.className =
-                        "answer-row";
-
-
-                    const number =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    number.className =
-                        lineIndex === 0
-                            ? "answer-number"
-                            : "answer-number-spacer";
-
-
-                    if (lineIndex === 0) {
-
-                        number.innerText =
-                            (answerIndex + 1) +
-                            ")";
-
-                    }
-
-
-                    const input =
-                        document.createElement(
-                            "textarea"
-                        );
-
-
-                    input.id =
-                        "answer-" +
-                        answerIndex +
-                        "-" +
-                        lineIndex;
-
-
-                    input.placeholder =
-                        "Type your answer...";
-
-
-                    input.value =
-                        (
-                            state.userAnswers[
-                                answerIndex
-                            ] &&
-                            state.userAnswers[
-                                answerIndex
-                            ][lineIndex]
-                        ) || "";
-
-
-                    input.rows = 4;
-
-
-                    input.addEventListener(
-                        "input",
-                        function() {
-
-                            autoGrow(this);
-
-                            saveCurrentInputs();
-
-                        }
-                    );
-
-
-                    row.appendChild(number);
-
-                    row.appendChild(input);
-
-                    section.appendChild(row);
-
-                }
-
-
-                answerArea.appendChild(section);
-
+                row.appendChild(number);
+                row.appendChild(input);
+                section.appendChild(row);
             }
-        );
 
-    }
+            answerArea.appendChild(section);
+        });
+    } else {
+        const section = document.createElement("div");
+        section.className = "answer-section";
 
-
-    /* =====================================================
-       SINGLE-ANSWER QUESTION
-    ===================================================== */
-
-    else {
-
-        const section =
-            document.createElement(
-                "div"
-            );
-
-
-        section.className =
-            "answer-section";
-
-
-        const input =
-            document.createElement(
-                "textarea"
-            );
-
-
-        input.id =
-            "answer-single";
-
-
-        input.placeholder =
-            "Type your answer...";
-
-
-        input.value =
-            (
-                state.userAnswers[0] &&
-                state.userAnswers[0][0]
-            ) || "";
-
-
+        const input = document.createElement("textarea");
+        input.id = "answer-single";
+        input.placeholder = "Type your answer...";
+        input.value = (state.userAnswers[0] && state.userAnswers[0][0]) || "";
         input.rows = 5;
-
-
-        input.addEventListener(
-            "input",
-            function() {
-
-                autoGrow(this);
-
-                saveCurrentInputs();
-
-            }
-        );
-
+        input.addEventListener("input", function() { autoGrow(this); saveCurrentInputs(); });
 
         section.appendChild(input);
-
         answerArea.appendChild(section);
-
     }
 
+    answerArea.querySelectorAll("textarea").forEach(function(textarea) {
+        autoGrow(textarea);
+    });
 
-    /* =====================================================
-       AUTO GROW ALL TEXTAREAS
-    ===================================================== */
-
-    answerArea
-        .querySelectorAll("textarea")
-        .forEach(function(textarea) {
-
-            autoGrow(textarea);
-
-        });
-
-
-    /* =====================================================
-       RESTORE PREVIOUS RESULT
-    ===================================================== */
-
-    document
-        .getElementById("result")
-        .innerHTML =
-            state.resultHTML || "";
-
-
-    /* =====================================================
-       CHECK BUTTON
-    ===================================================== */
-
-    const checkButton =
-        document.getElementById(
-            "checkButton"
-        );
-
-
-    checkButton.classList.toggle(
-        "hidden",
-        state.status === "correct" ||
-        state.status === "wrong"
-    );
-
+    document.getElementById("result").innerHTML = state.resultHTML || "";
+    const checkButton = document.getElementById("checkButton");
+    checkButton.classList.toggle("hidden", state.status === "correct" || state.status === "wrong");
 
     updateQuestionNavigation();
 
-
-    const firstInput =
-        answerArea.querySelector(
-            "textarea"
-        );
-
-
-    if (firstInput) {
-
-        firstInput.focus();
-
-    }
-
+    const firstInput = answerArea.querySelector("textarea");
+    if (firstInput) firstInput.focus();
 }
 
-
-/* =========================================================
-   GET COMPONENT ANSWER
-========================================================= */
-
-function getComponentStudentAnswer(
-    state,
-    answerIndex
-) {
-
-    return (
-        state.userAnswers[
-            answerIndex
-        ] || []
-    ).join(" ");
-
+function getComponentStudentAnswer(state, answerIndex) {
+    return (state.userAnswers[answerIndex] || []).join(" ");
 }
-
-
-/* =========================================================
-   CHECK ANSWER
-========================================================= */
 
 function checkAnswer() {
-
-    const question =
-        quizQuestions[currentQuestionIndex];
-
-
-    const state =
-        questionStates[currentQuestionIndex];
-
-
+    const question = quizQuestions[currentQuestionIndex];
+    const state = questionStates[currentQuestionIndex];
     if (!question || !state) return;
 
-
     saveCurrentInputs();
 
-
-    const maximumPoints =
-        getQuestionPoints(question);
-
-
+    const maximumPoints = getQuestionPoints(question);
     let score = 0;
-
     let resultHTML = "";
 
-
-    /* =====================================================
-       MULTI-PART
-    ===================================================== */
-
     if (Array.isArray(question.lines)) {
+        question.lines.forEach(function(answer, answerIndex) {
+            const studentAnswer = getComponentStudentAnswer(state, answerIndex);
+            const comparison = compareWords(answer.answer, studentAnswer);
+            const lineScore = calculatePartialScore(Number(answer.points) || 0, comparison);
+            score += lineScore;
 
-        question.lines.forEach(
-            function(answer, answerIndex) {
+            const completelyCorrect = lineScore === (Number(answer.points) || 0);
 
-                const studentAnswer =
-                    getComponentStudentAnswer(
-                        state,
-                        answerIndex
-                    );
-
-
-                const comparison =
-                    compareWords(
-                        answer.answer,
-                        studentAnswer
-                    );
-
-
-                const lineScore =
-                    calculatePartialScore(
-                        Number(answer.points) || 0,
-                        comparison
-                    );
-
-
-                score += lineScore;
-
-
-                const completelyCorrect =
-                    lineScore ===
-                    (Number(answer.points) || 0);
-
-
-                resultHTML +=
-
-                    "<div class='result " +
-
-                    (
-                        completelyCorrect
-                            ? "correct-result"
-                            : "wrong-result"
-                    ) +
-
-                    "'>" +
-
-                    "<strong>" +
-                    (answerIndex + 1) +
-                    ") Score: " +
-                    lineScore +
-                    "/" +
-                    answer.points +
-                    "</strong>" +
-
-                    "<div class='word-results'>" +
-
-                    comparison.resultHTML +
-
-                    "</div>" +
-
-                    (
-                        !completelyCorrect
-
-                            ? "<div class='correct-answer'>" +
-
-                              "<strong>Correct answer:</strong><br>" +
-
-                              escapeHTML(
-                                  answer.answer
-                              ) +
-
-                              "</div>"
-
-                            : ""
-                    ) +
-
-                    "</div>";
-
-            }
-        );
-
-    }
-
-
-    /* =====================================================
-       SINGLE ANSWER
-    ===================================================== */
-
-    else {
-
-        const studentAnswer =
-            state.userAnswers[0][0] || "";
-
-
-        const comparison =
-            compareWords(
-                question.answer,
-                studentAnswer
-            );
-
-
-        score =
-            calculatePartialScore(
-                Number(question.points) || 1,
-                comparison
-            );
-
+            resultHTML +=
+                "<div class='result " + (completelyCorrect ? "correct-result" : "wrong-result") + "'>" +
+                "<strong>" + (answerIndex + 1) + ") Score: " + lineScore + "/" + answer.points + "</strong>" +
+                "<div class='word-results'>" + comparison.resultHTML + "</div>" +
+                (!completelyCorrect
+                    ? "<div class='correct-answer'><strong>Correct answer:</strong><br>" +
+                      escapeHTML(answer.answer) + "</div>"
+                    : "") +
+                "</div>";
+        });
+    } else {
+        const studentAnswer = state.userAnswers[0][0] || "";
+        const comparison = compareWords(question.answer, studentAnswer);
+        score = calculatePartialScore(Number(question.points) || 1, comparison);
 
         resultHTML =
-
             "<div class='result " +
-
-            (
-                score ===
-                (Number(question.points) || 1)
-                    ? "correct-result"
-                    : "wrong-result"
-            ) +
-
-            "'>" +
-
-            "<strong>Score: " +
-            score +
-            "/" +
-            question.points +
-            "</strong>" +
-
-            "<div class='word-results'>" +
-
-            comparison.resultHTML +
-
-            "</div>" +
-
-            (
-                score <
-                (Number(question.points) || 1)
-
-                    ? "<div class='correct-answer'>" +
-
-                      "<strong>Correct answer:</strong><br>" +
-
-                      escapeHTML(
-                          question.answer
-                      ) +
-
-                      "</div>"
-
-                    : ""
-            ) +
-
+            (score === (Number(question.points) || 1) ? "correct-result" : "wrong-result") + "'>" +
+            "<strong>Score: " + score + "/" + question.points + "</strong>" +
+            "<div class='word-results'>" + comparison.resultHTML + "</div>" +
+            (score < (Number(question.points) || 1)
+                ? "<div class='correct-answer'><strong>Correct answer:</strong><br>" +
+                  escapeHTML(question.answer) + "</div>"
+                : "") +
             "</div>";
-
     }
 
-
-    /* =====================================================
-       SAVE RESULT
-    ===================================================== */
-
-    state.score =
-        Math.round(
-            score * 100
-        ) / 100;
-
-
-    state.maxPoints =
-        maximumPoints;
-
-
-    state.resultHTML =
-        resultHTML;
-
-
-    state.status =
-        state.score === maximumPoints
-            ? "correct"
-            : "wrong";
-
+    state.score = Math.round(score * 100) / 100;
+    state.maxPoints = maximumPoints;
+    state.resultHTML = resultHTML;
+    state.status = state.score === maximumPoints ? "correct" : "wrong";
 
     recalculateTotals();
-
-
-    /* =====================================================
-       HIDE CHECK BUTTON
-    ===================================================== */
-
-    document
-        .getElementById("checkButton")
-        .classList.add("hidden");
-
-
+    document.getElementById("checkButton").classList.add("hidden");
     updateQuestionNavigation();
-
-
-    document
-        .getElementById("result")
-        .innerHTML =
-            resultHTML;
-
+    document.getElementById("result").innerHTML = resultHTML;
 }
-
-
-/* =========================================================
-   RECALCULATE TOTALS
-========================================================= */
 
 function recalculateTotals() {
-
     let score = 0;
-
     let possible = 0;
 
-
-    questionStates.forEach(
-        function(state) {
-
-            possible +=
-                state.maxPoints;
-
-
-            if (
-                state.status === "correct" ||
-                state.status === "wrong"
-            ) {
-
-                score +=
-                    state.score;
-
-            }
-
+    questionStates.forEach(function(state) {
+        possible += state.maxPoints;
+        if (state.status === "correct" || state.status === "wrong") {
+            score += state.score;
         }
-    );
+    });
 
-
-    totalScore =
-        Math.round(
-            score * 100
-        ) / 100;
-
-
-    totalPossiblePoints =
-        Math.round(
-            possible * 100
-        ) / 100;
-
+    totalScore = Math.round(score * 100) / 100;
+    totalPossiblePoints = Math.round(possible * 100) / 100;
 }
 
-
-/* =========================================================
-   NEXT QUESTION
-========================================================= */
-
 function nextQuestion() {
-
     saveCurrentInputs();
 
-
-    if (
-        questionStates[
-            currentQuestionIndex
-        ].status === "unanswered"
-    ) {
-
-        questionStates[
-            currentQuestionIndex
-        ].status = "skipped";
-
+    if (questionStates[currentQuestionIndex].status === "unanswered") {
+        questionStates[currentQuestionIndex].status = "skipped";
     }
-
 
     let nextIndex = -1;
 
-
-    /* =====================================================
-       FIRST: UNANSWERED QUESTIONS AFTER CURRENT
-    ===================================================== */
-
-    for (
-        let i =
-            currentQuestionIndex + 1;
-
-        i < quizQuestions.length;
-
-        i++
-    ) {
-
-        if (
-            questionStates[i].status ===
-            "unanswered"
-        ) {
-
+    // First continue forward through unanswered questions.
+    for (let i = currentQuestionIndex + 1; i < quizQuestions.length; i++) {
+        if (questionStates[i].status === "unanswered") {
             nextIndex = i;
-
             break;
-
         }
-
     }
 
+    // Then wrap around to unanswered questions before the current one.
+    if (nextIndex === -1) {
+        for (let i = 0; i < currentQuestionIndex; i++) {
+            if (questionStates[i].status === "unanswered") {
+                nextIndex = i;
+                break;
+            }
+        }
+    }
 
-    /* =====================================================
-       SECOND: UNANSWERED QUESTIONS BEFORE CURRENT
-    ===================================================== */
+    // Finally return to skipped questions.
+    if (nextIndex === -1) {
+        for (let i = currentQuestionIndex + 1; i < quizQuestions.length; i++) {
+            if (questionStates[i].status === "skipped") {
+                nextIndex = i;
+                break;
+            }
+        }
+    }
 
     if (nextIndex === -1) {
-
-        for (
-            let i = 0;
-            i < currentQuestionIndex;
-            i++
-        ) {
-
-            if (
-                questionStates[i].status ===
-                "unanswered"
-            ) {
-
+        for (let i = 0; i < currentQuestionIndex; i++) {
+            if (questionStates[i].status === "skipped") {
                 nextIndex = i;
-
                 break;
-
             }
-
         }
-
     }
-
-
-    /* =====================================================
-       THIRD: SKIPPED QUESTIONS AFTER CURRENT
-    ===================================================== */
-
-    if (nextIndex === -1) {
-
-        for (
-            let i =
-                currentQuestionIndex + 1;
-
-            i < quizQuestions.length;
-
-            i++
-        ) {
-
-            if (
-                questionStates[i].status ===
-                "skipped"
-            ) {
-
-                nextIndex = i;
-
-                break;
-
-            }
-
-        }
-
-    }
-
-
-    /* =====================================================
-       FOURTH: SKIPPED QUESTIONS BEFORE CURRENT
-    ===================================================== */
-
-    if (nextIndex === -1) {
-
-        for (
-            let i = 0;
-            i < currentQuestionIndex;
-            i++
-        ) {
-
-            if (
-                questionStates[i].status ===
-                "skipped"
-            ) {
-
-                nextIndex = i;
-
-                break;
-
-            }
-
-        }
-
-    }
-
-
-    /* =====================================================
-       GO TO NEXT OR FINISH
-    ===================================================== */
 
     if (nextIndex !== -1) {
-
-        currentQuestionIndex =
-            nextIndex;
-
+        currentQuestionIndex = nextIndex;
         showQuestion();
-
     } else {
-
         showFinalResult();
-
     }
-
 }
-
-
-/* =========================================================
-   END QUIZ
-   ALWAYS ASK FOR CONFIRMATION
-========================================================= */
 
 function endQuiz() {
-
-    /* Save anything currently typed */
     saveCurrentInputs();
 
+    const unfinished = questionStates.filter(function(state) {
+        return state.status === "unanswered" || state.status === "skipped";
+    }).length;
 
-    /* ALWAYS show confirmation */
-    const confirmed =
-        window.confirm(
+    const message = unfinished > 0
+        ? "Are you sure you want to end the quiz?\n\n" + unfinished + " unanswered/skipped question(s) will be marked wrong and scored as empty answers."
+        : "Are you sure you want to end the quiz?";
 
-            "Are you sure you want to end the quiz?\n\n" +
+    if (!window.confirm(message)) return;
 
-            "Any unanswered or skipped questions will be " +
-            "marked as WRONG and receive 0 points.\n\n" +
-
-            "Click OK to end the quiz or Cancel to continue."
-
-        );
-
-
-    /* User clicked Cancel */
-    if (!confirmed) {
-
-        return;
-
-    }
-
-
-    /* =====================================================
-       MARK ALL UNANSWERED / SKIPPED AS WRONG
-    ===================================================== */
-
-    questionStates.forEach(
-        function(state, index) {
-
-            if (
-                state.status === "unanswered" ||
-                state.status === "skipped"
-            ) {
-
-                state.status = "wrong";
-
-                state.score = 0;
-
-                state.resultHTML =
-                    buildEmptyWrongResult(
-                        quizQuestions[index]
-                    );
-
-            }
-
+    // Mark every unanswered/skipped question wrong using its current empty answer.
+    questionStates.forEach(function(state) {
+        if (state.status === "unanswered" || state.status === "skipped") {
+            state.status = "wrong";
+            state.score = 0;
+            state.resultHTML = buildEmptyWrongResult(quizQuestions[questionStates.indexOf(state)]);
         }
-    );
+    });
 
-
-    /* =====================================================
-       SHOW FINAL RESULT
-    ===================================================== */
-
+    // Rebuild wrong index list and finish immediately.
     showFinalResult();
-
 }
-
-
-/* =========================================================
-   BUILD EMPTY WRONG RESULT
-========================================================= */
 
 function buildEmptyWrongResult(question) {
-
-    if (!question) {
-
-        return "";
-
-    }
-
-
-    /* =====================================================
-       MULTI-PART QUESTION
-    ===================================================== */
+    if (!question) return "";
 
     if (Array.isArray(question.lines)) {
-
         let html = "";
-
-
-        question.lines.forEach(
-            function(answer, index) {
-
-                html +=
-
-                    "<div class='result wrong-result'>" +
-
-                    "<strong>" +
-
-                    (index + 1) +
-
-                    ") Score: 0/" +
-
-                    answer.points +
-
-                    "</strong>" +
-
-                    "<div class='word-results'>" +
-
-                    "<span class='incorrect-word'>" +
-
-                    "[missing] ✗" +
-
-                    "</span>" +
-
-                    "</div>" +
-
-                    "<div class='correct-answer'>" +
-
-                    "<strong>Correct answer:</strong><br>" +
-
-                    escapeHTML(
-                        answer.answer
-                    ) +
-
-                    "</div>" +
-
-                    "</div>";
-
-            }
-        );
-
-
+        question.lines.forEach(function(answer, index) {
+            html +=
+                "<div class=\"result wrong-result\">" +
+                "<strong>" + (index + 1) + ") Score: 0/" + answer.points + "</strong>" +
+                "<div class=\"word-results\"><span class=\"incorrect-word\">[missing] ✗</span></div>" +
+                "<div class=\"correct-answer\"><strong>Correct answer:</strong><br>" +
+                escapeHTML(answer.answer) +
+                "</div></div>";
+        });
         return html;
-
     }
 
-
-    /* =====================================================
-       SINGLE ANSWER QUESTION
-
-       IMPORTANT:
-       return ( ... ) prevents JavaScript automatic
-       semicolon insertion from breaking the return.
-    ===================================================== */
-
-    return (
-
-        "<div class='result wrong-result'>" +
-
-        "<strong>Score: 0/" +
-
-        question.points +
-
-        "</strong>" +
-
-        "<div class='word-results'>" +
-
-        "<span class='incorrect-word'>" +
-
-        "[missing] ✗" +
-
-        "</span>" +
-
-        "</div>" +
-
-        "<div class='correct-answer'>" +
-
-        "<strong>Correct answer:</strong><br>" +
-
-        escapeHTML(
-            question.answer
-        ) +
-
-        "</div>" +
-
-        "</div>"
-
-    );
-
+    return
+        "<div class=\"result wrong-result\">" +
+        "<strong>Score: 0/" + question.points + "</strong>" +
+        "<div class=\"word-results\"><span class=\"incorrect-word\">[missing] ✗</span></div>" +
+        "<div class=\"correct-answer\"><strong>Correct answer:</strong><br>" +
+        escapeHTML(question.answer) +
+        "</div></div>";
 }
-
-
-/* =========================================================
-   FINAL RESULT
-========================================================= */
 
 function showFinalResult() {
-
     recalculateTotals();
 
+    document.getElementById("quizScreen").classList.add("hidden");
+    document.getElementById("finalScreen").classList.remove("hidden");
 
-    document
-        .getElementById("quizScreen")
-        .classList.add("hidden");
+    const percentage = totalPossiblePoints > 0
+        ? (totalScore / totalPossiblePoints) * 100
+        : 0;
 
+    document.getElementById("finalScore").innerText =
+        totalScore.toFixed(2) + " / " + totalPossiblePoints.toFixed(2);
 
-    document
-        .getElementById("finalScreen")
-        .classList.remove("hidden");
+    document.getElementById("finalPercentage").innerText =
+        "Score: " + percentage.toFixed(1) + "%";
 
+    const wrongIndices = questionStates
+        .map(function(state, index) { return state.status === "wrong" ? index : -1; })
+        .filter(function(index) { return index !== -1; });
 
-    const percentage =
+    const skippedIndices = questionStates
+        .map(function(state, index) { return state.status === "skipped" ? index : -1; })
+        .filter(function(index) { return index !== -1; });
 
-        totalPossiblePoints > 0
+    wrongQuestionIndices = wrongIndices.slice();
+    skippedQuestionIndices = skippedIndices.slice();
 
-            ? (
-                totalScore /
-                totalPossiblePoints
-            ) * 100
+    // Keep these global arrays for repeat/revision functionality.
+    wrongQuestionIndices = wrongIndices;
+    skippedQuestionIndices = skippedIndices;
 
-            : 0;
-
-
-    document
-        .getElementById("finalScore")
-        .innerText =
-
-            totalScore.toFixed(2) +
-            " / " +
-            totalPossiblePoints.toFixed(2);
-
-
-    document
-        .getElementById("finalPercentage")
-        .innerText =
-
-            "Score: " +
-            percentage.toFixed(1) +
-            "%";
-
-
-    /* =====================================================
-       FIND WRONG QUESTIONS
-    ===================================================== */
-
-    const wrongIndices =
-
-        questionStates
-
-            .map(
-                function(state, index) {
-
-                    return state.status === "wrong"
-                        ? index
-                        : -1;
-
-                }
-            )
-
-            .filter(
-                function(index) {
-
-                    return index !== -1;
-
-                }
-            );
-
-
-    /* =====================================================
-       FIND SKIPPED QUESTIONS
-    ===================================================== */
-
-    const skippedIndices =
-
-        questionStates
-
-            .map(
-                function(state, index) {
-
-                    return state.status === "skipped"
-                        ? index
-                        : -1;
-
-                }
-            )
-
-            .filter(
-                function(index) {
-
-                    return index !== -1;
-
-                }
-            );
-
-
-    wrongQuestionIndices =
-        wrongIndices.slice();
-
-
-    skippedQuestionIndices =
-        skippedIndices.slice();
-
-
-    /* =====================================================
-       WRONG SUMMARY
-    ===================================================== */
-
-    const wrongSummary =
-        document.getElementById(
-            "wrongSummary"
-        );
-
-
-    if (
-        wrongIndices.length === 0
-    ) {
-
+    const wrongSummary = document.getElementById("wrongSummary");
+    if (wrongIndices.length === 0) {
         wrongSummary.innerHTML =
-
-            "<h3>Wrong Questions</h3>" +
-
-            "<p>" +
-
-            "Excellent! You answered everything correctly." +
-
-            "</p>";
-
+            "<h3>Wrong Questions</h3><p>Excellent! You answered everything correctly.</p>";
     } else {
-
-        let html =
-
-            "<h3>Wrong Questions</h3>" +
-
-            "<p>" +
-
-            wrongIndices.length +
-
-            " question(s) need revision." +
-
-            "</p>";
-
-
-        wrongIndices.forEach(
-            function(index) {
-
-                html +=
-
-                    "<div class='summary-item'>" +
-
-                    "<strong>Question " +
-
-                    originalQuestionNumbers[index] +
-
-                    "</strong><br>" +
-
-                    escapeHTML(
-                        quizQuestions[index].question
-                    ) +
-
-                    "</div>";
-
-            }
-        );
-
-
-        wrongSummary.innerHTML =
-            html;
-
+        let html = "<h3>Wrong Questions</h3><p>" + wrongIndices.length +
+            " question(s) need revision.</p>";
+        wrongIndices.forEach(function(index) {
+            html += "<div class='summary-item'><strong>Question " +
+                originalQuestionNumbers[index] + "</strong><br>" +
+                escapeHTML(quizQuestions[index].question) + "</div>";
+        });
+        wrongSummary.innerHTML = html;
     }
 
-
-    /* =====================================================
-       SKIPPED SUMMARY
-    ===================================================== */
-
-    const skippedSummary =
-        document.getElementById(
-            "skippedSummary"
-        );
-
-
-    if (
-        skippedIndices.length === 0
-    ) {
-
+    const skippedSummary = document.getElementById("skippedSummary");
+    if (skippedIndices.length === 0) {
         skippedSummary.innerHTML =
-
-            "<h3>Skipped Questions</h3>" +
-
-            "<p>No questions were skipped.</p>";
-
+            "<h3>Skipped Questions</h3><p>No questions were skipped.</p>";
     } else {
-
-        let html =
-
-            "<h3>Skipped Questions</h3>";
-
-
-        skippedIndices.forEach(
-            function(index) {
-
-                html +=
-
-                    "<div class='summary-item'>" +
-
-                    "<strong>Question " +
-
-                    originalQuestionNumbers[index] +
-
-                    "</strong><br>" +
-
-                    escapeHTML(
-                        quizQuestions[index].question
-                    ) +
-
-                    "</div>";
-
-            }
-        );
-
-
-        skippedSummary.innerHTML =
-            html;
-
+        let html = "<h3>Skipped Questions</h3>";
+        skippedIndices.forEach(function(index) {
+            html += "<div class='summary-item'><strong>Question " +
+                originalQuestionNumbers[index] + "</strong><br>" +
+                escapeHTML(quizQuestions[index].question) + "</div>";
+        });
+        skippedSummary.innerHTML = html;
     }
 
-
-    /* =====================================================
-       REPEAT WRONG QUESTIONS BUTTON
-    ===================================================== */
-
-    const repeatButton =
-        document.getElementById(
-            "repeatButton"
-        );
-
-
-    if (
-        wrongIndices.length === 0
-    ) {
-
-        repeatButton.classList.add(
-            "hidden"
-        );
-
+    const repeatButton = document.getElementById("repeatButton");
+    if (wrongIndices.length === 0) {
+        repeatButton.classList.add("hidden");
     } else {
-
-        repeatButton.classList.remove(
-            "hidden"
-        );
-
-        repeatButton.innerText =
-            "Repeat Wrong Questions";
-
-        repeatButton.onclick =
-            repeatWrongQuestions;
-
+        repeatButton.classList.remove("hidden");
+        repeatButton.innerText = "Repeat Wrong Questions";
     }
-
 }
-
-
-/* =========================================================
-   REPEAT WRONG QUESTIONS
-========================================================= */
 
 function repeatWrongQuestions() {
+    const wrongIndices = questionStates
+        .map(function(state, index) { return state.status === "wrong" ? index : -1; })
+        .filter(function(index) { return index !== -1; });
 
-    const wrongIndices =
+    if (wrongIndices.length === 0) return;
 
-        questionStates
+    const oldQuestions = quizQuestions;
+    const oldNumbers = originalQuestionNumbers;
 
-            .map(
-                function(state, index) {
+    quizQuestions = wrongIndices.map(function(index) {
+        return oldQuestions[index];
+    });
 
-                    return state.status === "wrong"
-                        ? index
-                        : -1;
+    originalQuestionNumbers = wrongIndices.map(function(index) {
+        return oldNumbers[index];
+    });
 
-                }
-            )
-
-            .filter(
-                function(index) {
-
-                    return index !== -1;
-
-                }
-            );
-
-
-    if (
-        wrongIndices.length === 0
-    ) {
-
-        return;
-
-    }
-
-
-    const oldQuestions =
-        quizQuestions;
-
-
-    const oldNumbers =
-        originalQuestionNumbers;
-
-
-    quizQuestions =
-
-        wrongIndices.map(
-            function(index) {
-
-                return oldQuestions[index];
-
-            }
-        );
-
-
-    originalQuestionNumbers =
-
-        wrongIndices.map(
-            function(index) {
-
-                return oldNumbers[index];
-
-            }
-        );
-
-
-    startQuestion =
-        originalQuestionNumbers[0];
-
-
-    endQuestion =
-        originalQuestionNumbers[
-            originalQuestionNumbers.length - 1
-        ];
-
-
+    startQuestion = originalQuestionNumbers[0];
+    endQuestion = originalQuestionNumbers[originalQuestionNumbers.length - 1];
     currentQuestionIndex = 0;
-
-
-    questionStates =
-        quizQuestions.map(
-            createQuestionState
-        );
-
-
+    questionStates = quizQuestions.map(createQuestionState);
     totalScore = 0;
-
     totalPossiblePoints = 0;
-
     wrongQuestionIndices = [];
-
     skippedQuestionIndices = [];
 
-
-    document
-        .getElementById("finalScreen")
-        .classList.add("hidden");
-
-
-    document
-        .getElementById("quizScreen")
-        .classList.remove("hidden");
-
+    document.getElementById("finalScreen").classList.add("hidden");
+    document.getElementById("quizScreen").classList.remove("hidden");
 
     buildQuestionNavigation();
-
     showQuestion();
-
 }
 
-
-/* =========================================================
-   RESTART QUIZ
-========================================================= */
-
 function restartQuiz() {
-
     quizQuestions = [];
-
     originalQuestionNumbers = [];
-
     questionStates = [];
-
     currentQuestionIndex = 0;
-
     totalScore = 0;
-
     totalPossiblePoints = 0;
-
     wrongQuestionIndices = [];
-
     skippedQuestionIndices = [];
 
-
-    document
-        .getElementById("finalScreen")
-        .classList.add("hidden");
-
-
-    document
-        .getElementById("quizScreen")
-        .classList.add("hidden");
-
-
-    document
-        .getElementById("setupScreen")
-        .classList.remove("hidden");
-
+    document.getElementById("finalScreen").classList.add("hidden");
+    document.getElementById("quizScreen").classList.add("hidden");
+    document.getElementById("setupScreen").classList.remove("hidden");
 
     updateRangeMessage();
-
 }
 
 </script>
-
 </body>
-
 </html>
-```
