@@ -2166,22 +2166,44 @@ function goToQuestion(index) {
 }
 
 function normalizeText(text) {
-    let value = String(text ?? "")
-        .toLowerCase();
+    let value = String(text ?? "").toLowerCase();
+
+    /*
+     * =====================================================
+     * BIBLE REFERENCES
+     *
+     * Rv 21      = Rv21
+     * Rv21       = Rv21
+     * Rv 21:7    = Rv21:7
+     * Rv21:7     = Rv21:7
+     * Rv 21 : 7  = Rv21:7
+     * =====================================================
+     */
+
+    value = value.replace(
+        /\brv\s*(\d+)\s*:\s*(\d+)\b/gi,
+        "rv$1:$2"
+    );
+
+    value = value.replace(
+        /\brv\s*(\d+)\b/gi,
+        "rv$1"
+    );
 
     /*
      * =====================================================
      * POSSESSIVE S
      *
-     * God's
-     * God’s
-     * Gods
-     * God s
+     * God's  = gods
+     * God’s  = gods
+     * Gods   = gods
+     * God s  = gods
+     * God  s = gods
      *
-     * All become:
-     *
-     * gods
-     *
+     * Satan's = satans
+     * Satan’s = satans
+     * Satans  = satans
+     * Satan s = satans
      * =====================================================
      */
 
@@ -2191,13 +2213,16 @@ function normalizeText(text) {
     );
 
     /*
-     * Remove remaining apostrophes.
+     * Remove any remaining apostrophes.
      */
     value = value.replace(/[’']/g, "");
 
     /*
-     * Remove punctuation.
+     * =====================================================
+     * REMOVE PUNCTUATION
+     * =====================================================
      */
+
     value = value
         .replace(/[^\p{L}\p{N}\s]/gu, " ")
         .replace(/\s+/g, " ")
@@ -2207,13 +2232,9 @@ function normalizeText(text) {
      * =====================================================
      * NUMBER + WORD
      *
-     * 12 tribes
-     * 12tribes
-     * 12  tribes
-     *
-     * all become:
-     *
-     * 12tribes
+     * 12 tribes  = 12tribes
+     * 12tribes    = 12tribes
+     * 12  tribes  = 12tribes
      * =====================================================
      */
 
