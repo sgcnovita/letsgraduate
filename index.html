@@ -1680,11 +1680,32 @@ const questions = [
 /* Q30 */
 
 {
-    question: "Example Question 30",
+    question: "Q30: In the Temple of the Tabernacle of the Testimony in Rv 15:5, 1) who testify, 2) what, 3) What are the two reasons that only they can testify?",
 
-    points: 1,
+    points: 3,
 
-    answer: "Example answer thirty"
+     lines: [
+
+        {
+            answer: "those who overcame",
+            points: 1,
+           lines: 1
+        },
+        
+        {
+            answer: "actual entities of all the chapters of Revelation",
+            points: 1,
+           lines: 1
+        },
+      
+
+        {
+            answer: "because they saw the actual entities at the site of the events, and they fought and overcame the destroyers",
+            points: 1,
+           lines: 1
+        }
+
+    ]
 },
 
 
@@ -1692,11 +1713,27 @@ const questions = [
 /* Q31 */
 
 {
-    question: "Example Question 31",
+    question: "Q31: Write 1) how many kinds of plagues are in Revelation and what they are in order. Also, write 2) who are judged in Rv 6 and Rv 16, respectively.",
 
-    points: 1,
+    points: 2,
 
-    answer: "Example answer thirty one"
+     lines: [
+
+        {
+            answer: "three kinds, seven seals, seven trumpets, seven bowls",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answers: [
+                "Rv 6: betrayers",
+                "Rv 16: betrayers and destroyers"
+            ],
+           points: 1,
+           lines: 2
+        }
+   ]
 },
 
 
@@ -2175,7 +2212,31 @@ function checkAnswer() {
     if (Array.isArray(question.lines)) {
         question.lines.forEach(function(answer, answerIndex) {
             const studentAnswer = getComponentStudentAnswer(state, answerIndex);
-            const comparison = compareWords(answer.answer, studentAnswer);
+
+            let comparison;
+            
+            if (Array.isArray(answer.acceptedAnswers)) {
+                // Check the student's answer against all accepted answers.
+                let bestComparison = null;
+            
+                answer.acceptedAnswers.forEach(function(acceptedAnswer) {
+                    const currentComparison = compareWords(acceptedAnswer, studentAnswer);
+            
+                    if (
+                        bestComparison === null ||
+                        currentComparison.correctCount / Math.max(currentComparison.totalWords, 1) >
+                        bestComparison.correctCount / Math.max(bestComparison.totalWords, 1)
+                    ) {
+                        bestComparison = currentComparison;
+                    }
+                });
+            
+                comparison = bestComparison;
+            } else {
+                comparison = compareWords(answer.answer, studentAnswer);
+            }
+
+
             const lineScore = calculatePartialScore(Number(answer.points) || 0, comparison);
             score += lineScore;
 
