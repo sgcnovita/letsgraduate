@@ -2167,38 +2167,33 @@ function goToQuestion(index) {
 
 function normalizeText(text) {
     let value = String(text ?? "")
-        .toLowerCase()
-        .replace(/[’']/g, "");
+        .toLowerCase();
 
     /*
      * =====================================================
-     * FLEXIBLE BIBLE REFERENCE FORMATTING
+     * POSSESSIVE S
      *
-     * These become the same:
+     * God's
+     * God’s
+     * Gods
+     * God s
      *
-     * Rv10
-     * Rv 10
+     * All become:
      *
-     * Rv10:11
-     * Rv 10:11
-     * Rv 10 : 11
+     * gods
      *
-     * Rv17:5-7
-     * Rv 17: 5-7
      * =====================================================
      */
 
-    // Rv chapter:verse
     value = value.replace(
-        /\brv\s*(\d+)\s*:\s*(\d+)\b/gi,
-        "rv$1:$2"
+        /\b([a-z]+)(?:[’']\s*|\s+)s\b/gi,
+        "$1s"
     );
 
-    // Rv chapter only
-    value = value.replace(
-        /\brv\s*(\d+)\b/gi,
-        "rv$1"
-    );
+    /*
+     * Remove remaining apostrophes.
+     */
+    value = value.replace(/[’']/g, "");
 
     /*
      * Remove punctuation.
@@ -2210,27 +2205,25 @@ function normalizeText(text) {
 
     /*
      * =====================================================
-     * FLEXIBLE NUMBER + WORD FORMATTING
-     *
-     * These become the same:
+     * NUMBER + WORD
      *
      * 12 tribes
      * 12tribes
      * 12  tribes
-     * 12 Tribes
-     * 144000
-     * 144 000
      *
-     * This is useful for answers such as:
-     * "12 tribes"
+     * all become:
+     *
+     * 12tribes
      * =====================================================
      */
 
-    value = value.replace(/(\d+)\s+(?=[a-z])/gi, "$1");
+    value = value.replace(
+        /(\d+)\s+(?=[a-z])/gi,
+        "$1"
+    );
 
     return value;
 }
-
 
 function escapeHTML(text) {
     return String(text ?? "")
