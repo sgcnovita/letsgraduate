@@ -1270,8 +1270,6 @@ const questions = [
 },
 
 
-
-
 /* Q16 */
 
 {
@@ -2278,74 +2276,317 @@ function checkAnswer() {
     let resultHTML = "";
 
     if (Array.isArray(question.lines)) {
+
         question.lines.forEach(function(answer, answerIndex) {
-            const studentAnswer = getComponentStudentAnswer(state, answerIndex);
+
+            /*
+             * =====================================================
+             * CASE 1:
+             * One answer with multiple lines
+             *
+             * Example:
+             *
+             * answers: [
+             *     "Seven messengers: ...",
+             *     "Nicolaitans: ...",
+             *     "John: ..."
+             * ],
+             * lines: 3
+             *
+             * Each student line is compared with its corresponding
+             * correct answer.
+             * =====================================================
+             */
+
+            if (Array.isArray(answer.answers)) {
+
+                const studentLines = state.userAnswers[answerIndex] || [];
+                let totalCorrectWords = 0;
+                let totalCorrectWordsPossible = 0;
+                let allLinesCorrect = true;
+
+                let lineResultsHTML = "";
+
+                answer.answers.forEach(function(correctAnswer, lineIndex) {
+
+                    const studentAnswer = studentLines[lineIndex] || "";
+
+                    const comparison = compareWords(
+                        correctAnswer,
+                        studentAnswer
+                    );
+
+                    totalCorrectWords += comparison.correctCount;
+                    totalCorrectWordsPossible += comparison.totalWords;
+
+                    const lineCompletelyCorrect =
+                        comparison.totalWords > 0 &&
+                        comparison.correctCount === comparison.totalWords &&
+                        normalizeText(studentAnswer) === normalizeText(correctAnswer);
+
+                    if (!lineCompletelyCorrect) {
+                        allLinesCorrect = false;
+                    }
+
+                    lineResultsHTML +=
+                        "<div style='margin-bottom:12px;'>" +
+                        "<strong>" + (lineIndex + 1) + ")</strong> " +
+                        "<div class='word-results'>" +
+                        comparison.resultHTML +
+                        "</div>" +
+                        (
+                            !lineCompletelyCorrect
+                            ?
+                            "<div class='correct-answer'>" +
+                            "<strong>Correct answer:</strong><br>" +
+                            escapeHTML(correctAnswer) +
+                            "</div>"
+                            :
+                            ""
+                        ) +
+                        "</div>";
+                });
+
+                /*
+                 * Calculate the score based on all words across
+                 * all lines.
+                 */
+                let lineScore = 0;
+
+                if (totalCorrectWordsPossible > 0) {
+                    lineScore =
+                        Math.round(
+                            (Number(answer.points) || 0) *
+                            (totalCorrectWords / totalCorrectWordsPossible) *
+                            100
+                        ) / 100;
+                }
+
+                /*
+                 * If every line is completely correct,
+                 * give the full point.
+                 */
+                if (allLinesCorrect) {
+                    lineScore = Number(answer.points) || 0;
+                }
+
+                score += lineScore;
+
+                resultHTML +=
+                    "<div class='result " +
+                    (
+                        allLinesCorrect
+                        ? "correct-result"
+                        : "wrong-result"
+                    ) +
+                    "'>" +
+
+                    "<strong>" +
+                    (answerIndex + 1) +
+                    ") Score: " +
+                    lineScore +
+                    "/" +
+                    answer.points +
+                    "</strong>" +
+
+                    "<div style='margin-top:12px;'>" +
+                    lineResultsHTML +
+                    "</div>" +
+
+                    "</div>";
+
+                return;
+            }
+
+
+            /*
+             * =====================================================
+             * CASE 2:
+             * Normal single answer
+             *
+             * Example:
+             *
+             * answer: "Rv 10"
+             * lines: 1
+             * =====================================================
+             */
+
+            const studentAnswer =
+                getComponentStudentAnswer(state, answerIndex);
 
             let comparison;
-            
+
+            /*
+             * Optional support for multiple accepted answers.
+             *
+             * Example:
+             *
+             * acceptedAnswers: [
+             *     "12 tribes",
+             *     "12tribes"
+             * ]
+             *
+             * Because normalizeText() already handles this,
+             * both will work anyway.
+             */
             if (Array.isArray(answer.acceptedAnswers)) {
-                // Check the student's answer against all accepted answers.
+
                 let bestComparison = null;
-            
+
                 answer.acceptedAnswers.forEach(function(acceptedAnswer) {
-                    const currentComparison = compareWords(acceptedAnswer, studentAnswer);
-            
+
+                    const currentComparison =
+                        compareWords(
+                            acceptedAnswer,
+                            studentAnswer
+                        );
+
                     if (
                         bestComparison === null ||
-                        currentComparison.correctCount / Math.max(currentComparison.totalWords, 1) >
-                        bestComparison.correctCount / Math.max(bestComparison.totalWords, 1)
+                        currentComparison.correctCount /
+                        Math.max(currentComparison.totalWords, 1)
+                        >
+                        bestComparison.correctCount /
+                        Math.max(bestComparison.totalWords, 1)
                     ) {
                         bestComparison = currentComparison;
                     }
                 });
-            
+
                 comparison = bestComparison;
+
             } else {
-                comparison = compareWords(answer.answer, studentAnswer);
+
+                comparison = compareWords(
+                    answer.answer,
+                    studentAnswer
+                );
             }
 
+            const lineScore =
+                calculatePartialScore(
+                    Number(answer.points) || 0,
+                    comparison
+                );
 
-            const lineScore = calculatePartialScore(Number(answer.points) || 0, comparison);
             score += lineScore;
 
-            const completelyCorrect = lineScore === (Number(answer.points) || 0);
+            const completelyCorrect =
+                lineScore === (Number(answer.points) || 0);
 
             resultHTML +=
-                "<div class='result " + (completelyCorrect ? "correct-result" : "wrong-result") + "'>" +
-                "<strong>" + (answerIndex + 1) + ") Score: " + lineScore + "/" + answer.points + "</strong>" +
-                "<div class='word-results'>" + comparison.resultHTML + "</div>" +
-                (!completelyCorrect
-                    ? "<div class='correct-answer'><strong>Correct answer:</strong><br>" +
-                      escapeHTML(answer.answer) + "</div>"
-                    : "") +
+                "<div class='result " +
+                (
+                    completelyCorrect
+                    ? "correct-result"
+                    : "wrong-result"
+                ) +
+                "'>" +
+
+                "<strong>" +
+                (answerIndex + 1) +
+                ") Score: " +
+                lineScore +
+                "/" +
+                answer.points +
+                "</strong>" +
+
+                "<div class='word-results'>" +
+                comparison.resultHTML +
+                "</div>" +
+
+                (
+                    !completelyCorrect
+                    ?
+                    "<div class='correct-answer'>" +
+                    "<strong>Correct answer:</strong><br>" +
+                    escapeHTML(answer.answer) +
+                    "</div>"
+                    :
+                    ""
+                ) +
+
                 "</div>";
         });
+
     } else {
-        const studentAnswer = state.userAnswers[0][0] || "";
-        const comparison = compareWords(question.answer, studentAnswer);
-        score = calculatePartialScore(Number(question.points) || 1, comparison);
+
+        /*
+         * =====================================================
+         * NORMAL QUESTION WITH ONE ANSWER
+         * =====================================================
+         */
+
+        const studentAnswer =
+            state.userAnswers[0][0] || "";
+
+        const comparison =
+            compareWords(
+                question.answer,
+                studentAnswer
+            );
+
+        score =
+            calculatePartialScore(
+                Number(question.points) || 1,
+                comparison
+            );
 
         resultHTML =
             "<div class='result " +
-            (score === (Number(question.points) || 1) ? "correct-result" : "wrong-result") + "'>" +
-            "<strong>Score: " + score + "/" + question.points + "</strong>" +
-            "<div class='word-results'>" + comparison.resultHTML + "</div>" +
-            (score < (Number(question.points) || 1)
-                ? "<div class='correct-answer'><strong>Correct answer:</strong><br>" +
-                  escapeHTML(question.answer) + "</div>"
-                : "") +
+            (
+                score === (Number(question.points) || 1)
+                ? "correct-result"
+                : "wrong-result"
+            ) +
+            "'>" +
+
+            "<strong>Score: " +
+            score +
+            "/" +
+            question.points +
+            "</strong>" +
+
+            "<div class='word-results'>" +
+            comparison.resultHTML +
+            "</div>" +
+
+            (
+                score < (Number(question.points) || 1)
+                ?
+                "<div class='correct-answer'>" +
+                "<strong>Correct answer:</strong><br>" +
+                escapeHTML(question.answer) +
+                "</div>"
+                :
+                ""
+            ) +
+
             "</div>";
     }
 
-    state.score = Math.round(score * 100) / 100;
+    state.score =
+        Math.round(score * 100) / 100;
+
     state.maxPoints = maximumPoints;
+
     state.resultHTML = resultHTML;
-    state.status = state.score === maximumPoints ? "correct" : "wrong";
+
+    state.status =
+        state.score === maximumPoints
+        ? "correct"
+        : "wrong";
 
     recalculateTotals();
-    document.getElementById("checkButton").classList.add("hidden");
+
+    document
+        .getElementById("checkButton")
+        .classList.add("hidden");
+
     updateQuestionNavigation();
-    document.getElementById("result").innerHTML = resultHTML;
+
+    document.getElementById("result").innerHTML =
+        resultHTML;
 }
 
 function recalculateTotals() {
@@ -2447,26 +2688,107 @@ function buildEmptyWrongResult(question) {
     if (!question) return "";
 
     if (Array.isArray(question.lines)) {
+
         let html = "";
+
         question.lines.forEach(function(answer, index) {
-            html +=
-                "<div class=\"result wrong-result\">" +
-                "<strong>" + (index + 1) + ") Score: 0/" + answer.points + "</strong>" +
-                "<div class=\"word-results\"><span class=\"incorrect-word\">[missing] ✗</span></div>" +
-                "<div class=\"correct-answer\"><strong>Correct answer:</strong><br>" +
-                escapeHTML(answer.answer) +
-                "</div></div>";
+
+            /*
+             * Multiple correct answers / multiple lines
+             */
+            if (Array.isArray(answer.answers)) {
+
+                let linesHTML = "";
+
+                answer.answers.forEach(function(correctAnswer, lineIndex) {
+
+                    linesHTML +=
+                        "<div style='margin-bottom:12px;'>" +
+
+                        "<strong>" +
+                        (lineIndex + 1) +
+                        ")</strong> " +
+
+                        "<div class='word-results'>" +
+                        "<span class='incorrect-word'>" +
+                        "[missing] ✗" +
+                        "</span>" +
+                        "</div>" +
+
+                        "<div class='correct-answer'>" +
+                        "<strong>Correct answer:</strong><br>" +
+                        escapeHTML(correctAnswer) +
+                        "</div>" +
+
+                        "</div>";
+                });
+
+                html +=
+                    "<div class='result wrong-result'>" +
+
+                    "<strong>" +
+                    (index + 1) +
+                    ") Score: 0/" +
+                    answer.points +
+                    "</strong>" +
+
+                    "<div style='margin-top:12px;'>" +
+                    linesHTML +
+                    "</div>" +
+
+                    "</div>";
+
+            } else {
+
+                /*
+                 * Normal single answer
+                 */
+                html +=
+                    "<div class='result wrong-result'>" +
+
+                    "<strong>" +
+                    (index + 1) +
+                    ") Score: 0/" +
+                    answer.points +
+                    "</strong>" +
+
+                    "<div class='word-results'>" +
+                    "<span class='incorrect-word'>" +
+                    "[missing] ✗" +
+                    "</span>" +
+                    "</div>" +
+
+                    "<div class='correct-answer'>" +
+                    "<strong>Correct answer:</strong><br>" +
+                    escapeHTML(answer.answer) +
+                    "</div>" +
+
+                    "</div>";
+            }
         });
+
         return html;
     }
 
-    return
-        "<div class=\"result wrong-result\">" +
-        "<strong>Score: 0/" + question.points + "</strong>" +
-        "<div class=\"word-results\"><span class=\"incorrect-word\">[missing] ✗</span></div>" +
-        "<div class=\"correct-answer\"><strong>Correct answer:</strong><br>" +
+    return (
+        "<div class='result wrong-result'>" +
+        "<strong>Score: 0/" +
+        question.points +
+        "</strong>" +
+
+        "<div class='word-results'>" +
+        "<span class='incorrect-word'>" +
+        "[missing] ✗" +
+        "</span>" +
+        "</div>" +
+
+        "<div class='correct-answer'>" +
+        "<strong>Correct answer:</strong><br>" +
         escapeHTML(question.answer) +
-        "</div></div>";
+        "</div>" +
+
+        "</div>"
+    );
 }
 
 function showFinalResult() {
