@@ -1741,23 +1741,56 @@ const questions = [
 /* Q32 */
 
 {
-    question: "Example Question 32",
+    question: "Q32: Write 1) 2 chapters that show where the seven golden bowls in Rv 16 came from, 2) what is poured out from the bowls, and 3) where in which chapter the bowls are poured out.",
 
-    points: 1,
+    points: 3,
 
-    answer: "Example answer thirty two"
+     lines: [
+
+        {
+            answer: "Rv 12, Rv 15",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "God’s wrath",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "the tabernacle of Rv 13 and Babylon of Rv 18",
+            points: 1,
+           lines: 1
+        }
+
+   ]
+
 },
-
 
 
 /* Q33 */
 
 {
-    question: "Example Question 33",
+    question: "Q33: In the book of Revelation, what is 1) the food given by the pastor chosen by Jesus and 2) the food given by the pastor chosen by the devil? Write along with related verses. ",
 
-    points: 1,
+    points: 2,
 
-    answer: "Example answer thirty three"
+     lines: [
+
+        {
+            answer: "Rv 2:17 hidden manna, Rv 10 revealed word, Rv 22 fruit of the tree of life",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "Rv 17:2, Rv 18:3 wine of adulteries.",
+            points: 1,
+           lines: 1
+        }
+   ]
 },
 
 
@@ -1765,11 +1798,30 @@ const questions = [
 /* Q34 */
 
 {
-    question: "Example Question 34",
+    question: "Q34: What is 1) the wine of adulteries? As seen in Rv 18, 2) who did all nations that have fallen and those who drank the wine of adulteries marry, and 3) who are the bridegroom and the bride getting married?",
 
-    points: 1,
+    points: 3,
 
-    answer: "Example answer thirty four"
+     lines: [
+
+        {
+            answer: "false doctrines, fruit of good and evil",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "spirit of the dragon, Satan",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "Satan and churchgoers who belong to him.",
+            points: 1,
+           lines: 1
+        }
+   ]
 },
 
 
@@ -2015,7 +2067,7 @@ function normalizeText(text) {
      * =====================================================
      * FLEXIBLE BIBLE REFERENCE FORMATTING
      *
-     * These will all become the same:
+     * These become the same:
      *
      * Rv10
      * Rv 10
@@ -2026,8 +2078,6 @@ function normalizeText(text) {
      *
      * Rv17:5-7
      * Rv 17: 5-7
-     *
-     * Spaces around "Rv", chapter numbers and ":" are ignored.
      * =====================================================
      */
 
@@ -2045,13 +2095,31 @@ function normalizeText(text) {
 
     /*
      * Remove punctuation.
-     * The colon in Bible references is intentionally converted
-     * to a space after the reference has already been standardised.
      */
     value = value
         .replace(/[^\p{L}\p{N}\s]/gu, " ")
         .replace(/\s+/g, " ")
         .trim();
+
+    /*
+     * =====================================================
+     * FLEXIBLE NUMBER + WORD FORMATTING
+     *
+     * These become the same:
+     *
+     * 12 tribes
+     * 12tribes
+     * 12  tribes
+     * 12 Tribes
+     * 144000
+     * 144 000
+     *
+     * This is useful for answers such as:
+     * "12 tribes"
+     * =====================================================
+     */
+
+    value = value.replace(/(\d+)\s+(?=[a-z])/gi, "$1");
 
     return value;
 }
