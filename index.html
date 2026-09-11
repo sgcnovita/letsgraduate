@@ -1031,7 +1031,7 @@ const questions = [
                 "Nicolaitans: food sacrificed to idols and teachings, adultery",
                 "John: letters of repentance and the word of promise"
             ],
-            points: 3,
+            points: 1,
             lines: 3
         }
     ]
@@ -1327,15 +1327,12 @@ const questions = [
         },
 
         {
-            answer: "first-sixth trumpet: death of the betrayers",
+            answers: [
+                "first-sixth trumpet: death of the betrayers",
+                "seventh trumpet: trumpet of salvation"
+            ],
             points: 1,
-           lines: 1
-        },
-       
-       {
-            answer: "seventh trumpet: trumpet of salvation",
-            points: 1,
-           lines: 1
+           lines: 2
         }
 
    ]
@@ -1377,15 +1374,12 @@ const questions = [
      lines: [
 
         {
-            answer: "Rv 9: spirits and flesh that belong to the devil",
+            answers: [
+                "Rv 9: spirits and flesh that belong to the devil",
+                "Rv 19: spirits and flesh that belong to God"
+            ],
             points: 1,
-           lines: 1
-        },
-
-        {
-            answer: "Rv 19: spirits and flesh that belong to God",
-            points: 1,
-           lines: 1
+           lines: 2
         },
        
         {
@@ -1599,11 +1593,31 @@ const questions = [
 /* Q27 */
 
 {
-    question: "Example Question 27",
+    question: "Q27: 1) What is the new song in Rv 14:3, and only 2) who in the whole world can sing it? 3) What is the reality of the place where the new song is learned?",
 
-    points: 1,
+    points: 3,
 
-    answer: "Example answer twenty seven"
+     lines: [
+
+        {
+            answer: "word of the fulfilled realities of Revelation",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "sealed 144,000 of the 12 tribes",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "Zion Christian Mission Center before the throne",
+            points: 1,
+           lines: 1
+        }
+
+    ]
 },
 
 
@@ -1611,11 +1625,28 @@ const questions = [
 /* Q28 */
 
 {
-    question: "Example Question 28",
+    question: "Q28: According to Mt 13, 1) with what can we distinguish those born of God’s seed and those born of the devil’s seed? Also, 2) what is the reality and result of each group?",
 
-    points: 1,
+    points: 2,
 
-    answer: "Example answer twenty eight"
+     lines: [
+
+        {
+            answer: "Those who are harvested and those who are not harvested",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answers: [
+                "Those born of God’s seed: those who are harvested, sealed and registered into the 12 tribes, heaven and eternal life",
+                "Those born of the devil’s seed: those who are not harvested, sealed or registered into the 12 tribes, hell and eternal punishment"
+            ],
+           points: 1,
+           lines: 2
+        }
+
+    ]
 },
 
 
@@ -1623,11 +1654,25 @@ const questions = [
 /* Q29 */
 
 {
-    question: "Example Question 29",
+    question: "Q29: 1) Who are those who had been victorious in Rv 15:2 and what is the related Bible chapter? Write the 2) weapons they used to overcome along with 1 reference verse.",
 
-    points: 1,
+    points: 2,
 
-    answer: "Example answer twenty nine"
+     lines: [
+
+        {
+            answer: "those who fought and overcame the group of the dragon, Rv 12",
+            points: 1,
+           lines: 1
+        },
+
+        {
+            answer: "blood of the Lamb and the word of testimony, Rv 12:11",
+            points: 1,
+           lines: 1
+        }
+
+    ]
 },
 
 
@@ -1925,13 +1970,55 @@ function goToQuestion(index) {
 }
 
 function normalizeText(text) {
-    return String(text ?? "")
+    let value = String(text ?? "")
         .toLowerCase()
-        .replace(/[’']/g, "")
+        .replace(/[’']/g, "");
+
+    /*
+     * =====================================================
+     * FLEXIBLE BIBLE REFERENCE FORMATTING
+     *
+     * These will all become the same:
+     *
+     * Rv10
+     * Rv 10
+     *
+     * Rv10:11
+     * Rv 10:11
+     * Rv 10 : 11
+     *
+     * Rv17:5-7
+     * Rv 17: 5-7
+     *
+     * Spaces around "Rv", chapter numbers and ":" are ignored.
+     * =====================================================
+     */
+
+    // Rv chapter:verse
+    value = value.replace(
+        /\brv\s*(\d+)\s*:\s*(\d+)\b/gi,
+        "rv$1:$2"
+    );
+
+    // Rv chapter only
+    value = value.replace(
+        /\brv\s*(\d+)\b/gi,
+        "rv$1"
+    );
+
+    /*
+     * Remove punctuation.
+     * The colon in Bible references is intentionally converted
+     * to a space after the reference has already been standardised.
+     */
+    value = value
         .replace(/[^\p{L}\p{N}\s]/gu, " ")
         .replace(/\s+/g, " ")
         .trim();
+
+    return value;
 }
+
 
 function escapeHTML(text) {
     return String(text ?? "")
