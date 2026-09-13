@@ -2170,28 +2170,65 @@ function normalizeText(text) {
 
     /*
      * =====================================================
-     * 1. BIBLE REFERENCES
+     * 1. NORMALISE APOSTROPHES
      *
-     * Rv 7       = Rv7
-     * Rv7        = Rv7
+     * These are all treated as the same:
      *
-     * Rv 14      = Rv14
-     * Rv14       = Rv14
+     * God's
+     * God’s
+     * God s
+     * gods
      *
-     * Rv 7:9-14  = Rv7:9-14
-     * Rv7:9-14   = Rv7:9-14
-     * Rv 7 : 9-14 = Rv7:9-14
+     * Satan's
+     * Satan’s
+     * Satan s
+     * satans
+     * =====================================================
+     */
+
+    value = value
+        .replace(/[’']/g, "")
+        .replace(/\b(god|satan)\s+s\b/gi, "$1s");
+
+
+    /*
+     * =====================================================
+     * 2. NORMALISE BIBLE REFERENCES
+     *
+     * These are all treated as the same:
+     *
+     * Rv 7
+     * Rv7
+     * Rv 14
+     * Rv14
+     *
+     * Rv 7:9
+     * Rv7:9
+     * Rv 7 : 9
+     *
+     * Rv 17:5-7
+     * Rv17:5-7
+     * Rv 17 : 5 - 7
+     *
+     * IMPORTANT:
+     * The space after the reference is preserved.
+     *
+     * "Rv 14 born"
+     * becomes
+     * "rv14 born"
+     *
+     * NOT
+     * "rv14born"
      * =====================================================
      */
 
     value = value.replace(
-        /\brv\s*(\d+)\s*:\s*(\d+)\s*[-–—]\s*(\d+)\b/gi,
-        "rv$1:$2-$3"
-    );
-
-    value = value.replace(
-        /\brv\s*(\d+)\s*:\s*(\d+)\b/gi,
-        "rv$1:$2"
+        /\brv\s*(\d+)\s*:\s*(\d+)\s*(?:-\s*(\d+))?\b/gi,
+        function(match, chapter, verse, endVerse) {
+            return endVerse
+                ? "rv" + chapter + ":" + verse + "-" + endVerse
+                : "rv" + chapter + ":" + verse;
+        }
     );
 
     value = value.replace(
@@ -2202,122 +2239,69 @@ function normalizeText(text) {
 
     /*
      * =====================================================
-     * 2. POSSESSIVE "S"
-     *
-     * These are all equivalent:
-     *
-     * God's
-     * God’s
-     * Gods
-     * God s
-     * God  s
-     *
-     * Satan's
-     * Satan’s
-     * Satans
-     * Satan s
-     * =====================================================
-     */
-
-    value = value.replace(
-        /\b([a-z]+)(?:[’']\s*|\s+)s\b/gi,
-        "$1s"
-    );
-
-    /*
-     * Remove remaining apostrophes.
-     */
-    value = value.replace(/[’']/g, "");
-
-
-    /*
-     * =====================================================
-     * 3. SPECIAL CASE:
-     *
-     * first fruits = firstfruits
-     * firstfruits  = firstfruits
-     *
-     * This is specifically included so the two forms
-     * are always treated as identical.
-     * =====================================================
-     */
-
-    value = value.replace(
-        /\bfirst\s+fruits\b/gi,
-        "firstfruits"
-    );
-
-
-    /*
-     * =====================================================
-     * 4. SPECIAL CASE:
-     *
-     * fulfillment = fulfilment
-     * fulfilment  = fulfilment
-     *
-     * Both American and British spelling are accepted.
-     * =====================================================
-     */
-
-    value = value.replace(
-        /\bfulfillment\b/gi,
-        "fulfilment"
-    );
-
-
-    /*
-     * =====================================================
-     * 5. REMOVE PUNCTUATION
+     * 3. REMOVE PUNCTUATION
      * =====================================================
      */
 
     value = value
-        .replace(/[^\p{L}\p{N}\s:-]/gu, " ")
+        .replace(/[^\p{L}\p{N}\s]/gu, " ")
         .replace(/\s+/g, " ")
         .trim();
 
 
     /*
      * =====================================================
-     * 6. FLEXIBLE NUMBER + WORD
+     * 4. SPECIAL WORD EQUIVALENCES
      *
-     * 12 tribes  = 12tribes
-     * 12tribes    = 12tribes
-     * 12  tribes  = 12tribes
+     * first fruits = firstfruits
+     * fulfillment = fulfilment
      *
-     * This keeps the previous requirement.
+     * We convert both forms to one standard form.
      * =====================================================
      */
 
-    value = value.replace(
-        /(\d+)\s+(?=[a-z])/gi,
-        "$1"
-    );
+    value = value
+        .replace(/\bfirst\s+fruits\b/gi, "firstfruits")
+        .replace(/\bfulfilment\b/gi, "fulfillment");
 
 
     /*
      * =====================================================
-     * 7. NORMALIZE SPACES AROUND BIBLE REFERENCES
+     * 5. FLEXIBLE NUMBER + WORD FORMATTING
      *
-     * Rv 7:9 - 14
-     * Rv7:9-14
+     * 12 tribes  -> 12tribes
+     * 12  tribes -> 12tribes
+     * 12tribes   -> 12tribes
      *
-     * become equivalent.
+     * BUT:
+     *
+     * Rv 14 born -> rv14 born
+     *
+     * because Bible references were already converted above.
+     *
+     * We only join numbers with specific standalone words
+     * where this flexibility is wanted.
      * =====================================================
      */
 
-    value = value.replace(
-        /\brv(\d+)\s*:\s*(\d+)\s*[-–—]\s*(\d+)\b/gi,
-        "rv$1:$2-$3"
-    );
+    value = value
+        .replace(/\b12\s+tribes\b/gi, "12tribes")
+        .replace(/\b144\s+000\b/gi, "144000");
 
-    value = value.replace(
-        /\brv(\d+)\s*:\s*(\d+)\b/gi,
-        "rv$1:$2"
-    );
+
+    /*
+     * =====================================================
+     * 6. FINAL CLEANUP
+     * =====================================================
+     */
+
+    value = value
+        .replace(/\s+/g, " ")
+        .trim();
 
     return value;
 }
+   
 function escapeHTML(text) {
     return String(text ?? "")
         .replace(/&/g, "&amp;")
