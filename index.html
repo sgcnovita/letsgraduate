@@ -2317,30 +2317,66 @@ function compareWords(correctText, studentText) {
     const correctWords = correct ? correct.split(" ") : [];
     const studentWords = student ? student.split(" ") : [];
 
+    /*
+     * Line the two answers up word by word (longest common
+     * subsequence), so one missing or extra word does not push
+     * every later word out of place.
+     */
+    const n = correctWords.length;
+    const m = studentWords.length;
+    const table = [];
+    for (let i = 0; i <= n; i++) table.push(new Array(m + 1).fill(0));
+    for (let i = n - 1; i >= 0; i--) {
+        for (let j = m - 1; j >= 0; j--) {
+            table[i][j] = correctWords[i] === studentWords[j]
+                ? table[i + 1][j + 1] + 1
+                : Math.max(table[i + 1][j], table[i][j + 1]);
+        }
+    }
+
     let correctCount = 0;
     let resultHTML = "";
+    let missingWords = [];
+    let typedWords = [];
 
-    for (let i = 0; i < correctWords.length; i++) {
-        const correctWord = correctWords[i];
-        const studentWord = studentWords[i];
+    // Words between two matches: pair them up as wrong words,
+    // then show what is left as [missing] or as extra words.
+    function flushGap() {
+        const paired = Math.min(missingWords.length, typedWords.length);
+        for (let k = 0; k < paired; k++) {
+            resultHTML += "<span class='incorrect-word'>" +
+                escapeHTML(typedWords[k]) + " ✗</span>";
+        }
+        for (let k = paired; k < missingWords.length; k++) {
+            resultHTML += "<span class='incorrect-word'>[missing] ✗</span>";
+        }
+        for (let k = paired; k < typedWords.length; k++) {
+            resultHTML += "<span class='extra-word'>" +
+                escapeHTML(typedWords[k]) + " +</span>";
+        }
+        missingWords = [];
+        typedWords = [];
+    }
 
-        if (studentWord === correctWord) {
+    let i = 0;
+    let j = 0;
+    while (i < n || j < m) {
+        if (i < n && j < m && correctWords[i] === studentWords[j]) {
+            flushGap();
             correctCount++;
             resultHTML += "<span class='correct-word'>" +
-                escapeHTML(correctWord) + " ✓</span>";
+                escapeHTML(correctWords[i]) + " ✓</span>";
+            i++;
+            j++;
+        } else if (j >= m || (i < n && table[i + 1][j] >= table[i][j + 1])) {
+            missingWords.push(correctWords[i]);
+            i++;
         } else {
-            resultHTML += "<span class='incorrect-word'>" +
-                escapeHTML(studentWord || "[missing]") + " ✗</span>";
+            typedWords.push(studentWords[j]);
+            j++;
         }
     }
-
-    if (studentWords.length > correctWords.length) {
-        resultHTML += "<br><br><strong>Extra words:</strong><br>";
-        for (let i = correctWords.length; i < studentWords.length; i++) {
-            resultHTML += "<span class='extra-word'>" +
-                escapeHTML(studentWords[i]) + " +</span>";
-        }
-    }
+    flushGap();
 
     return {
         correctCount: correctCount,
