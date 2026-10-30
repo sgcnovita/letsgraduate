@@ -2223,7 +2223,7 @@ function normalizeText(text) {
      */
 
     value = value.replace(
-        /\brv\s*(\d+)\s*:\s*(\d+)\s*(?:-\s*(\d+))?\b/gi,
+        /\brv\s*(\d+)\s*:\s*(\d+)(?:\s*-\s*(\d+))?\b/gi,
         function(match, chapter, verse, endVerse) {
             return endVerse
                 ? "rv" + chapter + ":" + verse + "-" + endVerse
